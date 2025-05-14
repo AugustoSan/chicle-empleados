@@ -13,7 +13,6 @@ class ShellApp extends StatefulWidget {
 
 class _ShellAppState extends State<ShellApp> {
   final _shellNavigatorKey = GlobalKey<NavigatorState>();
-  // String _currentRoute = '/home';
   int _selectedIndex = 0;
 
   void _onTabTapped(int idx) => setState(() => _selectedIndex = idx);
@@ -23,7 +22,7 @@ class _ShellAppState extends State<ShellApp> {
   Widget build(BuildContext context) {
     final titles = ['Bebidas', 'Menús', 'Órdenes'];
     return Scaffold(
-      appBar: AppBarCustom(currentRoute: titles[_selectedIndex]),
+      appBar: AppBarCustom(currentRoute: titles[_selectedIndex], onSettings: () => _shellNavigatorKey.currentState!.pushNamed(DrawerItems.settings.route)),
       // drawer: DrawerCustom(navigatorKey: _shellNavigatorKey),
       // floatingActionButton: _buildFab(),
       body: Navigator(
@@ -41,6 +40,7 @@ class _ShellAppState extends State<ShellApp> {
             case '/menuItems':
               page = MenuItemsListScreen();
               break;
+            case '/': 
             default:
               page = const HomeScreen();
           }
@@ -53,45 +53,4 @@ class _ShellAppState extends State<ShellApp> {
       ),
     );
   }
-
-  // Widget? _buildFab() {
-  //   // Si estamos en settings, no mostramos nada
-  //   if (_currentRoute == '/settings' || _currentRoute == '/home' || _currentRoute == '/' || _currentRoute == '/help') return null;
-
-  //   // Definimos ruta de destino y icono según ruta actual
-  //   String targetRoute;
-  //   IconData icon;
-  //   String tooltip;
-
-  //   print(_currentRoute);
-
-  //   switch (_currentRoute) {
-  //     case '/menuItems':
-  //       targetRoute = '/newMenuItem';
-  //       icon = Icons.add_card;
-  //       tooltip = 'Agregar nuevo menu';
-  //       break;
-  //     case '/orders':
-  //       targetRoute = '/newOrder';
-  //       icon = Icons.add_shopping_cart;
-  //       tooltip = 'Agregar nueva orden';
-  //       break;
-  //     case '/home':
-  //     default:
-  //       targetRoute = '/newSomething';
-  //       icon = Icons.add;
-  //       tooltip = 'Agregar nuevo';
-  //   }
-
-  //   return FloatingActionButton(
-  //     tooltip: tooltip,
-  //     child: Icon(icon),
-  //     onPressed: () {
-  //       // Si el drawer estaba abierto, lo cerramos primero
-  //       _shellNavigatorKey.currentState?.pop();
-  //       // Luego empujamos la ruta del formulario correspondiente
-  //       _shellNavigatorKey.currentState?.pushNamed(targetRoute);
-  //     },
-  //   );
-  // }
 }

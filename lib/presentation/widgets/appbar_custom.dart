@@ -4,26 +4,18 @@ import 'package:provider/provider.dart';
 
 import '../../presentation/providers/business_provider.dart';
 
-class AppBarCustom extends StatefulWidget implements PreferredSizeWidget{
+class AppBarCustom extends StatelessWidget implements PreferredSizeWidget{
   final String currentRoute;
-  AppBarCustom({super.key, required this.currentRoute});
-  @override
-  State<AppBarCustom> createState() => _AppBarCustomState(currentRoute: currentRoute);
+  final VoidCallback onSettings;
+  const AppBarCustom({super.key, required this.currentRoute, required this.onSettings});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
 
-class _AppBarCustomState extends State<AppBarCustom>{
-  final String currentRoute;
-  _AppBarCustomState({required this.currentRoute});
   @override
   Widget build(BuildContext ctx) {
     final business = ctx.watch<BusinessProvider>().business;
-    print('name: ${business?.name}');
-    String title = (currentRoute == '/home')
-      ? (business?.name ?? 'Chicle')
-      : _mapRouteToTitle(currentRoute);
+    String title = business?.name ?? 'Chicle';
     return AppBar(
       title: Text(title, style: const TextStyle(fontSize: 24, color: Colors.white)),
       backgroundColor: Theme.of(ctx).primaryColor,
@@ -34,27 +26,24 @@ class _AppBarCustomState extends State<AppBarCustom>{
         ),
       ),
       actions: [
-        IconButton(
-          icon: const Icon(Icons.logout, color: Colors.white),
-          onPressed: _logout,
+        PopupMenuButton(
+          icon: const Icon(Icons.more_vert, color: Colors.white),
+          onSelected: (value) {
+            switch (value) {
+              case 'settings':
+                onSettings();
+                break;
+              case 'logout':
+                ctx.read<AuthProvider>().logout();
+                break;
+            }
+          },
+          itemBuilder: (ctx) => [
+            const PopupMenuItem(value: 'settings', child: Text('Configuración')),
+            const PopupMenuItem(value: 'logout', child: Text('Cerrar Sesión')),
+          ],
         ),
       ],
     );
-  }
-
-  String _mapRouteToTitle(String route) {
-    switch (route) {
-      case '/settings':   return 'Configuración';
-      case '/menuItems':  return 'Productos';
-      case '/orders':     return 'Órdenes';
-      case '/perfil':     return 'Perfil';
-      case '/help':       return 'Ayuda';
-      default:            return 'Chicle';
-    }
-  }
-
-  Future<void> _logout() async {
-    final auth = context.read<AuthProvider>();
-    await auth.logout();
   }
 }

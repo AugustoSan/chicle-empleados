@@ -4,11 +4,18 @@ import '../../domain/domain.dart';
 
 class BusinessProvider with ChangeNotifier {
   final BusinessRepository _repo;
+  bool _initialized = false;
 
   Business? _business;
   Business? get business => _business;
 
   BusinessProvider(this._repo);
+
+  Future<void> initialize() async {
+    if (_initialized) return;
+    await _repo.initialize();
+    _initialized = true;
+  }
 
   Future<void> loadBusinessData() async {
     _business = await _repo.loadBusiness();

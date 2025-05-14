@@ -16,7 +16,7 @@ class BusinessRepositoryImpl implements BusinessRepository {
         currency:       'MXN',
         taxPercent:     16.0,
         type:           BusinessType.cafeteria,
-        enabledModules: ['productos', 'ventas', 'compras'],
+        enabledModules: ['bebidas', 'comidas', 'menus', 'reportes', 'configuración'],
       ));
     }
   }
