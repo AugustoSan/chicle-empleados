@@ -14,10 +14,23 @@ class ShellApp extends StatefulWidget {
 class _ShellAppState extends State<ShellApp> {
   final _shellNavigatorKey = GlobalKey<NavigatorState>();
   int _selectedIndex = 0;
+  int _selectedBottomIndex = 0;
 
   void onTap(int index) {
     setState(() {
-      _selectedIndex = index;
+      if(index != _selectedIndex) {
+        _selectedIndex = index;
+        _shellNavigatorKey.currentState!.pushNamed(drawerMenuItems[index].route);
+      }
+    });
+  }
+
+  void onTapBottom(int index) {
+    setState(() {
+      if(index != _selectedBottomIndex) {
+        _selectedBottomIndex = index;
+        _shellNavigatorKey.currentState!.pushNamed(menuBottomItems[index].route);
+      }
     });
   }
 
@@ -47,14 +60,14 @@ class _ShellAppState extends State<ShellApp> {
               break;
             case '/': 
             default:
-              page = const HomeScreen();
+              page = const MenuItemsListScreen();
           }
           return MaterialPageRoute(builder: (_) => page, settings: settings);
         },
       ),
       bottomNavigationBar: MenuBottomCustom(
-            currentIndex: _selectedIndex,
-            onTap: onTap,
+            currentIndex: _selectedBottomIndex,
+            onTap: onTapBottom,
             shellNavigatorKey: _shellNavigatorKey,
           ),
     );

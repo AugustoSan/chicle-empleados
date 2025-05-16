@@ -16,16 +16,6 @@ class MenuBottomCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return BottomNavigationBar(
-    //   currentIndex: currentIndex,
-    //   onTap: onTap,
-    //   items: <Widget> [
-    //     ...menuBottomItems.map((item) => BottomNavigationBarItem(
-    //       icon: Icon(item.icon),
-    //       label: item.title,
-    //     )),
-    //   ],
-    // );
     return ClipRRect(
         borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
         child: NavigationBar(
