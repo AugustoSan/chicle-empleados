@@ -1,3 +1,4 @@
+import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -59,6 +60,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       child: Column(
                         children: [
+                          ContainerAddPicture(rutaImagen: null),
+                          const SizedBox(height: 12),
                           TextFormField(
                             controller: _nameC,
                             decoration: const InputDecoration(labelText: 'Nombre del negocio'),

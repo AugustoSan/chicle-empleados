@@ -89,4 +89,16 @@ final ThemeData chicleTheme = ThemeData(
     ),
     margin: const EdgeInsets.only(top: 2, right: 2, left: 2),
   ),
+
+  iconTheme: const IconThemeData(color: Colors.blue),
+
+  // IconButtonTheme
+  iconButtonTheme: IconButtonThemeData(
+    style: IconButton.styleFrom(
+      foregroundColor: Colors.blue.shade600,
+      backgroundColor: Colors.blue.shade50,
+    ),
+  ),
+
+  
 );

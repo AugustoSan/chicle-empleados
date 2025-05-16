@@ -36,6 +36,7 @@ class _ShellAppState extends State<ShellApp> {
 
   @override  Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBarCustom(
         currentRoute: drawerMenuItems[_selectedIndex].route, 
         onSettings: () => _shellNavigatorKey.currentState!.pushNamed(DrawerMenuItems.settings.route),
