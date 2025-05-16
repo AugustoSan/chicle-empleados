@@ -12,3 +12,9 @@ class SaveBusinessConfig {
   SaveBusinessConfig(this.repo);
   Future<void> call(Business cfg) => repo.saveBusiness(cfg);
 }
+
+class SaveLogo {
+  final BusinessRepository repo;
+  SaveLogo(this.repo);
+  Future<void> call(String logoPath) => repo.saveLogo(logoPath);
+}

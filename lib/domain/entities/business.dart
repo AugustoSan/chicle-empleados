@@ -6,6 +6,7 @@ class Business {
   final double taxPercent;          // IVA u otro impuesto
   final BusinessType type;          // Tipo de negocio
   final List<String> enabledModules;// Ej: ["mesas","takeaway","delivery"]
+  final String? logo;
 
   Business({
     required this.name,
@@ -13,6 +14,7 @@ class Business {
     required this.taxPercent,
     required this.type,
     required this.enabledModules,
+    this.logo,
   });
 
   Business copyWith({
@@ -21,6 +23,7 @@ class Business {
     double? taxPercent,
     BusinessType? type,
     List<String>? enabledModules,
+    String? logo,
   }) {
     return Business(
       name:           name         ?? this.name,
@@ -28,6 +31,7 @@ class Business {
       taxPercent:     taxPercent   ?? this.taxPercent,
       type:           type         ?? this.type,
       enabledModules: enabledModules ?? this.enabledModules,
+      logo:           logo         ?? this.logo,
     );
   }
 }

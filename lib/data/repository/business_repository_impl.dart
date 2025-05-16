@@ -10,6 +10,7 @@ class BusinessRepositoryImpl implements BusinessRepository {
 
   @override
   Future<void> initialize() async {
+    // box.clear();
     if (box.isEmpty) {
       await saveBusiness(Business(
         name:           'Chicle',
@@ -17,6 +18,7 @@ class BusinessRepositoryImpl implements BusinessRepository {
         taxPercent:     16.0,
         type:           BusinessType.cafeteria,
         enabledModules: ['bebidas', 'comidas', 'menus', 'reportes', 'configuración'],
+        logo:           null,
       ));
     }
   }
@@ -33,6 +35,7 @@ class BusinessRepositoryImpl implements BusinessRepository {
       taxPercent:     model.taxPercent,
       type:           BusinessType.values[model.type],
       enabledModules: model.enabledModules,
+      logo:           model.logo,
     );
   }
 
@@ -45,11 +48,19 @@ class BusinessRepositoryImpl implements BusinessRepository {
       taxPercent:     biz.taxPercent,
       type:           biz.type.index,
       enabledModules: biz.enabledModules,
+      logo:           biz.logo,
     );
     if (box.isEmpty) {
       await box.add(model);
     } else {
       await box.putAt(0, model);
     }
+  }
+
+  @override
+  Future<void> saveLogo(String logoPath) async {
+    final model = box.getAt(0)!;
+    model.logo = logoPath;
+    
   }
 }

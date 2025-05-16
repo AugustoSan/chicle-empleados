@@ -21,12 +21,16 @@ class BusinessModel extends HiveObject {
   @HiveField(4)
   List<String> enabledModules;
 
+  @HiveField(5)
+  String? logo;
+
   BusinessModel({
     required this.name,
     required this.currency,
     required this.taxPercent,
     required this.type,
     required this.enabledModules,
+    this.logo,
   });
 
   /// Este es el método `copyWith` que te faltaba:
@@ -36,6 +40,7 @@ class BusinessModel extends HiveObject {
     double? taxPercent,
     int? type,
     List<String>? enabledModules,
+    String? logo,
   }) {
     return BusinessModel(
       name:   name ?? this.name,
@@ -43,6 +48,7 @@ class BusinessModel extends HiveObject {
       taxPercent:   taxPercent ?? this.taxPercent,
       type:   type ?? this.type,
       enabledModules:   enabledModules ?? this.enabledModules,
+      logo:   logo ?? this.logo,
     );
   }
 }
