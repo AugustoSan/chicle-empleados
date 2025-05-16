@@ -15,19 +15,24 @@ class _ShellAppState extends State<ShellApp> {
   final _shellNavigatorKey = GlobalKey<NavigatorState>();
   int _selectedIndex = 0;
 
-  void _onTabTapped(int idx) => setState(() => _selectedIndex = idx);
-  
+  void onTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    final titles = ['Bebidas', 'Menús', 'Órdenes'];
+  @override  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarCustom(currentRoute: titles[_selectedIndex], onSettings: () => _shellNavigatorKey.currentState!.pushNamed(DrawerItems.settings.route)),
+      appBar: AppBarCustom(
+        currentRoute: drawerMenuItems[_selectedIndex].route, 
+        onSettings: () => _shellNavigatorKey.currentState!.pushNamed(DrawerMenuItems.settings.route),
+        onHelp: () => _shellNavigatorKey.currentState!.pushNamed(DrawerMenuItems.help.route),
+      ),
       // drawer: DrawerCustom(navigatorKey: _shellNavigatorKey),
       // floatingActionButton: _buildFab(),
       body: Navigator(
         key: _shellNavigatorKey,
-        initialRoute: '/home',
+        initialRoute: drawerMenuItems[_selectedIndex].route,
         onGenerateRoute: (settings) {
           Widget page;
           switch (settings.name) {
@@ -48,9 +53,10 @@ class _ShellAppState extends State<ShellApp> {
         },
       ),
       bottomNavigationBar: MenuBottomCustom(
-        currentIndex: _selectedIndex,
-        onTap: _onTabTapped,
-      ),
+            currentIndex: _selectedIndex,
+            onTap: onTap,
+            shellNavigatorKey: _shellNavigatorKey,
+          ),
     );
   }
 }

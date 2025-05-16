@@ -18,6 +18,10 @@ class DrawerCustom extends StatelessWidget {
             DrawerHeader(
               decoration: BoxDecoration(
                 color: Theme.of(ctx).primaryColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                ),
               ),
               child: Text(
                 business?.name ?? 'Sin Nombre',
@@ -27,7 +31,7 @@ class DrawerCustom extends StatelessWidget {
                 ),
               ),
             ),
-            ...drawerItems.map((item) => ListTile(
+            ...menuBottomItems.map((item) => ListTile(
             leading: Icon(item.icon),
             title: Text(item.title),
             onTap: () {

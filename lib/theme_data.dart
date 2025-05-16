@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 final ThemeData chicleTheme = ThemeData(
   // Colores principales
-  primaryColor: Colors.blue.shade600,
+  primaryColor: const Color.fromARGB(255, 80, 168, 246),
   scaffoldBackgroundColor: Colors.white,
   colorScheme: ColorScheme.light(
     primary: Colors.blue.shade600,
@@ -66,13 +66,27 @@ final ThemeData chicleTheme = ThemeData(
 
   // Barra inferior de navegación
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.blue.shade50,
     selectedItemColor: Colors.blue.shade600,
-    unselectedItemColor: Colors.blue.shade200,
-    showSelectedLabels: false,
-    showUnselectedLabels: false,
+    unselectedItemColor: Colors.blue.shade500,
+    showSelectedLabels: true,
+    showUnselectedLabels: true,
+    elevation: 4,
+    selectedLabelStyle: TextStyle(fontSize: 12, color: Colors.blue.shade600),
+    unselectedLabelStyle: TextStyle(fontSize: 12, color: Colors.blue.shade500),
+    type: BottomNavigationBarType.fixed,
   ),
 
   // Para que al aparecer teclado reorganice el diseño
   useMaterial3: false,
+
+  // CardTheme
+  cardTheme: CardTheme(
+    elevation: 4,
+    color: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+    margin: const EdgeInsets.only(top: 2, right: 2, left: 2),
+  ),
 );
