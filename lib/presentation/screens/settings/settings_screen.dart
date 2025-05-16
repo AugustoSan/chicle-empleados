@@ -1,3 +1,4 @@
+import 'package:chicle_app_empleados/presentation/screens/info/acerca_de.dart';
 import 'package:chicle_app_empleados/presentation/screens/settings/company_screen.dart';
 import 'package:flutter/material.dart';
 // import 'package:chicle_app_empleados/presentation/presentation.dart';
@@ -36,11 +37,11 @@ class SettingsScreen extends StatelessWidget {
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CompanyScreen())),
                   ),
-                  const ListTile(
+                  ListTile(
                     title: Text('Acerca de'),
                     leading: Icon(Icons.info),
                     trailing: Icon(Icons.arrow_forward_ios),
-                    // onTap: () => Navigator.pushNamed(context, '/company'),
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AcercaDeScreen())),
                   ),
                 ],
               ),

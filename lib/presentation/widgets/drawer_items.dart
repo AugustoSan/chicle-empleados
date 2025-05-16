@@ -52,9 +52,7 @@ class DrawerMenuItems {
 }
 
 const List<DrawerItem> drawerMenuItems = [
-  DrawerMenuItems.profile,
   DrawerMenuItems.settings,
-  DrawerMenuItems.help,
   DrawerMenuItems.logout,
 ];
 
