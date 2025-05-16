@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../presentation.dart';
 import './../screens/modules/menuitems_list_screen.dart';
 import './../screens/home/home_screen.dart';
-import './../screens/settings/settings_screen.dart';
+import 'settings/settings_screen.dart';
 
 class ShellApp extends StatefulWidget {
   const ShellApp({super.key});

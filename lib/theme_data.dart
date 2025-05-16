@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 final ThemeData chicleTheme = ThemeData(
   // Colores principales
   primaryColor: const Color.fromARGB(255, 80, 168, 246),
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: Colors.blue.shade100,
   colorScheme: ColorScheme.light(
     primary: Colors.blue.shade600,
     secondary: Colors.blue.shade50, // para fondos claros
@@ -66,7 +66,7 @@ final ThemeData chicleTheme = ThemeData(
 
   // Barra inferior de navegación
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    backgroundColor: Colors.blue.shade50,
+    backgroundColor: Colors.white,
     selectedItemColor: Colors.blue.shade600,
     unselectedItemColor: Colors.blue.shade500,
     showSelectedLabels: true,
