@@ -5,12 +5,13 @@ class ContainerAddPicture extends StatelessWidget {
   
   final VoidCallback onSaveImage;
   final String? rutaImagen; // puede ser null
-  ContainerAddPicture({super.key, required this.onSaveImage, this.rutaImagen});
+  const ContainerAddPicture({super.key, required this.onSaveImage, this.rutaImagen});
 
 
   @override
   Widget build(BuildContext context) {
     final bool mostrarImagen = rutaImagen != null && File(rutaImagen!).existsSync();
+
     return Container(
           height: 160,
           alignment: Alignment.center,

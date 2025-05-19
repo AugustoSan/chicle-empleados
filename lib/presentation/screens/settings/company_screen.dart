@@ -1,60 +1,17 @@
 import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 
 import '../../../domain/domain.dart';
 
-class CompanyScreen extends StatefulWidget {
+class CompanyScreen extends StatelessWidget {
   const CompanyScreen({super.key});
-  @override
-  State<CompanyScreen> createState() => _CompanyScreenState();
-} 
-
-class _CompanyScreenState extends State<CompanyScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameC = TextEditingController();
-  final _currencyC = TextEditingController();
-  final _taxC = TextEditingController();
-  String? _logoC = null;
-  BusinessType _selectedType = BusinessType.cafeteria;
-
-  @override
-  void initState() {
-    super.initState();
-    // Carga inicial desde el provider
-    final biz = context.read<BusinessProvider>().business;
-    if (biz != null) {
-      _nameC.text     = biz.name;
-      _currencyC.text = biz.currency;
-      _taxC.text      = biz.taxPercent.toString();
-      _selectedType   = biz.type;
-      _logoC          = biz.logo;
-    }
-  }
-
-  Future<void> _saveLogo() async {
-    final picker = ImagePicker();
-    final image = await picker.pickImage(source: ImageSource.gallery);
-
-    if(image != null){
-      setState(() {
-        _logoC = image.path;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _nameC.dispose();
-    _currencyC.dispose();
-    _taxC.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.watch<BusinessController>();
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Negocio'),
@@ -65,7 +22,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
         ),
         body: SafeArea(
           child: Form(
-            key: _formKey,
+            key: vm.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -83,10 +40,10 @@ class _CompanyScreenState extends State<CompanyScreen> {
                         Expanded(
                           child: ListView(
                             children: [
-                              ContainerAddPicture(onSaveImage: _saveLogo, rutaImagen: _logoC),
+                              ContainerAddPicture(onSaveImage: vm.saveLogo, rutaImagen: vm.logoC.value),
                               const SizedBox(height: 12),
                               TextFormField(
-                                controller: _nameC,
+                                controller: vm.nameC,
                                 decoration: const InputDecoration(labelText: 'Nombre del negocio'),
                                 validator: (v) => v != null && v.isNotEmpty
                                     ? null
@@ -94,14 +51,14 @@ class _CompanyScreenState extends State<CompanyScreen> {
                               ),
                               const SizedBox(height: 12),
                               TextFormField(
-                                controller: _currencyC,
+                                controller: vm.currencyC,
                                 decoration: const InputDecoration(labelText: 'Moneda'),
                                 validator: (v) =>
                                     v != null && v.isNotEmpty ? null : 'Moneda inválida',
                                     ),
                                     const SizedBox(height: 12),
                                     TextFormField(
-                                      controller: _taxC,
+                                      controller: vm.taxC,
                                       decoration: const InputDecoration(labelText: 'Porcentaje de IVA'),
                                       keyboardType: TextInputType.number,
                                       validator: (v) {
@@ -111,16 +68,16 @@ class _CompanyScreenState extends State<CompanyScreen> {
                                       },
                                     ),
                                     const SizedBox(height: 12),
-                                    DropdownButtonFormField<BusinessType>(
-                                      value: _selectedType,
-                                      decoration: const InputDecoration(labelText: 'Tipo de negocio'),
-                                      items: BusinessType.values.map((t) =>
-                                        DropdownMenuItem(value: t, child: Text(t.name))
-                                      ).toList(),
-                                      onChanged: (t) {
-                                        if (t != null) setState(() => _selectedType = t);
-                                      },
-                                    ),
+                                    // DropdownButtonFormField<BusinessType>(
+                                    //   value: vm.selectedType.value,
+                                    //   decoration: const InputDecoration(labelText: 'Tipo de negocio'),
+                                    //   items: BusinessType.values.map((t) =>
+                                    //     DropdownMenuItem(value: t, child: Text(t.name))
+                                    //   ).toList(),
+                                    //   onChanged: (t) {
+                                    //     if (t != null) setState(() => _selectedType = t);
+                                    //   },
+                                    // ),
                                     const SizedBox(height: 24),
                                   ],
                                 ),
@@ -128,14 +85,14 @@ class _CompanyScreenState extends State<CompanyScreen> {
                         Center(
                           child: ElevatedButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
+                              if (vm.formKey.currentState!.validate()) {
                                 final business = Business(
-                                  name: _nameC.text.trim(),
-                                  currency: _currencyC.text.trim(),
-                                  taxPercent: double.parse(_taxC.text.trim()),
-                                  type: _selectedType,
+                                  name: vm.nameC.text.trim(),
+                                  currency: vm.currencyC.text.trim(),
+                                  taxPercent: double.parse(vm.taxC.text.trim()),
+                                  type: vm.selectedType.value,
                                   enabledModules: [],
-                                  logo: _logoC,
+                                  logo: vm.logoC.value,
                                 );
                                 context.read<BusinessProvider>().saveBusiness(business);
                                 ScaffoldMessenger.of(context).showSnackBar(

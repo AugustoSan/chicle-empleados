@@ -22,7 +22,7 @@ class AppDatabase extends _$AppDatabase {
 
   // ¡Incrementa esto cada vez que cambies tablas!
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   // Aquí indicas a Drift cómo pasar de la versión 1 → 2
   @override
@@ -38,7 +38,10 @@ class AppDatabase extends _$AppDatabase {
         await migrator.createTable(menuItemModel);
       }
       // Si en el futuro llegas a v3, aquí pondrías:
-      // if (from < 3) { ... }
+      if (from < 3) { 
+        // Borrar base de datos
+        // await migrator.deleteAll();
+      }
     },
     // (opcional) limpia datos obsoletos antes de abrir
     beforeOpen: (details) async {

@@ -1,5 +1,6 @@
 import 'package:chicle_app_empleados/presentation/screens/info/acerca_de.dart';
 import 'package:chicle_app_empleados/presentation/screens/settings/company_screen.dart';
+import 'package:chicle_app_empleados/presentation/screens/settings/profile_screen.dart';
 import 'package:flutter/material.dart';
 // import 'package:chicle_app_empleados/presentation/presentation.dart';
 // import 'package:provider/provider.dart';
@@ -25,11 +26,13 @@ class SettingsScreen extends StatelessWidget {
             ),
             child: ListView(
               children: [
-                const ListTile(
+                 ListTile(
                   title: Text('Perfil'),
                   leading: Icon(Icons.person),
                     trailing: Icon(Icons.arrow_forward_ios),
-                    // onTap: () => Navigator.pushNamed(context, '/company'),
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+                    },
                   ),
                   ListTile(
                     title: Text('Negocio'),

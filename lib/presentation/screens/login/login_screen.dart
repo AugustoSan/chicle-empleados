@@ -7,7 +7,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    final vm = ctx.watch<LoginViewModel>();
+    final vm = ctx.watch<LoginController>();
     final business     = ctx.watch<BusinessProvider>().business;
     final primaryColor = Theme.of(ctx).primaryColor;
     final lightBlueBg  = Theme.of(ctx).colorScheme.secondary;

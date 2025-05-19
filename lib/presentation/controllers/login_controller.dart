@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../presentation/providers/auth_provider.dart';
+import '../providers/providers.dart';
 
-class LoginViewModel extends ChangeNotifier {
+class LoginController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -13,7 +13,7 @@ class LoginViewModel extends ChangeNotifier {
 
   final AuthProvider _auth;
 
-  LoginViewModel(this._auth);
+  LoginController(this._auth);
 
   Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;

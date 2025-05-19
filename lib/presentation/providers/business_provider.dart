@@ -38,9 +38,10 @@ class BusinessProvider with ChangeNotifier {
     }
   }
 
-  Future<void> saveBusiness(Business config) async {
+  Future<bool> saveBusiness(Business config) async {
     _business = config;
     await _repo.saveBusiness(config);
     notifyListeners();
+    return true;
   }
 }

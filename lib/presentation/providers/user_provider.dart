@@ -16,9 +16,9 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<User?> getUser(String username) async {
-    _currentUser = await _repo.getUser(username);
+    final user = await _repo.getUser(username);
     notifyListeners();
-    return _currentUser;
+    return user;
   }
 
   Future<bool> validatePassword(String username, String password) async {
@@ -27,9 +27,9 @@ class UserProvider with ChangeNotifier {
 
   User? get currentUser => _currentUser;
 
-  // Future<void> saveUser(User user) async {
-  //   _user = user;
-  //   await _repo.saveUser(user);
-  //   notifyListeners();
-  // }
+  Future<bool> saveUser(User user) async {
+    await _repo.saveUser(user);
+    notifyListeners();
+    return true;
+  }
 }
