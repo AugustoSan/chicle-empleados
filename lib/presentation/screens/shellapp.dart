@@ -1,9 +1,7 @@
+import 'package:chicle_app_empleados/presentation/utils/route.dart';
 import 'package:flutter/material.dart';
 
 import '../presentation.dart';
-import './../screens/modules/menuitems_list_screen.dart';
-import './../screens/home/home_screen.dart';
-import 'settings/settings_screen.dart';
 
 class ShellApp extends StatefulWidget {
   const ShellApp({super.key});
@@ -46,23 +44,9 @@ class _ShellAppState extends State<ShellApp> {
       // floatingActionButton: _buildFab(),
       body: Navigator(
         key: _shellNavigatorKey,
-        initialRoute: drawerMenuItems[_selectedIndex].route,
+        initialRoute: '/home',
         onGenerateRoute: (settings) {
-          Widget page;
-          switch (settings.name) {
-            case '/settings':
-              page = const SettingsScreen();
-              break;
-            case '/home':
-              page = const HomeScreen();
-              break;
-            case '/menuItems':
-              page = MenuItemsListScreen();
-              break;
-            case '/': 
-            default:
-              page = const MenuItemsListScreen();
-          }
+          Widget page = RouteUtils().getPage(settings.name!);
           return MaterialPageRoute(builder: (_) => page, settings: settings);
         },
       ),

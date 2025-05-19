@@ -37,12 +37,12 @@ class DrawerMenuItems {
   static const DrawerItem profile = DrawerItem(
     icon: Icons.person,
     title: 'Perfil',
-    route: '/',
+    route: '/profile',
   );
   static const DrawerItem help = DrawerItem(
     icon: Icons.help,
     title: 'Ayuda',
-    route: '/',
+    route: '/help',
   );
   static const DrawerItem logout = DrawerItem(
     icon: Icons.logout,
@@ -51,12 +51,24 @@ class DrawerMenuItems {
   );
 }
 
+// Lista de todos los elementos del nav
+const List<DrawerItem> navMenuItems = [
+  DrawerMenuItems.home,
+  DrawerMenuItems.menu,
+  DrawerMenuItems.order,
+  DrawerMenuItems.settings,
+  DrawerMenuItems.profile,
+  DrawerMenuItems.help,
+  DrawerMenuItems.logout,
+];
+
+/// Lista de todos los elementos del drawer
 const List<DrawerItem> drawerMenuItems = [
   DrawerMenuItems.settings,
   DrawerMenuItems.logout,
 ];
 
-/// Lista de todos los elementos del drawer
+/// Lista de todos los elementos del bottom
 const List<DrawerItem> menuBottomItems = [
   DrawerMenuItems.home,
   DrawerMenuItems.menu,
