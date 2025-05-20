@@ -1,4 +1,3 @@
-import 'package:chicle_app_empleados/presentation/utils/route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +25,7 @@ class ShellApp extends StatelessWidget {
           return MaterialPageRoute(builder: (_) => page, settings: settings);
         },
       ),
+      floatingActionButton: FloatingButtomCustom(),
       bottomNavigationBar: MenuBottomCustom(
             currentIndex: selectedBottomIndex,
             onTap: navigatorKey.navigateBottomMenu,

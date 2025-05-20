@@ -1,9 +1,7 @@
-import 'package:chicle_app_empleados/presentation/providers/auth_provider.dart';
-import 'package:chicle_app_empleados/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../presentation/providers/business_provider.dart';
+import '../presentation.dart';
 
 class AppBarCustom extends StatelessWidget implements PreferredSizeWidget{
   final String currentRoute;
@@ -41,7 +39,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget{
                 break;
             }
           },
-          itemBuilder: (ctx) => drawerMenuItems.map((item) => PopupMenuItem(value: item.route, child: Text(item.title))).toList(),
+          itemBuilder: (ctx) => popupMenuItems.map((item) => PopupMenuItem(value: item.route, child: Text(item.title))).toList(),
         ),
       ],
     );

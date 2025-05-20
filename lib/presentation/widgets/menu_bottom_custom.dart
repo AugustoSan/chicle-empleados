@@ -1,5 +1,6 @@
-import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
+
+import '../presentation.dart';
 
 /// BottomNavigationBar con dos pestañas: Bebidas y Menús
 class MenuBottomCustom extends StatelessWidget {

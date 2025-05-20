@@ -32,4 +32,8 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
     return true;
   }
+
+  Future<List<User>> getAllUsers() async {
+    return await _repo.getAllUsers();
+  }
 }

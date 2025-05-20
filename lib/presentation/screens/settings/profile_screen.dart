@@ -13,19 +13,13 @@ class ProfileScreen extends StatelessWidget {
     final vm = context.watch<ProfileController>();
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Perfil'),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
         body: SafeArea(
           child: Form(
             key: vm.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const HeaderCustom(title: 'Perfil', onBack: false,),
                 Expanded(
                   child: Container(
                     margin: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),

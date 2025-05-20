@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:chicle_app_empleados/presentation/widgets/drawer_items.dart';
+import '../presentation.dart';
 
 class ShellNavigatorController extends ChangeNotifier {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -51,6 +51,9 @@ class ShellNavigatorController extends ChangeNotifier {
           break;
         case '/orders':
           navigatorKey.currentState!.pushNamed(DrawerMenuItems.order.route);
+          break;
+        case '/profile':
+          navigatorKey.currentState!.pushNamed(DrawerMenuItems.profile.route);
           break;
         default:
           print('entro en default');
