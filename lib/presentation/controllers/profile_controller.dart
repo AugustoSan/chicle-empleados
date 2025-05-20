@@ -23,6 +23,7 @@ class ProfileController extends ChangeNotifier {
   Future<void> loadFromUser(String username) async {
     final user = await _userProvider.getUser(username);
     if (user == null) return;
+    print('user: ${user.imageUrl}');
     id = user.id;
     nameC.text     = user.name;
     usernameC.text = user.username;

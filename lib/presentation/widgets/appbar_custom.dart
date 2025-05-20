@@ -7,9 +7,8 @@ import '../../presentation/providers/business_provider.dart';
 
 class AppBarCustom extends StatelessWidget implements PreferredSizeWidget{
   final String currentRoute;
-  final VoidCallback onSettings;
-  final VoidCallback onHelp;
-  const AppBarCustom({super.key, required this.currentRoute, required this.onSettings, required this.onHelp});
+  final Function(String) onTap;
+  const AppBarCustom({super.key, required this.currentRoute, required this.onTap});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -18,14 +17,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget{
   Widget build(BuildContext ctx) {
     final business = ctx.watch<BusinessProvider>().business;
     String title = business?.name ?? 'Chicle';
-    // final canGoBack = Navigator.canPop(ctx);
     return AppBar(
-      // leading: canGoBack
-      //     ? IconButton(
-      //         icon: const Icon(Icons.arrow_back),
-      //         onPressed: () => Navigator.pop(ctx),
-      //       )
-      //     : null,
       title: Text(title, style: const TextStyle(fontSize: 24)),
       elevation: 4,
       shape: const RoundedRectangleBorder(
@@ -39,13 +31,13 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget{
           onSelected: (value) {
             switch (value) {
               case '/settings':
-                onSettings();
+                onTap(value);
                 break;
               case '/logout':
                 ctx.read<AuthProvider>().logout();
                 break;
               case '/help':
-                onHelp();
+                onTap(value);
                 break;
             }
           },

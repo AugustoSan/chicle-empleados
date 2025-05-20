@@ -16,13 +16,14 @@ class MenuBottomCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final showSelected = currentIndex >= 0 && currentIndex < menuBottomItems.length;
     return ClipRRect(
         borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
         child: NavigationBar(
           height: 65,
           backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
           animationDuration: const Duration(milliseconds: 500),
-          selectedIndex: currentIndex,
+          selectedIndex: showSelected ? currentIndex : 0,
           elevation: 4,
           onDestinationSelected: onTap,
           labelTextStyle: WidgetStateProperty.resolveWith((states) {
@@ -32,12 +33,12 @@ class MenuBottomCustom extends StatelessWidget {
               return Theme.of(context).bottomNavigationBarTheme.unselectedLabelStyle;
             } 
           }),
-          indicatorColor: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+          indicatorColor: showSelected ? Theme.of(context).bottomNavigationBarTheme.selectedItemColor : null,
           destinations: menuBottomItems.map(
             (item) => 
             NavigationDestination(
               icon: Icon(item.icon, color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor),
-              selectedIcon: Icon(item.icon, color: Colors.white, size: 24),
+              selectedIcon: Icon(item.icon, color: showSelected ? Colors.white : Theme.of(context).bottomNavigationBarTheme.unselectedItemColor, size: 24),
               label: item.title,
             )
           ).toList(),

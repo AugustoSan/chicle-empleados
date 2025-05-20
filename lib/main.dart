@@ -26,12 +26,12 @@ Future<void> deleteOldDatabase() async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 1) Inicializa Hive
+  // 1) Inicializa Hiveuser: admin
   await Hive.initFlutter();
   Hive.registerAdapter(AuthModelAdapter());
   Hive.registerAdapter(BusinessModelAdapter());
 
-  await deleteOldDatabase();
+  // await deleteOldDatabase();
   // 2) Inicializa Drift
   final database = AppDatabase();
 
@@ -64,6 +64,10 @@ Future<void> main() async {
             if (u.isNotEmpty) ctrl!.loadFromUser(u);
             return ctrl!;
           },
+        ),
+        // 6) ShellNavigatorController
+        ChangeNotifierProvider<ShellNavigatorController>(
+          create: (ctx) => ShellNavigatorController(),
         ),
       ],
       child: MyApp(),
