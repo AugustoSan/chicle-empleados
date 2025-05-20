@@ -21,55 +21,55 @@ class _MenuListScreenState extends State<MenuItemsListScreen> {
       name: 'Café Latte',
       price: 30.0,
       category: 'bebida',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Latte',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Caffe_Latte_cup.jpg/960px-Caffe_Latte_cup.jpg',
     ),
     MenuItem(
       name: 'Cappuccino',
       price: 28.0,
       category: 'bebida',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Cappuccino',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Caffe_Latte_cup.jpg/960px-Caffe_Latte_cup.jpg',
     ),
     MenuItem(
       name: 'Espresso',
       price: 25.0,
       category: 'bebida',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Espresso',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Caffe_Latte_cup.jpg/960px-Caffe_Latte_cup.jpg',
     ),
     MenuItem(
       name: 'Café Latte',
       price: 30.0,
       category: 'bebida',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Latte',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Caffe_Latte_cup.jpg/960px-Caffe_Latte_cup.jpg',
     ),
     MenuItem(
       name: 'Cappuccino',
       price: 28.0,
       category: 'bebida',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Cappuccino',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Caffe_Latte_cup.jpg/960px-Caffe_Latte_cup.jpg',
     ),
     MenuItem(
       name: 'Espresso',
       price: 25.0,
       category: 'bebida',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Espresso',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Caffe_Latte_cup.jpg/960px-Caffe_Latte_cup.jpg',
     ),
     MenuItem(
       name: 'Café Latte',
       price: 30.0,
       category: 'bebida',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Latte',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Caffe_Latte_cup.jpg/960px-Caffe_Latte_cup.jpg',
     ),
     MenuItem(
       name: 'Cappuccino',
       price: 28.0,
       category: 'bebida',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Cappuccino',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Caffe_Latte_cup.jpg/960px-Caffe_Latte_cup.jpg',
     ),
     MenuItem(
       name: 'Espresso',
       price: 25.0,
       category: 'bebida',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Espresso',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Caffe_Latte_cup.jpg/960px-Caffe_Latte_cup.jpg',
     ),
   ];
 
@@ -79,73 +79,73 @@ class _MenuListScreenState extends State<MenuItemsListScreen> {
       name: 'Sandwich',
       price: 30.0,
       category: 'alimento',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Sandwich',
+      imageUrl: 'https://lh4.googleusercontent.com/proxy/yGjLM7fUdWe58nbHLfkDeHifXPyNdvmN6SH7E_whSZkBs2HZBeFSFqMqW7-9tWhexjz-t150RYWS8nrzIWMq5_5tIsB-exiFvjVSvi3lJMICpwc_ToohHyoVt7paaXXrfHGpPb_klw',
     ),
     MenuItem(
       name: 'Cuernito',
       price: 28.0,
       category: 'alimento',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Cuernito',
+      imageUrl: 'https://lh4.googleusercontent.com/proxy/yGjLM7fUdWe58nbHLfkDeHifXPyNdvmN6SH7E_whSZkBs2HZBeFSFqMqW7-9tWhexjz-t150RYWS8nrzIWMq5_5tIsB-exiFvjVSvi3lJMICpwc_ToohHyoVt7paaXXrfHGpPb_klw',
     ),
     MenuItem(
       name: 'Baguette',
       price: 25.0,
       category: 'alimento',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Baguette',
+      imageUrl: 'https://lh4.googleusercontent.com/proxy/yGjLM7fUdWe58nbHLfkDeHifXPyNdvmN6SH7E_whSZkBs2HZBeFSFqMqW7-9tWhexjz-t150RYWS8nrzIWMq5_5tIsB-exiFvjVSvi3lJMICpwc_ToohHyoVt7paaXXrfHGpPb_klw',
     ),
     MenuItem(
       name: 'Sandwich',
       price: 30.0,
       category: 'alimento',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Sandwich',
+      imageUrl: 'https://lh4.googleusercontent.com/proxy/yGjLM7fUdWe58nbHLfkDeHifXPyNdvmN6SH7E_whSZkBs2HZBeFSFqMqW7-9tWhexjz-t150RYWS8nrzIWMq5_5tIsB-exiFvjVSvi3lJMICpwc_ToohHyoVt7paaXXrfHGpPb_klw',
     ),
     MenuItem(
       name: 'Cuernito',
       price: 28.0,
       category: 'alimento',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Cuernito',
+      imageUrl: 'https://lh4.googleusercontent.com/proxy/yGjLM7fUdWe58nbHLfkDeHifXPyNdvmN6SH7E_whSZkBs2HZBeFSFqMqW7-9tWhexjz-t150RYWS8nrzIWMq5_5tIsB-exiFvjVSvi3lJMICpwc_ToohHyoVt7paaXXrfHGpPb_klw',
     ),
     MenuItem(
       name: 'Baguette',
       price: 25.0,
       category: 'alimento',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Baguette',
+      imageUrl: 'https://lh4.googleusercontent.com/proxy/yGjLM7fUdWe58nbHLfkDeHifXPyNdvmN6SH7E_whSZkBs2HZBeFSFqMqW7-9tWhexjz-t150RYWS8nrzIWMq5_5tIsB-exiFvjVSvi3lJMICpwc_ToohHyoVt7paaXXrfHGpPb_klw',
     ),
     MenuItem(
       name: 'Sandwich',
       price: 30.0,
       category: 'alimento',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Sandwich',
+      imageUrl: 'https://lh4.googleusercontent.com/proxy/yGjLM7fUdWe58nbHLfkDeHifXPyNdvmN6SH7E_whSZkBs2HZBeFSFqMqW7-9tWhexjz-t150RYWS8nrzIWMq5_5tIsB-exiFvjVSvi3lJMICpwc_ToohHyoVt7paaXXrfHGpPb_klw',
     ),
     MenuItem(
       name: 'Cuernito',
       price: 28.0,
       category: 'alimento',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Cuernito',
+      imageUrl: 'https://lh4.googleusercontent.com/proxy/yGjLM7fUdWe58nbHLfkDeHifXPyNdvmN6SH7E_whSZkBs2HZBeFSFqMqW7-9tWhexjz-t150RYWS8nrzIWMq5_5tIsB-exiFvjVSvi3lJMICpwc_ToohHyoVt7paaXXrfHGpPb_klw',
     ),
     MenuItem(
       name: 'Baguette',
       price: 25.0,
       category: 'alimento',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Baguette',
+      imageUrl: 'https://lh4.googleusercontent.com/proxy/yGjLM7fUdWe58nbHLfkDeHifXPyNdvmN6SH7E_whSZkBs2HZBeFSFqMqW7-9tWhexjz-t150RYWS8nrzIWMq5_5tIsB-exiFvjVSvi3lJMICpwc_ToohHyoVt7paaXXrfHGpPb_klw',
     ),
     MenuItem(
       name: 'Sandwich',
       price: 30.0,
       category: 'alimento',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Sandwich',
+      imageUrl: 'https://lh4.googleusercontent.com/proxy/yGjLM7fUdWe58nbHLfkDeHifXPyNdvmN6SH7E_whSZkBs2HZBeFSFqMqW7-9tWhexjz-t150RYWS8nrzIWMq5_5tIsB-exiFvjVSvi3lJMICpwc_ToohHyoVt7paaXXrfHGpPb_klw',
     ),
     MenuItem(
       name: 'Cuernito',
       price: 28.0,
       category: 'alimento',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Cuernito',
+      imageUrl: 'https://lh4.googleusercontent.com/proxy/yGjLM7fUdWe58nbHLfkDeHifXPyNdvmN6SH7E_whSZkBs2HZBeFSFqMqW7-9tWhexjz-t150RYWS8nrzIWMq5_5tIsB-exiFvjVSvi3lJMICpwc_ToohHyoVt7paaXXrfHGpPb_klw',
     ),
     MenuItem(
       name: 'Baguette',
       price: 25.0,
       category: 'alimento',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Baguette',
+      imageUrl: 'https://lh4.googleusercontent.com/proxy/yGjLM7fUdWe58nbHLfkDeHifXPyNdvmN6SH7E_whSZkBs2HZBeFSFqMqW7-9tWhexjz-t150RYWS8nrzIWMq5_5tIsB-exiFvjVSvi3lJMICpwc_ToohHyoVt7paaXXrfHGpPb_klw',
     ),
   ];
 
@@ -154,37 +154,37 @@ class _MenuListScreenState extends State<MenuItemsListScreen> {
       name: 'Combo Desayuno',
       price: 75.0,
       category: 'menu',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Desayuno',
+      imageUrl: 'https://content.clara.es/medio/2024/10/16/desayunos-sin-pan-crep-frutos-rojos_a7503192_241016091932_1280x1280.webp',
     ),
     MenuItem(
       name: 'Lunch Express',
       price: 90.0,
       category: 'menu',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Lunch',
+      imageUrl: 'https://content.clara.es/medio/2024/10/16/desayunos-sin-pan-crep-frutos-rojos_a7503192_241016091932_1280x1280.webp',
     ),
     MenuItem(
       name: 'Tarde Dulce',
       price: 65.0,
       category: 'menu',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Tarde',
+      imageUrl: 'https://content.clara.es/medio/2024/10/16/desayunos-sin-pan-crep-frutos-rojos_a7503192_241016091932_1280x1280.webp',
     ),
     MenuItem(
       name: 'Combo Desayuno',
       price: 75.0,
       category: 'menu',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Desayuno',
+      imageUrl: 'https://content.clara.es/medio/2024/10/16/desayunos-sin-pan-crep-frutos-rojos_a7503192_241016091932_1280x1280.webp',
     ),
     MenuItem(
       name: 'Lunch Express',
       price: 90.0,
       category: 'menu',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Lunch',
+      imageUrl: 'https://content.clara.es/medio/2024/10/16/desayunos-sin-pan-crep-frutos-rojos_a7503192_241016091932_1280x1280.webp',
     ),
     MenuItem(
       name: 'Tarde Dulce',
       price: 65.0,
       category: 'menu',
-      imageUrl: 'https://via.placeholder.com/80x80.png?text=Tarde',
+      imageUrl: 'https://content.clara.es/medio/2024/10/16/desayunos-sin-pan-crep-frutos-rojos_a7503192_241016091932_1280x1280.webp',
     ),
   ];
 
@@ -215,91 +215,98 @@ class _MenuListScreenState extends State<MenuItemsListScreen> {
               return CardMenuCustom(item: item);
         },
       )
-      : SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // — Bebidas —
-            Expanded(
-              child: Column(
-                children: [
-                  const SectionTitle('Bebidas'),
-                  const SizedBox(height: 8),
-                  GridView.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 12,
-                    crossAxisSpacing: 12,
-                    childAspectRatio: 1.0,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: _bebidas.map((item) {
-                      return ItemCard(
-                        item: item,
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 16),
-            // — Alimentos —
-            Expanded(
-              child: Column(
-                children: [
-                  const SectionTitle('Alimentos'),
-                  const SizedBox(height: 8),
-                  GridView.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 12,
-                    crossAxisSpacing: 12,
-                    childAspectRatio: 1.0,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: _alimentos.map((item) {
-                      return ItemCard(
-                        item: item,
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 16),
-            // — Menús —
-            Expanded(
-              child: Column(
-                children: [
-                  const SectionTitle('Menús'),
-                  const SizedBox(height: 8),
-                  Column(
-                    children: _menus.map((item) {
-                      final isFeatured = item.name == 'Especial del Día';
-                      return Container(
-                        width: double.infinity,
-                        margin: const EdgeInsets.only(bottom: 12),
-                        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                        decoration: BoxDecoration(
-                          color: isFeatured ? Colors.white : Colors.white,
-                          borderRadius: BorderRadius.circular(12),
+      : Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // — Menús —
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SectionTitle('Menús'),
+              const SizedBox(height: 8),
+              Expanded(
+                // para mantener scroll en caso de muchos ítems
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(4),
+                  itemCount: _menus.length,
+                  itemBuilder: (ctx, i) {
+                    final item = _menus[i];
+                    final isFeatured = item.name == 'Especial del Día';
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 12),
+                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        item.name,
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: isFeatured ? 18 : 16,
+                          fontWeight: isFeatured ? FontWeight.bold : FontWeight.w500,
                         ),
-                        child: Text(
-                          item.name,
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: isFeatured ? 18 : 16,
-                            fontWeight: isFeatured ? FontWeight.bold : FontWeight.w500,
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ],
+                      ),
+                    );
+                  },
+                ),
               ),
-            )
-          ],
+            ],
+          ),
         ),
-      );
+
+        const SizedBox(width: 16),
+
+        // — Bebidas —
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SectionTitle('Bebidas'),
+              const SizedBox(height: 8),
+              // El Expanded le da altura y el Expanded interior le da ancho
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: 1,
+                  // SON grids independientes, scrolling vertical propio:
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.all(4),
+                  children: _bebidas.map((item) => ItemCard(item: item)).toList(),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(width: 16),
+
+        // — Alimentos —
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SectionTitle('Alimentos'),
+              const SizedBox(height: 8),
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: 1,
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.all(4),
+                  children: _alimentos.map((item) => ItemCard(item: item)).toList(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
 
