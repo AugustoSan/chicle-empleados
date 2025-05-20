@@ -5,3 +5,5 @@ export './drawer_custom.dart';
 export './menu_bottom_custom.dart';
 export './floating_buttom_custom.dart';
 export 'header_custom.dart';
+export 'seccion_title.dart';
+export 'item_card.dart';

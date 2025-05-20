@@ -93,7 +93,6 @@ const List<DrawerItem> menuBottomItems = [
   DrawerMenuItems.home,
   DrawerMenuItems.menu,
   DrawerMenuItems.order,
-  DrawerMenuItems.profile,
 ];
 
 
