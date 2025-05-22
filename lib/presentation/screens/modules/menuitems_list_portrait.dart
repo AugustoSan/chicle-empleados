@@ -24,7 +24,7 @@ class MenuItemsListPortrait extends StatelessWidget {
               Expanded(
                 // para mantener scroll en caso de muchos ítems
                 child: FutureBuilder<List<MenuItem>>(
-                  future: context.read<MenuItemProvider>().getMenuItems(), 
+                  future: context.read<MenuItemProvider>().getMenus(), 
                   builder: (ctx, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
@@ -76,7 +76,7 @@ class MenuItemsListPortrait extends StatelessWidget {
               // El Expanded le da altura y el Expanded interior le da ancho
               Expanded(
                 child: FutureBuilder<List<MenuItem>>(
-                  future: context.read<MenuItemProvider>().getMenuItems(), 
+                  future: context.read<MenuItemProvider>().getBebidas(), 
                   builder: (ctx, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
@@ -115,7 +115,7 @@ class MenuItemsListPortrait extends StatelessWidget {
               const SizedBox(height: 8),
               Expanded(
                 child: FutureBuilder<List<MenuItem>>(
-                  future: context.read<MenuItemProvider>().getMenuItems(), 
+                  future: context.read<MenuItemProvider>().getComida(), 
                   builder: (ctx, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
