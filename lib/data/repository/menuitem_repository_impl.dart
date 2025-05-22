@@ -1,6 +1,5 @@
 import '../../data/local/app_database.dart';
-import '../../domain/repositories/menuitem_repository.dart';
-import '../../domain/entities/menuItem.dart';
+import '../../domain/domain.dart';
 
 class MenuItemRepositoryImpl extends MenuItemRepository {
   final AppDatabase _db;
@@ -12,7 +11,7 @@ class MenuItemRepositoryImpl extends MenuItemRepository {
     id:          row.id,
     name:        row.name,
     price:       row.price,
-    category:    row.category,
+    category:    EnumMenuItemCategory.values[row.category],
     description: row.description,
     imageUrl:    row.imageUrl,
   );
@@ -32,51 +31,50 @@ class MenuItemRepositoryImpl extends MenuItemRepository {
   }
 
   @override
-  Future<void> saveMenuItem(MenuItem menuItem) async {
+  Future<int> saveMenuItem(MenuItem menuItem) async {
     final table = _db.menuItemModel;
 
-    // Crea el objeto DataClass a partir del dominio
-    final data = MenuItemModelData(
-      id:          menuItem.id ?? 0, // id obligatorio en DataClass, pero sólo se usará en replace
+    // Construye el companion SIN especificar `id`
+    final companion = MenuItemModelCompanion.insert(
       name:        menuItem.name,
       price:       menuItem.price,
-      category:    menuItem.category,
+      category:    EnumMenuItemCategory.values.indexOf(menuItem.category),
       description: menuItem.description ?? '',
       imageUrl:    menuItem.imageUrl ?? '',
     );
 
-    if (menuItem.id == null) {
-      // Inserción: omitimos el id (se ignora el campo en la DataClass)
-      await _db.into(table).insert(data);
-    } else {
-      // Actualización: filtramos por id y reemplazamos toda la fila
-      await (_db.update(table)
-            ..where((tbl) => tbl.id.equals(menuItem.id!)))
-          .replace(data);
+    if (menuItem.id == null || menuItem.id == 0) {
+      // Esto retornará el nuevo ID asignado
+      final newId = await _db.into(table).insert(companion);
+      return newId;
     }
+    return -1;
   }
 
   @override
-  Future<void> updateMenuItem(MenuItem menuItem) async {
+  Future<int> updateMenuItem(MenuItem menuItem) async {
     final table = _db.menuItemModel;
     final data = MenuItemModelData(
       id:          menuItem.id!, // aquí ya debe existir
       name:        menuItem.name,
       price:       menuItem.price,
-      category:    menuItem.category,
+      category:    EnumMenuItemCategory.values.indexOf(menuItem.category),
       description: menuItem.description ?? '',
       imageUrl:    menuItem.imageUrl ?? '',
     );
-    await (_db.update(table)
+    // write devuelve Future<int> con el número de filas modificadas
+    final count = await (_db.update(table)
           ..where((tbl) => tbl.id.equals(menuItem.id!)))
-        .replace(data);
+        .write(data);
+    return count;
   }
 
   @override
-  Future<void> deleteMenuItem(int id) async {
+  Future<int> deleteMenuItem(int id) async {
     // Borrado con `go()` al final
-    await (_db.delete(_db.menuItemModel)
+    final res = await (_db.delete(_db.menuItemModel)
           ..where((tbl) => tbl.id.equals(id)))
         .go();
+    return res;
   }
 }

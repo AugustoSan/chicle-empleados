@@ -9,28 +9,31 @@ class MenuItemProvider with ChangeNotifier {
   
   Future<List<MenuItem>> getMenuItems() async {
     final menuItems = await _repo.getMenuItems();
-    notifyListeners();
+    // notifyListeners();
     return menuItems;
   }
 
   Future<MenuItem?> getMenuItem(int id) async {
     final menuItem = await _repo.getMenuItem(id);
-    notifyListeners();
+    // notifyListeners();
     return menuItem;
   }
 
-  Future<void> saveMenuItem(MenuItem menuItem) async {
-    await _repo.saveMenuItem(menuItem);
-    notifyListeners();
+  Future<int> saveMenuItem(MenuItem menuItem) async {
+    final res = await _repo.saveMenuItem(menuItem);
+    // notifyListeners();
+    return res;
   }
 
-  Future<void> updateMenuItem(MenuItem menuItem) async {
-    await _repo.updateMenuItem(menuItem);
-    notifyListeners();
+  Future<int> updateMenuItem(MenuItem menuItem) async {
+    final res = await _repo.updateMenuItem(menuItem);
+    // notifyListeners();
+    return res;
   }
 
-  Future<void> deleteMenuItem(int id) async {
-    await _repo.deleteMenuItem(id);
-    notifyListeners();
+  Future<int> deleteMenuItem(int id) async {
+    final res = await _repo.deleteMenuItem(id);
+    // notifyListeners();
+    return res;
   }
 }

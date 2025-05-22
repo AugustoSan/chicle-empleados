@@ -55,6 +55,7 @@ Future<void> main() async {
         // ViewModels
         ChangeNotifierProvider<LoginController>(create: (ctx) => LoginController(ctx.read<AuthProvider>())),
         ChangeNotifierProvider<BusinessController>(create: (ctx) => BusinessController(ctx.read<BusinessProvider>())),
+        ChangeNotifierProvider<AddMenuItemController>(create: (ctx) => AddMenuItemController(ctx.read<MenuItemProvider>())),
         // 5) ProfileController — si necesita “reactivar” cada vez que currentUser cambie,
         //    mejor usar ProxyProvider. Sino un create normal basta.
         ChangeNotifierProxyProvider<AuthProvider, ProfileController>(

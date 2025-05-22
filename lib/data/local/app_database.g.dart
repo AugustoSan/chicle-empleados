@@ -331,9 +331,9 @@ class $MenuItemModelTable extends MenuItemModel
   static const VerificationMeta _categoryMeta =
       const VerificationMeta('category');
   @override
-  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+  late final GeneratedColumn<int> category = GeneratedColumn<int>(
       'category', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
   @override
@@ -410,7 +410,7 @@ class $MenuItemModelTable extends MenuItemModel
       price: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}price'])!,
       category: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}category'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}category'])!,
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
       imageUrl: attachedDatabase.typeMapping
@@ -429,7 +429,7 @@ class MenuItemModelData extends DataClass
   final int id;
   final String name;
   final double price;
-  final String category;
+  final int category;
   final String description;
   final String imageUrl;
   const MenuItemModelData(
@@ -445,7 +445,7 @@ class MenuItemModelData extends DataClass
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     map['price'] = Variable<double>(price);
-    map['category'] = Variable<String>(category);
+    map['category'] = Variable<int>(category);
     map['description'] = Variable<String>(description);
     map['image_url'] = Variable<String>(imageUrl);
     return map;
@@ -469,7 +469,7 @@ class MenuItemModelData extends DataClass
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       price: serializer.fromJson<double>(json['price']),
-      category: serializer.fromJson<String>(json['category']),
+      category: serializer.fromJson<int>(json['category']),
       description: serializer.fromJson<String>(json['description']),
       imageUrl: serializer.fromJson<String>(json['imageUrl']),
     );
@@ -481,7 +481,7 @@ class MenuItemModelData extends DataClass
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'price': serializer.toJson<double>(price),
-      'category': serializer.toJson<String>(category),
+      'category': serializer.toJson<int>(category),
       'description': serializer.toJson<String>(description),
       'imageUrl': serializer.toJson<String>(imageUrl),
     };
@@ -491,7 +491,7 @@ class MenuItemModelData extends DataClass
           {int? id,
           String? name,
           double? price,
-          String? category,
+          int? category,
           String? description,
           String? imageUrl}) =>
       MenuItemModelData(
@@ -546,7 +546,7 @@ class MenuItemModelCompanion extends UpdateCompanion<MenuItemModelData> {
   final Value<int> id;
   final Value<String> name;
   final Value<double> price;
-  final Value<String> category;
+  final Value<int> category;
   final Value<String> description;
   final Value<String> imageUrl;
   const MenuItemModelCompanion({
@@ -561,7 +561,7 @@ class MenuItemModelCompanion extends UpdateCompanion<MenuItemModelData> {
     this.id = const Value.absent(),
     required String name,
     required double price,
-    required String category,
+    required int category,
     required String description,
     required String imageUrl,
   })  : name = Value(name),
@@ -573,7 +573,7 @@ class MenuItemModelCompanion extends UpdateCompanion<MenuItemModelData> {
     Expression<int>? id,
     Expression<String>? name,
     Expression<double>? price,
-    Expression<String>? category,
+    Expression<int>? category,
     Expression<String>? description,
     Expression<String>? imageUrl,
   }) {
@@ -591,7 +591,7 @@ class MenuItemModelCompanion extends UpdateCompanion<MenuItemModelData> {
       {Value<int>? id,
       Value<String>? name,
       Value<double>? price,
-      Value<String>? category,
+      Value<int>? category,
       Value<String>? description,
       Value<String>? imageUrl}) {
     return MenuItemModelCompanion(
@@ -617,7 +617,7 @@ class MenuItemModelCompanion extends UpdateCompanion<MenuItemModelData> {
       map['price'] = Variable<double>(price.value);
     }
     if (category.present) {
-      map['category'] = Variable<String>(category.value);
+      map['category'] = Variable<int>(category.value);
     }
     if (description.present) {
       map['description'] = Variable<String>(description.value);
@@ -825,7 +825,7 @@ typedef $$MenuItemModelTableCreateCompanionBuilder = MenuItemModelCompanion
   Value<int> id,
   required String name,
   required double price,
-  required String category,
+  required int category,
   required String description,
   required String imageUrl,
 });
@@ -834,7 +834,7 @@ typedef $$MenuItemModelTableUpdateCompanionBuilder = MenuItemModelCompanion
   Value<int> id,
   Value<String> name,
   Value<double> price,
-  Value<String> category,
+  Value<int> category,
   Value<String> description,
   Value<String> imageUrl,
 });
@@ -857,7 +857,7 @@ class $$MenuItemModelTableFilterComposer
   ColumnFilters<double> get price => $composableBuilder(
       column: $table.price, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get category => $composableBuilder(
+  ColumnFilters<int> get category => $composableBuilder(
       column: $table.category, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get description => $composableBuilder(
@@ -885,7 +885,7 @@ class $$MenuItemModelTableOrderingComposer
   ColumnOrderings<double> get price => $composableBuilder(
       column: $table.price, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get category => $composableBuilder(
+  ColumnOrderings<int> get category => $composableBuilder(
       column: $table.category, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get description => $composableBuilder(
@@ -913,7 +913,7 @@ class $$MenuItemModelTableAnnotationComposer
   GeneratedColumn<double> get price =>
       $composableBuilder(column: $table.price, builder: (column) => column);
 
-  GeneratedColumn<String> get category =>
+  GeneratedColumn<int> get category =>
       $composableBuilder(column: $table.category, builder: (column) => column);
 
   GeneratedColumn<String> get description => $composableBuilder(
@@ -952,7 +952,7 @@ class $$MenuItemModelTableTableManager extends RootTableManager<
             Value<int> id = const Value.absent(),
             Value<String> name = const Value.absent(),
             Value<double> price = const Value.absent(),
-            Value<String> category = const Value.absent(),
+            Value<int> category = const Value.absent(),
             Value<String> description = const Value.absent(),
             Value<String> imageUrl = const Value.absent(),
           }) =>
@@ -968,7 +968,7 @@ class $$MenuItemModelTableTableManager extends RootTableManager<
             Value<int> id = const Value.absent(),
             required String name,
             required double price,
-            required String category,
+            required int category,
             required String description,
             required String imageUrl,
           }) =>

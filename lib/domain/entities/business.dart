@@ -1,4 +1,4 @@
-enum BusinessType { restaurante, cafeteria, fonda, foodTruck }
+import '../enums/enums.dart';
 
 class Business {
   final String name;                // Nombre del local

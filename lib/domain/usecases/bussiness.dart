@@ -1,5 +1,5 @@
-import '../../domain/entities/business.dart';
-import '../../domain/repositories/business_repository.dart';
+import '../entities/business.dart';
+import '../repositories/business_repository.dart';
 
 class GetBusinessConfig {
   final BusinessRepository repo;

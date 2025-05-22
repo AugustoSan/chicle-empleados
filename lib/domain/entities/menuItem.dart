@@ -1,9 +1,11 @@
+import '../enums/enums.dart';
+
 class MenuItem {
   final int?      id;          // Nullable porque la BD lo asigna
   final String   name;
   final String?  description;  // Opcional
   final double   price;
-  final String   category;     // p.e. 'bebida', 'platillo', 'postre'
+  final EnumMenuItemCategory   category;     // p.e. 'bebida', 'platillo', 'postre'
   final String?  imageUrl;     // Si quieres mostrar foto
 
   MenuItem({

@@ -1,7 +1,6 @@
 import 'package:hive/hive.dart';
 import '../../models/businessModel.dart';
-import '../../domain/entities/business.dart';
-import '../../domain/repositories/business_repository.dart';
+import '../../domain/domain.dart';
 
 class BusinessRepositoryImpl implements BusinessRepository {
   final Box<BusinessModel> box;
