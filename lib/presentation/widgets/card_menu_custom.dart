@@ -9,47 +9,49 @@ class CardMenuCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(12),
-        title: Text(
-          item.name,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        subtitle: Column(
+      margin: EdgeInsets.zero,
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('\$ ${item.price.toStringAsFixed(2)}'),
-            item.imageUrl != null
-                ? Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Colors.grey.shade200,
+            // Título y subtítulo
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(item.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+              subtitle: Text('\$ ${item.price.toStringAsFixed(2)}'),
+            ),
+
+            if (item.imageUrl != null)
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                      bottom: Radius.circular(12)),
+                  child: SizedBox(
+                    height: 80,                     // un poco menos
+                    width: double.infinity,
+                    child: Image.file(
+                      File(item.imageUrl!),
+                      fit: BoxFit.cover,
                     ),
-                    alignment: Alignment.center,
-                    child: ClipRRect(
-                      child: Image.file(
-                        File(item.imageUrl!),
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  )
-                : const Text('Sin foto'),
+                  ),
+                ),
+              ),
+
+            const SizedBox(height: 8),
+
+            // Descripción con padding
+            Text(
+              item.description ?? 'Sin descripción',
+              style: Theme.of(context).textTheme.bodyMedium,
+              maxLines: 2,                      // límite de líneas
+              overflow: TextOverflow.ellipsis,  // para que no crezca infinitamente
+            ),
           ],
         ),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () {
-          // Aquí podrías navegar a detalle del ítem
-        },
-      ),
+      )
     );
   }
 }
