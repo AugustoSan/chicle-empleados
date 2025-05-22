@@ -89,6 +89,7 @@ class AddMenuScreen extends StatelessWidget {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Guardado ✔️')),
                                 );
+                                Navigator.pop(context);
                               }
                             },
                             child: const Text('Guardar'),

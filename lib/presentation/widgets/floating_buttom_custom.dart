@@ -14,7 +14,14 @@ class FloatingButtomCustom extends StatelessWidget {
       onPressed: (){
         print('Floating button pressed ${navigatorKey.currentRoute}');
         if(navigatorKey.currentRoute == DrawerMenuItems.menu.route){
-          navigatorKey.navigatorKey.currentState!.push(MaterialPageRoute(builder: (context) => AddMenuScreen()));
+          navigatorKey.navigatorKey.currentState!.push(
+            MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider(
+                create: (ctx) => AddMenuItemController(ctx.read<MenuItemProvider>()), 
+                child: const AddMenuScreen()
+              )
+            )
+          );
         }
       },
       child: Icon(Icons.add),
