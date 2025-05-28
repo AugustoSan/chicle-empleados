@@ -26,7 +26,7 @@ class AddMenuItemController extends ChangeNotifier {
     _error   = null;
     notifyListeners();
 
-    final ok = await _menuItemProvider.saveMenuItem(
+    await _menuItemProvider.saveMenuItem(
       MenuItem(
         name:         nameC.text,
         description:  descriptionC.text,
@@ -37,7 +37,7 @@ class AddMenuItemController extends ChangeNotifier {
     );
 
     _loading = false;
-    if (ok == -1) _error = 'Ocurrio un error al guardar';
+    // if (ok == -1) _error = 'Ocurrio un error al guardar';
     notifyListeners();
   }
 

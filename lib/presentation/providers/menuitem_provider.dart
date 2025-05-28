@@ -4,62 +4,28 @@ import '../../domain/domain.dart';
 
 class MenuItemProvider with ChangeNotifier {
   final MenuItemRepository _repo;
+  List<MenuItem> _allItems = [];
 
   MenuItemProvider(this._repo);
-  
-  Future<List<MenuItem>> getMenuItems() async {
-    final menuItems = await _repo.getMenuItems();
+
+  // Llama esto en initState de tu pantalla o nada más instanciar el provider
+  Future<void> loadAll() async {
+    _allItems = await _repo.getMenuItems();
     notifyListeners();
-    return menuItems;
   }
 
-  Future<List<MenuItem>> getBebidas() async {
-    final items = await _repo.getMenuItems();
-    List<MenuItem> bebidas = [];
-    for (final item in items) {
-      if (item.category == EnumMenuItemCategory.bebida) {
-        bebidas.add(item);
-      }
-    }
-    notifyListeners();
-    return bebidas;
-  }
+  // Exposiciones filtradas, ya sin Future
+  List<MenuItem> get bebidas =>
+    _allItems.where((i) => i.category == EnumMenuItemCategory.bebida).toList();
 
-  Future<List<MenuItem>> getComida() async {
-    final items = await _repo.getMenuItems();
-    List<MenuItem> comida = [];
-    for (final item in items) {
-      if (item.category == EnumMenuItemCategory.comida) {
-        comida.add(item);
-      }
-    }
-    notifyListeners();
-    return comida;
-  }
+  List<MenuItem> get comida =>
+    _allItems.where((i) => i.category == EnumMenuItemCategory.comida).toList();
 
-  Future<List<MenuItem>> getMenus() async {
-    final items = await _repo.getMenuItems();
-    List<MenuItem> menus = [];
-    for (final item in items) {
-      if (item.category == EnumMenuItemCategory.menu) {
-        menus.add(item);
-      }
-    }
-    notifyListeners();
-    return menus;
-  }
+  List<MenuItem> get menus =>
+    _allItems.where((i) => i.category == EnumMenuItemCategory.menu).toList();
 
-  Future<List<MenuItem>> getExtras() async {
-    final items = await _repo.getMenuItems();
-    List<MenuItem> extras = [];
-    for (final item in items) {
-      if (item.category == EnumMenuItemCategory.extra) {
-        extras.add(item);
-      }
-    }
-    notifyListeners();
-    return extras;
-  }
+  List<MenuItem> get extras =>
+    _allItems.where((i) => i.category == EnumMenuItemCategory.extra).toList();
 
   Future<MenuItem?> getMenuItem(int id) async {
     final menuItem = await _repo.getMenuItem(id);
@@ -67,21 +33,21 @@ class MenuItemProvider with ChangeNotifier {
     return menuItem;
   }
 
-  Future<int> saveMenuItem(MenuItem menuItem) async {
+  Future<void> saveMenuItem(MenuItem menuItem) async {
     final res = await _repo.saveMenuItem(menuItem);
-    notifyListeners();
-    return res;
+    if(res == -1) print('Error al guardar');
+    loadAll();
   }
 
-  Future<int> updateMenuItem(int id, MenuItem menuItem) async {
+  Future<void> updateMenuItem(int id, MenuItem menuItem) async {
     final res = await _repo.updateMenuItem(id, menuItem);
-    notifyListeners();
-    return res;
+    if(res == -1) print('Error al actualizar');
+    loadAll();
   }
 
   Future<int> deleteMenuItem(int id) async {
     final res = await _repo.deleteMenuItem(id);
-    notifyListeners();
+    loadAll();
     return res;
   }
 }

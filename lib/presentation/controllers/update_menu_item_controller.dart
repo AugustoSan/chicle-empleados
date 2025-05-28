@@ -35,7 +35,7 @@ class UpdateMenuItemController extends ChangeNotifier {
     _error   = null;
     notifyListeners();
 
-    final ok = await _menuItemProvider.updateMenuItem( id,
+    await _menuItemProvider.updateMenuItem( id,
       MenuItem(
         id:           id,
         name:         nameC.text,
@@ -47,7 +47,7 @@ class UpdateMenuItemController extends ChangeNotifier {
     );
 
     _loading = false;
-    if (ok == -1) _error = 'Ocurrio un error al guardar';
+    // if (ok == -1) _error = 'Ocurrio un error al guardar';
     notifyListeners();
   }
 
