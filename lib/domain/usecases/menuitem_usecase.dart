@@ -36,8 +36,8 @@ class UpdateMenuItem {
 
   UpdateMenuItem(this.repository);
 
-  Future<void> call(MenuItem product) {
-    return repository.updateMenuItem(product);
+  Future<void> call(int id, MenuItem product) {
+    return repository.updateMenuItem(id, product);
   }
 }
 

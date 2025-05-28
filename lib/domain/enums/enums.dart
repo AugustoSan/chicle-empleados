@@ -12,3 +12,9 @@ enum EnumMenuItemCategory {
   menu,
   extra,
 }
+
+enum PictureType {
+  profile,
+  data,
+  business
+}

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import '../../domain/domain.dart';
 import '../providers/providers.dart';
+import '../utils/utils.dart';
 
 class ProfileController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
@@ -54,11 +54,10 @@ class ProfileController extends ChangeNotifier {
   }
 
   Future<void> saveImage() async {
-    final picker = ImagePicker();
-    final image = await picker.pickImage(source: ImageSource.gallery);
+    final imageUrl = await Picture().saveImage(PictureType.profile);
 
-    if(image != null){
-      imageProfile.value = image.path;
+    if(imageUrl != null){
+      imageProfile.value = imageUrl;
     }
     notifyListeners();
   }

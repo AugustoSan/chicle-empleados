@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import '../../domain/domain.dart';
 import '../providers/providers.dart';
+import '../utils/utils.dart';
 
 class BusinessController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
@@ -53,11 +53,10 @@ class BusinessController extends ChangeNotifier {
   }
 
   Future<void> saveLogo() async {
-    final picker = ImagePicker();
-    final image = await picker.pickImage(source: ImageSource.gallery);
+    final imageUrl = await Picture().saveImage(PictureType.business);
 
-    if(image != null){
-      logoC.value = image.path;
+    if(imageUrl != null){
+      logoC.value = imageUrl;
     }
     notifyListeners();
   }

@@ -73,8 +73,8 @@ class MenuItemProvider with ChangeNotifier {
     return res;
   }
 
-  Future<int> updateMenuItem(MenuItem menuItem) async {
-    final res = await _repo.updateMenuItem(menuItem);
+  Future<int> updateMenuItem(int id, MenuItem menuItem) async {
+    final res = await _repo.updateMenuItem(id, menuItem);
     notifyListeners();
     return res;
   }

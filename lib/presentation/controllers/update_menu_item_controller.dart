@@ -3,13 +3,15 @@ import '../../domain/domain.dart';
 import '../providers/providers.dart';
 import '../utils/utils.dart';
 
-class AddMenuItemController extends ChangeNotifier {
+class UpdateMenuItemController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
+  
   final nameC = TextEditingController();
   final descriptionC = TextEditingController();
   final priceC = TextEditingController();
   final ValueNotifier<EnumMenuItemCategory> type = ValueNotifier<EnumMenuItemCategory>(EnumMenuItemCategory.bebida);
   final ValueNotifier<String?> image = ValueNotifier<String?>(null);
+  late int id;
 
   bool  _loading = false;
   String? _error;
@@ -18,7 +20,14 @@ class AddMenuItemController extends ChangeNotifier {
 
   final MenuItemProvider _menuItemProvider;
 
-  AddMenuItemController(this._menuItemProvider);
+  UpdateMenuItemController(this._menuItemProvider, MenuItem menuItem){
+    id = menuItem.id!;
+    nameC.text = menuItem.name;
+    descriptionC.text = menuItem.description ?? '';
+    priceC.text = menuItem.price.toString();
+    type.value = menuItem.category;
+    image.value = menuItem.imageUrl;
+  }
 
   Future<void> save(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;
@@ -26,8 +35,9 @@ class AddMenuItemController extends ChangeNotifier {
     _error   = null;
     notifyListeners();
 
-    final ok = await _menuItemProvider.saveMenuItem(
+    final ok = await _menuItemProvider.updateMenuItem( id,
       MenuItem(
+        id:           id,
         name:         nameC.text,
         description:  descriptionC.text,
         price:        double.parse(priceC.text),
@@ -47,6 +57,18 @@ class AddMenuItemController extends ChangeNotifier {
     if(imageUrl != null){
       image.value = imageUrl;
     }
+    notifyListeners();
+  }
+
+  Future<void> delete(int id) async {
+    _loading = true;
+    _error   = null;
+    notifyListeners();
+
+    final ok = await _menuItemProvider.deleteMenuItem(id);
+
+    _loading = false;
+    if (ok == -1) _error = 'Ocurrio un error al eliminar';
     notifyListeners();
   }
 

@@ -52,10 +52,10 @@ class MenuItemRepositoryImpl extends MenuItemRepository {
   }
 
   @override
-  Future<int> updateMenuItem(MenuItem menuItem) async {
+  Future<int> updateMenuItem(int id, MenuItem menuItem) async {
     final table = _db.menuItemModel;
     final data = MenuItemModelData(
-      id:          menuItem.id!, // aquí ya debe existir
+      id:          id, // aquí ya debe existir
       name:        menuItem.name,
       price:       menuItem.price,
       category:    EnumMenuItemCategory.values.indexOf(menuItem.category),
@@ -64,7 +64,7 @@ class MenuItemRepositoryImpl extends MenuItemRepository {
     );
     // write devuelve Future<int> con el número de filas modificadas
     final count = await (_db.update(table)
-          ..where((tbl) => tbl.id.equals(menuItem.id!)))
+          ..where((tbl) => tbl.id.equals(id)))
         .write(data);
     return count;
   }
