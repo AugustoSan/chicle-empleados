@@ -1,17 +1,10 @@
 // lib/di/locator.dart
 import 'package:hive/hive.dart';
-import '../../../data/data.dart';
-import '../../../domain/entities/boxes.dart';
-import '../../../domain/repositories/auth_repository.dart';
-import '../../../domain/repositories/menuitem_repository.dart';
-import '../../../domain/repositories/user_repository.dart';
-import '../../../models/businessModel.dart';
-import '../../../presentation/providers/auth_provider.dart';
-import '../../../presentation/providers/menuitem_provider.dart';
-import '../../../presentation/providers/user_provider.dart';
-import '../repositories/business_repository.dart';
-import '../../presentation/providers/business_provider.dart';
 import 'package:get_it/get_it.dart';
+import '../../../models/businessModel.dart';
+import '../../../data/data.dart';
+import '../domain.dart';
+import '../../../presentation/presentation.dart';
 
 final getIt = GetIt.instance;
 
@@ -32,6 +25,14 @@ Future<void> setupLocator(AppDatabase db) async {
   );
   getIt.registerFactory<UserProvider>(
     () => UserProvider(getIt<UserRepository>()),
+  );
+
+  // --- Ventas ---
+  getIt.registerLazySingleton<SalesRepository>(
+    () => SalesRepositoryImpl(db),
+  );
+  getIt.registerFactory<SaleProvider>(
+    () => SaleProvider(getIt<SalesRepository>()),
   );
 
   // --- Autenticación ---

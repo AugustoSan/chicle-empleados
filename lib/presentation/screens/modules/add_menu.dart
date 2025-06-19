@@ -77,15 +77,14 @@ class AddMenuScreen extends StatelessWidget {
                         Center(
                           child: ElevatedButton(
                             onPressed: () {
-                              if (vm.formKey.currentState!.validate()) {
-                                final userSave = MenuItem(
-                                  name: vm.nameC.text.trim(),
-                                  description: vm.descriptionC.text.trim(),
-                                  price: double.parse(vm.priceC.text.trim()),
-                                  category: vm.type.value,
-                                  imageUrl: vm.image.value ?? '',
+                              vm.save(context);
+                              if (vm.error != null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("${vm.error!} ❌")),
                                 );
-                                context.read<MenuItemProvider>().saveMenuItem(userSave);
+                              }
+                              else {
+                              // context.read<MenuItemProvider>().saveMenuItem(userSave);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Guardado ✔️')),
                                 );

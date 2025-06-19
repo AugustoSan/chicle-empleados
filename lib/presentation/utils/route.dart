@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../screens/settings/settings.dart';
 import '../screens/home/home.dart';
 import '../screens/modules/modules.dart';
+import '../screens/orders/orders.dart';
 
 class DrawerItem {
   final IconData icon;
@@ -109,7 +110,7 @@ class RouteUtils {
         break;
       case '/orders':
         // page = const OrdersScreen();
-        page = const HomeScreen();
+        page = const OrdersScreen();
         break;
       case '/settings':
         page = const SettingsScreen();

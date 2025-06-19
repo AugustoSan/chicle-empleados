@@ -6,20 +6,17 @@ class MenuItemRepositoryImpl extends MenuItemRepository {
 
   MenuItemRepositoryImpl(this._db);
 
-  /// Mapea de la fila de la BD a la entidad de dominio
-  MenuItem _fromRow(MenuItemModelData row) => MenuItem(
-    id:          row.id,
-    name:        row.name,
-    price:       row.price,
-    category:    EnumMenuItemCategory.values[row.category],
-    description: row.description,
-    imageUrl:    row.imageUrl,
-  );
-
   @override
   Future<List<MenuItem>> getMenuItems() async {
     final rows = await _db.select(_db.menuItemModel).get();
-    return rows.map(_fromRow).toList();
+    return rows.map((item) => MenuItem.withAll(
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      category: EnumMenuItemCategory.values[item.category],
+      imageUrl: item.imageUrl,
+    )).toList();
   }
 
   @override
@@ -27,7 +24,14 @@ class MenuItemRepositoryImpl extends MenuItemRepository {
     final row = await (_db.select(_db.menuItemModel)
           ..where((tbl) => tbl.id.equals(id)))
         .getSingleOrNull();
-    return row == null ? null : _fromRow(row);
+    return row == null ? null : MenuItem.withAll(
+      id: row.id,
+      name: row.name,
+      description: row.description,
+      price: row.price,
+      category: EnumMenuItemCategory.values[row.category],
+      imageUrl: row.imageUrl,
+    );
   }
 
   @override

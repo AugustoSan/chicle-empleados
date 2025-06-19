@@ -110,20 +110,22 @@ class UpdateMenuScreen extends StatelessWidget {
                         Center(
                           child: ElevatedButton(
                             onPressed: () {
-                              if (vm.formKey.currentState!.validate()) {
-                                final userSave = MenuItem(
-                                  name: vm.nameC.text.trim(),
-                                  description: vm.descriptionC.text.trim(),
-                                  price: double.parse(vm.priceC.text.trim()),
-                                  category: vm.type.value,
-                                  imageUrl: vm.image.value ?? '',
-                                );
-                                context.read<MenuItemProvider>().updateMenuItem(vm.id, userSave);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Guardado ✔️')),
-                                );
-                                Navigator.pop(context);
-                              }
+                              vm.save(context);
+                              // if (vm.formKey.currentState!.validate()) {
+                              //   final userSave = MenuItem.withAll(
+                              //     id: vm.id,
+                              //     name: vm.nameC.text.trim(),
+                              //     description: vm.descriptionC.text.trim(),
+                              //     price: double.parse(vm.priceC.text.trim()),
+                              //     category: vm.type.value,
+                              //     imageUrl: vm.image.value ?? '',
+                              //   );
+                              //   context.read<MenuItemProvider>().updateMenuItem(vm.id, userSave);
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     const SnackBar(content: Text('Guardado ✔️')),
+                              //   );
+                              //   Navigator.pop(context);
+                              // }
                             },
                             child: const Text('Guardar'),
                           ),

@@ -1,5 +1,3 @@
-import 'package:drift/drift.dart';
-
 import '../../data/local/app_database.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/user_repository.dart';
@@ -39,11 +37,11 @@ class UserRepositoryImpl implements UserRepository {
     if (row == null) return null;
 
     return User(
-      id:           row.id,
-      name:         row.name,
-      username:     row.name,
+      id: row.id,
+      name: row.name,
+      username: row.username,
       passwordHash: row.password,
-      imageUrl:     row.imageUrl,
+      imageUrl: row.imageUrl,
     );
   }
 
@@ -58,21 +56,21 @@ class UserRepositoryImpl implements UserRepository {
     final query = _db.select(_db.usersModel);
     final rows = await query.get();
     return rows.map((row) => User(
-      id:           row.id,
-      name:         row.name,
-      username:     row.name,
+      id: row.id,
+      name: row.name,
+      username: row.username,
       passwordHash: row.password,
-      imageUrl:     row.imageUrl,
+      imageUrl: row.imageUrl,
     )).toList();
   }
 
   @override
   Future<bool> saveUser(User user) async {
-    final companion = UsersModelCompanion(
-      name: Value(user.name),
-      username: Value(user.username),
-      password: Value(user.passwordHash),
-      imageUrl: Value(user.imageUrl),
+    final companion = UsersModelCompanion.insert(
+      name: user.name,
+      username: user.username,
+      password: user.passwordHash,
+      imageUrl: user.imageUrl,
     );
       
     // Ejecutamos el update y recogemos cuántas filas se vieron afectadas

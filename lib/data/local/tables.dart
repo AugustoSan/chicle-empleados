@@ -19,8 +19,8 @@ class MenuItemModel extends Table {
 
 class SalesModel extends Table {
   IntColumn      get id        => integer().autoIncrement()();
+  IntColumn      get status    => integer()();
   DateTimeColumn get date      => dateTime()();
-  RealColumn     get subTotal  => real()();
   RealColumn     get total     => real()();
   IntColumn      get userId    => integer().references(UsersModel, #id)();
 }

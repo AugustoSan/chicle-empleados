@@ -16,7 +16,7 @@ LazyDatabase _openConnection() {
   });
 }
 
-@DriftDatabase(tables: [UsersModel, MenuItemModel])
+@DriftDatabase(tables: [UsersModel, MenuItemModel, SalesModel, SaleItemsModel])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 

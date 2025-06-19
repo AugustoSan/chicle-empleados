@@ -18,3 +18,9 @@ enum PictureType {
   data,
   business
 }
+
+enum EnumSalesStatus {
+  pending,
+  completed,
+  cancelled
+}

@@ -26,6 +26,11 @@ class _MenuItemsListLandscapeState extends State<MenuItemsListLandscape> {
     final comidaList = provider.comida;
     final extraList = provider.extras;
 
+    print('menuList: ${menuList.length}');
+    print('bebidasList: ${bebidasList.length}');
+    print('comidaList: ${comidaList.length}');
+    print('extraList: ${extraList.length}');
+
     if(menuList.isEmpty && bebidasList.isEmpty && comidaList.isEmpty && extraList.isEmpty) {
       return const Center(child: CircularProgressIndicator());
     }

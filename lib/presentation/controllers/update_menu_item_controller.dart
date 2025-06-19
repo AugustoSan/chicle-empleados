@@ -36,7 +36,7 @@ class UpdateMenuItemController extends ChangeNotifier {
     notifyListeners();
 
     await _menuItemProvider.updateMenuItem( id,
-      MenuItem(
+      MenuItem.withAll(
         id:           id,
         name:         nameC.text,
         description:  descriptionC.text,

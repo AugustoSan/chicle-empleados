@@ -21,13 +21,18 @@ class AddMenuItemController extends ChangeNotifier {
   AddMenuItemController(this._menuItemProvider);
 
   Future<void> save(BuildContext context) async {
-    if (!formKey.currentState!.validate()) return;
+    
+    final error = validate();
+    if (error != '') {
+      _error = error;
+      return;
+    }
     _loading = true;
     _error   = null;
     notifyListeners();
 
     await _menuItemProvider.saveMenuItem(
-      MenuItem(
+      MenuItem.withoutId(
         name:         nameC.text,
         description:  descriptionC.text,
         price:        double.parse(priceC.text),
@@ -35,6 +40,10 @@ class AddMenuItemController extends ChangeNotifier {
         imageUrl:     image.value ?? '',
       )
     );
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Guardado ✔️')),
+    );
+    Navigator.pop(context);
 
     _loading = false;
     // if (ok == -1) _error = 'Ocurrio un error al guardar';
@@ -48,6 +57,12 @@ class AddMenuItemController extends ChangeNotifier {
       image.value = imageUrl;
     }
     notifyListeners();
+  }
+
+  String validate() {
+    if(nameC.text.isEmpty) return 'Nombre inválido';
+    if(priceC.text.isEmpty) return 'Precio inválido';
+    return '';
   }
 
   @override

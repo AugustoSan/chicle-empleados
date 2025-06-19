@@ -7,3 +7,4 @@ export './repository/menuitem_repository_impl.dart';
 export './repository/user_repository_impl.dart';
 export './services/auth_service.dart';
 
+export './repository/sales_repository_impl.dart';
