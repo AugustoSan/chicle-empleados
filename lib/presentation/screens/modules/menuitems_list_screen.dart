@@ -12,9 +12,10 @@ class MenuItemsListScreen extends StatelessWidget {
     final orientation = MediaQuery.of(context).orientation;
     print('orientation: $orientation');
 
-    return orientation == Orientation.portrait
-        ? MenuItemsListPortrait()
-        : MenuItemsListLandscape();
+    // return orientation == Orientation.portrait
+    //     ? MenuItemsListPortrait()
+    //     : MenuItemsListLandscape();
+    return const MenuItemsListPortrait();
   }
 }
 

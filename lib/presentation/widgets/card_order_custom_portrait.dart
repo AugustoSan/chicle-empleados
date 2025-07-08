@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 import '../../domain/domain.dart';
 
-class CardOrderCustomLandscape extends StatelessWidget {
+class CardOrderCustomPortrait extends StatelessWidget {
   final Sales item;
-  const CardOrderCustomLandscape({super.key, required this.item});
+  const CardOrderCustomPortrait({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +22,6 @@ class CardOrderCustomLandscape extends StatelessWidget {
                 child: Container(
                   // margin: const EdgeInsets.only(bottom: 12),
                   padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +41,7 @@ class CardOrderCustomLandscape extends StatelessWidget {
                                   ? Colors.green
                                   : item.status == EnumSalesStatus.pending
                                       ? Colors.red
-                                      : Colors.black,
+                                      : Colors.grey[150],
                             ),
                           ),
 

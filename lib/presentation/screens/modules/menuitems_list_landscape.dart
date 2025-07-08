@@ -23,15 +23,15 @@ class _MenuItemsListLandscapeState extends State<MenuItemsListLandscape> {
     final provider = context.watch<MenuItemProvider>();
     final menuList = provider.menus;
     final bebidasList = provider.bebidas;
-    final comidaList = provider.comida;
+    final alimentosList = provider.alimentos;
     final extraList = provider.extras;
 
     print('menuList: ${menuList.length}');
     print('bebidasList: ${bebidasList.length}');
-    print('comidaList: ${comidaList.length}');
+    print('alimentosList: ${alimentosList.length}');
     print('extraList: ${extraList.length}');
 
-    if(menuList.isEmpty && bebidasList.isEmpty && comidaList.isEmpty && extraList.isEmpty) {
+    if(menuList.isEmpty && bebidasList.isEmpty && alimentosList.isEmpty && extraList.isEmpty) {
       return const Center(child: CircularProgressIndicator());
     }
 
@@ -39,9 +39,9 @@ class _MenuItemsListLandscapeState extends State<MenuItemsListLandscape> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // — Menús —
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        SizedBox(
+          width: 200,
+          child: ListView(
             children: [
               const SectionTitle('Menús'),
               const SizedBox(height: 8),
@@ -102,7 +102,7 @@ class _MenuItemsListLandscapeState extends State<MenuItemsListLandscape> {
                             // SON grids independientes, scrolling vertical propio:
                             physics: const BouncingScrollPhysics(),
                         padding: const EdgeInsets.all(4),
-                        children: comidaList.map((item) => CardMenuCustom(item: item)).toList(),
+                        children: alimentosList.map((item) => CardMenuCustom(item: item)).toList(),
                       )
               ),
             ],

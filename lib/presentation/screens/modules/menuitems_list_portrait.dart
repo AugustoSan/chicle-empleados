@@ -23,90 +23,33 @@ class _MenuItemsListPortraitState extends State<MenuItemsListPortrait> {
     final provider = context.watch<MenuItemProvider>();
     final menuList = provider.menus;
     final bebidasList = provider.bebidas;
-    final comidaList = provider.comida;
+    final alimentosList = provider.alimentos;
     final extraList = provider.extras;
 
-    if(menuList.isEmpty && bebidasList.isEmpty && comidaList.isEmpty && extraList.isEmpty) {
+    if(menuList.isEmpty && bebidasList.isEmpty && alimentosList.isEmpty && extraList.isEmpty) {
       return const Center(child: CircularProgressIndicator());
     }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
+      // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // — Menús —
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SectionTitle('Menús'),
-              const SizedBox(height: 8),
-              Expanded(
-                // para mantener scroll en caso de muchos ítems
-                child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: menuList.length,
-                      itemBuilder: (context, index) {
-                        final item = menuList[index];
-                        return CardMenuCustomLandscape(item: item);
-                      },
-                    ),
-              ),
-            ],
-          ),
+        MenuCarousel(
+          items: menuList,
+          title: 'Menús',
         ),
 
-        const SizedBox(width: 16),
-
-        // — Bebidas —
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SectionTitle('Bebidas'),
-              const SizedBox(height: 8),
-              // El Expanded le da altura y el Expanded interior le da ancho
-              Expanded(
-                child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: bebidasList.length,
-                      itemBuilder: (context, index) {
-                        final item = bebidasList[index];
-                        return Container(
-                          width: 150,
-                          margin: const EdgeInsets.only(right: 8, left: 8, bottom: 12),
-                          child: CardMenuCustom(item: item),
-                        );
-                      }
-                    )
-              ),
-            ],
-          ),
+        MenuCarousel(
+          items: bebidasList,
+          title: 'Bebidas',
         ),
 
-        const SizedBox(width: 16),
+        MenuCarousel(
+          items: alimentosList,
+          title: 'Alimentos',
+        ),
 
-        // — Alimentos —
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SectionTitle('Alimentos'),
-              const SizedBox(height: 8),
-              Expanded(
-                child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: comidaList.length,
-                      itemBuilder: (context, index) {
-                        final item = comidaList[index];
-                        return Container(
-                          width: 150,
-                          margin: const EdgeInsets.only(right: 8, left: 8, bottom: 12),
-                          child: CardMenuCustom(item: item),
-                        );
-                      }
-                    )
-              ),
-            ],
-          ),
+        MenuCarousel(
+          items: extraList,
+          title: 'Extras',
         ),
       ],
     );

@@ -23,30 +23,38 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-        builder: (context, constraints) {
-          return Padding(
-          padding: const EdgeInsets.all(12),
-          child: GridView.builder(
-            shrinkWrap: true,                // para que no expanda infinito
-            physics: ScrollPhysics().parent, // anida en scroll padre
-            itemCount: 38,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
-              // ajustar ratio ancho/alto de cada tile:
-              childAspectRatio: 5, // más ancho que alto (3:1)
+    return Column(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
             ),
-            itemBuilder: (context, index) {
-              final item = sales;
-              int position = index % 3;
-              sales.status = EnumSalesStatus.values[position];
-              return CardOrderCustomLandscape(item: item);
-            },
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(8),
+                    itemCount: 38,
+                    itemBuilder: (BuildContext context, int index) {
+                      final item = sales;
+                      int position = index % 3;
+                      item.id = index + 1;
+                      item.date = DateTime.now();
+                      item.status = EnumSalesStatus.values[position];
+                      return CardOrderCustomPortrait(item: item);
+                    },
+                    separatorBuilder: (BuildContext context, int index) => const Divider(),
+                  ),
+                );
+              }
+            ),
           ),
-        );
-      }
+        ),
+      ],
     );
   }
 }

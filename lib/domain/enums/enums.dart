@@ -8,7 +8,7 @@ enum BusinessType {
 
 enum EnumMenuItemCategory {
   bebida,
-  comida,
+  alimento,
   menu,
   extra,
 }

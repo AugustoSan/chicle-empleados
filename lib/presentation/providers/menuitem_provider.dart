@@ -18,8 +18,8 @@ class MenuItemProvider with ChangeNotifier {
   List<MenuItem> get bebidas =>
     _allItems.where((i) => i.category == EnumMenuItemCategory.bebida).toList();
 
-  List<MenuItem> get comida =>
-    _allItems.where((i) => i.category == EnumMenuItemCategory.comida).toList();
+  List<MenuItem> get alimentos =>
+    _allItems.where((i) => i.category == EnumMenuItemCategory.alimento).toList();
 
   List<MenuItem> get menus =>
     _allItems.where((i) => i.category == EnumMenuItemCategory.menu).toList();
