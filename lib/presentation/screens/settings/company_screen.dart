@@ -51,6 +51,23 @@ class CompanyScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 12),
                               TextFormField(
+                                controller: vm.addressC,
+                                decoration: const InputDecoration(labelText: 'Dirección'),
+                                validator: (v) => v != null && v.isNotEmpty
+                                    ? null
+                                    : 'Dirección inválida',
+                              ),
+                              const SizedBox(height: 12),
+                              TextFormField(
+                                controller: vm.phoneC,
+                                keyboardType: TextInputType.phone,
+                                decoration: const InputDecoration(labelText: 'Teléfono'),
+                                validator: (v) => v != null && v.isNotEmpty && v.length == 10
+                                    ? null
+                                    : 'Teléfono inválido',
+                              ),
+                              const SizedBox(height: 12),
+                              TextFormField(
                                 controller: vm.currencyC,
                                 decoration: const InputDecoration(labelText: 'Moneda'),
                                 validator: (v) =>
@@ -90,6 +107,8 @@ class CompanyScreen extends StatelessWidget {
                                   name: vm.nameC.text.trim(),
                                   currency: vm.currencyC.text.trim(),
                                   taxPercent: double.parse(vm.taxC.text.trim()),
+                                  address: vm.addressC.text.trim(),
+                                  phone: vm.phoneC.text.trim(),
                                   type: vm.selectedType.value,
                                   enabledModules: [],
                                   logo: vm.logoC.value,

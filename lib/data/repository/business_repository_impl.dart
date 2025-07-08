@@ -12,7 +12,7 @@ class BusinessRepositoryImpl implements BusinessRepository {
     // box.clear();
     if (box.isEmpty) {
       await saveBusiness(Business(
-        name:           'Chicle',
+        name:           'Cafetería',
         currency:       'MXN',
         taxPercent:     16.0,
         type:           BusinessType.cafeteria,
@@ -34,6 +34,8 @@ class BusinessRepositoryImpl implements BusinessRepository {
       taxPercent:     model.taxPercent,
       type:           BusinessType.values[model.type],
       enabledModules: model.enabledModules,
+      address:        model.address,
+      phone:          model.phone,
       logo:           model.logo,
     );
   }
@@ -47,11 +49,14 @@ class BusinessRepositoryImpl implements BusinessRepository {
       taxPercent:     biz.taxPercent,
       type:           biz.type.index,
       enabledModules: biz.enabledModules,
+      address:        biz.address,
+      phone:          biz.phone,
       logo:           biz.logo,
     );
     if (box.isEmpty) {
       await box.add(model);
     } else {
+      print('BusinessRepositoryImpl.saveBusiness: ${model.name}');
       await box.putAt(0, model);
     }
   }

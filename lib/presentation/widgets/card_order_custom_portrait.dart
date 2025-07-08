@@ -1,5 +1,6 @@
 
 import 'package:chicle_app_empleados/presentation/presentation.dart';
+import 'package:chicle_app_empleados/presentation/widgets/order_ticket.dart';
 // import 'package:chicle_app_empleados/presentation/screens/modules/update_menu.dart';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
@@ -11,61 +12,60 @@ class CardOrderCustomPortrait extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final navigatorKey = context.watch<ShellNavigatorController>();
+    print('CardOrderCustomPortrait: ${item.id}');
     return InkWell(
-                onLongPress: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) => AlertDialogShowOrder(item: item),
-                  );
-                },
-                child: Container(
-                  // margin: const EdgeInsets.only(bottom: 12),
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text('Orden: # ${item.id.toString()}'),
-                          ),
-                          Text(
-                            item.status.name.toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: item.status == EnumSalesStatus.completed
-                                  ? Colors.green
-                                  : item.status == EnumSalesStatus.pending
-                                      ? Colors.red
-                                      : Colors.grey[150],
-                            ),
-                          ),
-
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              PriceUtils.getStringPrice(item.total),
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          Text(
-                            DateUtil.formatDateTime(item.date),
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ],
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (_) => ReceiptWidget(data: item),
+        );
+      },
+      child: Container(
+        // margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text('Orden: # ${item.id.toString()}'),
+                ),
+                Text(
+                  item.status.name.toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: item.status == EnumSalesStatus.completed
+                        ? Colors.green
+                        : item.status == EnumSalesStatus.pending
+                            ? Colors.red
+                            : Colors.grey[150],
                   ),
                 ),
-              );
+              ],
+            ),
+            const SizedBox(height: 4),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    PriceUtils.getStringPrice(item.total),
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ),
+                Text(
+                  DateUtil.formatDateTime(item.date),
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

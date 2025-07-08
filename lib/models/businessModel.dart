@@ -22,6 +22,12 @@ class BusinessModel extends HiveObject {
   List<String> enabledModules;
 
   @HiveField(5)
+  String? address;
+
+  @HiveField(6)
+  String? phone;
+
+  @HiveField(7)
   String? logo;
 
   BusinessModel({
@@ -30,6 +36,8 @@ class BusinessModel extends HiveObject {
     required this.taxPercent,
     required this.type,
     required this.enabledModules,
+    this.address,
+    this.phone,
     this.logo,
   });
 
@@ -40,6 +48,8 @@ class BusinessModel extends HiveObject {
     double? taxPercent,
     int? type,
     List<String>? enabledModules,
+    String? address,
+    String? phone,
     String? logo,
   }) {
     return BusinessModel(
@@ -48,6 +58,8 @@ class BusinessModel extends HiveObject {
       taxPercent:   taxPercent ?? this.taxPercent,
       type:   type ?? this.type,
       enabledModules:   enabledModules ?? this.enabledModules,
+      address:   address ?? this.address,
+      phone:   phone ?? this.phone,
       logo:   logo ?? this.logo,
     );
   }

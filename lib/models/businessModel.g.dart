@@ -22,14 +22,16 @@ class BusinessModelAdapter extends TypeAdapter<BusinessModel> {
       taxPercent: fields[2] as double,
       type: fields[3] as int,
       enabledModules: (fields[4] as List).cast<String>(),
-      logo: fields[5] as String?,
+      address: fields[5] as String?,
+      phone: fields[6] as String?,
+      logo: fields[7] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, BusinessModel obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -41,6 +43,10 @@ class BusinessModelAdapter extends TypeAdapter<BusinessModel> {
       ..writeByte(4)
       ..write(obj.enabledModules)
       ..writeByte(5)
+      ..write(obj.address)
+      ..writeByte(6)
+      ..write(obj.phone)
+      ..writeByte(7)
       ..write(obj.logo);
   }
 

@@ -6,6 +6,8 @@ class Business {
   final double taxPercent;          // IVA u otro impuesto
   final BusinessType type;          // Tipo de negocio
   final List<String> enabledModules;// Ej: ["mesas","takeaway","delivery"]
+  final String? address;
+  final String? phone;
   final String? logo;
 
   Business({
@@ -14,6 +16,8 @@ class Business {
     required this.taxPercent,
     required this.type,
     required this.enabledModules,
+    this.address,
+    this.phone,
     this.logo,
   });
 
@@ -23,6 +27,8 @@ class Business {
     double? taxPercent,
     BusinessType? type,
     List<String>? enabledModules,
+    String? address,
+    String? phone,
     String? logo,
   }) {
     return Business(
@@ -31,6 +37,8 @@ class Business {
       taxPercent:     taxPercent   ?? this.taxPercent,
       type:           type         ?? this.type,
       enabledModules: enabledModules ?? this.enabledModules,
+      address:        address      ?? this.address,
+      phone:          phone        ?? this.phone,
       logo:           logo         ?? this.logo,
     );
   }

@@ -23,6 +23,7 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: [
         Expanded(
@@ -41,10 +42,9 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
                     itemCount: 38,
                     itemBuilder: (BuildContext context, int index) {
                       final item = sales;
-                      int position = index % 3;
                       item.id = index + 1;
                       item.date = DateTime.now();
-                      item.status = EnumSalesStatus.values[position];
+                      item.status = EnumSalesStatus.completed; // quitar
                       return CardOrderCustomPortrait(item: item);
                     },
                     separatorBuilder: (BuildContext context, int index) => const Divider(),

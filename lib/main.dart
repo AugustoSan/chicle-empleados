@@ -29,6 +29,9 @@ Future<void> main() async {
   // 1) Inicializa Hiveuser: admin
   await Hive.initFlutter();
   Hive.registerAdapter(AuthModelAdapter());
+
+  // await Hive.deleteBoxFromDisk('business');
+  // 2) Inicializa Hive business
   Hive.registerAdapter(BusinessModelAdapter());
 
   // await deleteOldDatabase();

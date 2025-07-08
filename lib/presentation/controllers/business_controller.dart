@@ -6,6 +6,8 @@ import '../utils/utils.dart';
 class BusinessController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   final nameC = TextEditingController();
+  final addressC = TextEditingController();
+  final phoneC = TextEditingController(); 
   final currencyC = TextEditingController();
   final taxC = TextEditingController();
   final ValueNotifier<String?> logoC = ValueNotifier<String?>(null);
@@ -23,6 +25,8 @@ class BusinessController extends ChangeNotifier {
     final biz = _businessProvider.business;
     if (biz != null) {
       nameC.text     = biz.name;
+      addressC.text  = biz.address ?? '';
+      phoneC.text    = biz.phone ?? '';
       currencyC.text = biz.currency;
       taxC.text      = biz.taxPercent.toString();
       selectedType.value   = BusinessType.cafeteria;
@@ -44,6 +48,8 @@ class BusinessController extends ChangeNotifier {
         taxPercent: double.parse(taxC.text),
         type: BusinessType.cafeteria,
         logo: logoC.value, enabledModules: [],
+        address: addressC.text,
+        phone: phoneC.text,
       )
     );
 
