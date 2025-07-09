@@ -20,18 +20,18 @@ class AddMenuItemController extends ChangeNotifier {
 
   AddMenuItemController(this._menuItemProvider);
 
-  Future<void> save(BuildContext context) async {
+  Future<String> save(BuildContext context) async {
     
     final error = validate();
     if (error != '') {
       _error = error;
-      return;
+      return error;
     }
     _loading = true;
     _error   = null;
     notifyListeners();
 
-    await _menuItemProvider.saveMenuItem(
+    final ok = await _menuItemProvider.saveMenuItem(
       MenuItem.withoutId(
         name:         nameC.text,
         description:  descriptionC.text,
@@ -40,14 +40,13 @@ class AddMenuItemController extends ChangeNotifier {
         imageUrl:     image.value ?? '',
       )
     );
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Guardado ✔️')),
-    );
-    Navigator.pop(context);
-
+    if (ok == -1) {
+      _error = 'Ocurrio un error al guardar';
+      return error;
+    }
     _loading = false;
-    // if (ok == -1) _error = 'Ocurrio un error al guardar';
     notifyListeners();
+    return error;
   }
 
   Future<void> saveImage() async {

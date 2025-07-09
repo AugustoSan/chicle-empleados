@@ -6,12 +6,14 @@ class Sales {
   late int?      id;          // Nullable porque la BD lo asigna
   late EnumSalesStatus   status;
   late DateTime  date;  // Opcional
-  final int  userId;     // Si quieres mostrar foto
+  final int  userId;     // Usuario que realizo la venta
+  final String  consumer;
   late List<SaleItemMenu> items;
 
   Sales({
     this.id,
     required this.userId,
+    required this.consumer,
     required this.items,
   })
   {
@@ -21,6 +23,7 @@ class Sales {
   Sales.withDate({
     this.id,
     required this.userId,
+    required this.consumer,
     required this.date,
     required this.items,
   })
@@ -31,6 +34,7 @@ class Sales {
   Sales.withoutItems({
     this.id,
     required this.userId,
+    required this.consumer,
     required this.date,
     required this.status,
   })
@@ -40,6 +44,7 @@ class Sales {
 
   Sales.withoutId({
     required this.userId,
+    required this.consumer,
     required this.status,
     required this.date,
     required this.items,
@@ -54,6 +59,7 @@ class Sales {
     required this.date,
     required this.items,
     required this.userId,
+    required this.consumer,
   });
   double  get total => items.fold(0.0, (sum, item) => sum + item.total);
 }

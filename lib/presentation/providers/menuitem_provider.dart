@@ -33,16 +33,16 @@ class MenuItemProvider with ChangeNotifier {
     return menuItem;
   }
 
-  Future<void> saveMenuItem(MenuItem menuItem) async {
+  Future<int> saveMenuItem(MenuItem menuItem) async {
     final res = await _repo.saveMenuItem(menuItem);
-    if(res == -1) print('Error al guardar');
     loadAll();
+    return res;
   }
 
-  Future<void> updateMenuItem(int id, MenuItem menuItem) async {
+  Future<int> updateMenuItem(int id, MenuItem menuItem) async {
     final res = await _repo.updateMenuItem(id, menuItem);
-    if(res == -1) print('Error al actualizar');
     loadAll();
+    return res;
   }
 
   Future<int> deleteMenuItem(int id) async {

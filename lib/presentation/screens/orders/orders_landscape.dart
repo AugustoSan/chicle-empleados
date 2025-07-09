@@ -15,6 +15,7 @@ class _OrdersLandscapeState extends State<OrdersLandscape> {
   Sales sales = Sales.withAll(
     id: 1,
     userId: 0,
+    consumer: 'Publico en general',
     status: EnumSalesStatus.completed,
     date: DateTime.now(),
     items: [SaleItemMenu(

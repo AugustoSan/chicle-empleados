@@ -30,16 +30,16 @@ class SaleProvider with ChangeNotifier {
     return sale;
   }
 
-  Future<void> saveSale(Sales sales) async {
+  Future<int> saveSale(Sales sales) async {
     final res = await _repo.saveSale(sales);
-    if(res == -1) print('Error al guardar');
     loadAll();
+    return res;
   }
 
-  Future<void> updateSale(int id, Sales sales) async {
+  Future<int> updateSale(int id, Sales sales) async {
     final res = await _repo.updateSale(id, sales);
-    if(res == -1) print('Error al actualizar');
     loadAll();
+    return res;
   }
 
   Future<int> deleteSale(int id) async {

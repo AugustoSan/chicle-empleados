@@ -13,6 +13,7 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
   Sales sales = Sales.withAll(
     id: 1,
     userId: 0,
+    consumer: 'Publico en general',
     status: EnumSalesStatus.completed,
     date: DateTime.now(),
     items: [SaleItemMenu(
@@ -44,7 +45,7 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
                       final item = sales;
                       item.id = index + 1;
                       item.date = DateTime.now();
-                      item.status = EnumSalesStatus.completed; // quitar
+                      item.status = EnumSalesStatus.values[index % 3]; // quitar
                       return CardOrderCustomPortrait(item: item);
                     },
                     separatorBuilder: (BuildContext context, int index) => const Divider(),

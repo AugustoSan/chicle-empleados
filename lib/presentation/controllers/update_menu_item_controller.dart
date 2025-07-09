@@ -29,13 +29,13 @@ class UpdateMenuItemController extends ChangeNotifier {
     image.value = menuItem.imageUrl;
   }
 
-  Future<void> save(BuildContext context) async {
-    if (!formKey.currentState!.validate()) return;
+  Future<String> save(BuildContext context) async {
+    if (!formKey.currentState!.validate()) return '';
     _loading = true;
     _error   = null;
     notifyListeners();
 
-    await _menuItemProvider.updateMenuItem( id,
+    final ok = await _menuItemProvider.updateMenuItem( id,
       MenuItem.withAll(
         id:           id,
         name:         nameC.text,
@@ -47,8 +47,9 @@ class UpdateMenuItemController extends ChangeNotifier {
     );
 
     _loading = false;
-    // if (ok == -1) _error = 'Ocurrio un error al guardar';
+    if (ok == -1) _error = 'Ocurrio un error al guardar';
     notifyListeners();
+    return _error ?? '';
   }
 
   Future<void> saveImage() async {

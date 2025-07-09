@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../domain/domain.dart';
 import '../../presentation.dart';
 
-class AddMenuScreen extends StatelessWidget {
-  const AddMenuScreen({Key? key}) : super(key: key);
+class AddSaleScreen extends StatelessWidget {
+  const AddSaleScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.watch<AddMenuItemController>();
+    final vm = context.watch<AddSaleController>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agregar a la carta'),
+        title: const Text('Nueva orden'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () => Navigator.pop(context),
@@ -37,7 +36,6 @@ class AddMenuScreen extends StatelessWidget {
                         Expanded(
                           child: ListView(
                             children: [
-                              ContainerAddPicture(onSaveImage: vm.saveImage, rutaImagen: vm.image.value),
                               const SizedBox(height: 12),
                               TextFormField(
                                 controller: vm.nameC,
@@ -47,37 +45,18 @@ class AddMenuScreen extends StatelessWidget {
                                     : 'Nombre inválido',
                               ),
                               const SizedBox(height: 12),
-                              TextFormField(
-                                controller: vm.descriptionC,
-                                decoration: const InputDecoration(labelText: 'Descripción'),
-                              ),
-                              const SizedBox(height: 12),
-                              TextFormField(
-                                controller: vm.priceC,
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(labelText: 'Precio'),
-                                validator: (v) =>
-                                    v != null && v.isNotEmpty ? null : 'Precio inválido',
-                              ),
-                              const SizedBox(height: 12),
-                              DropdownButtonFormField<EnumMenuItemCategory>(
-                                value: vm.type.value,
-                                decoration: const InputDecoration(labelText: 'Categoría'),
-                                items: EnumMenuItemCategory.values.map((t) =>
-                                  DropdownMenuItem(value: t, child: Text(t.name))
-                                ).toList(),
-                                onChanged: (t) {
-                                  if (t != null) vm.type.value = t;
-                                },
-                              ),
-                              const SizedBox(height: 12),
+                              // TextFormField(
+                              //   controller: vm.phoneC,
+                              //   decoration: const InputDecoration(labelText: 'Telefono'),
+                              // ),
+                              // const SizedBox(height: 12),
                             ],
                           ),
                         ),
                         Center(
                           child: ElevatedButton(
                             onPressed: () async {
-                              final res = await vm.save(context);
+                              final res = await vm.saveSale(context);
                               if (res != '') {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(res)),

@@ -26,9 +26,6 @@ class _MenuItemsListPortraitState extends State<MenuItemsListPortrait> {
     final alimentosList = provider.alimentos;
     final extraList = provider.extras;
 
-    if(menuList.isEmpty && bebidasList.isEmpty && alimentosList.isEmpty && extraList.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
-    }
     return ListView(
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -109,23 +109,18 @@ class UpdateMenuScreen extends StatelessWidget {
                         ),
                         Center(
                           child: ElevatedButton(
-                            onPressed: () {
-                              vm.save(context);
-                              // if (vm.formKey.currentState!.validate()) {
-                              //   final userSave = MenuItem.withAll(
-                              //     id: vm.id,
-                              //     name: vm.nameC.text.trim(),
-                              //     description: vm.descriptionC.text.trim(),
-                              //     price: double.parse(vm.priceC.text.trim()),
-                              //     category: vm.type.value,
-                              //     imageUrl: vm.image.value ?? '',
-                              //   );
-                              //   context.read<MenuItemProvider>().updateMenuItem(vm.id, userSave);
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //     const SnackBar(content: Text('Guardado ✔️')),
-                              //   );
-                              //   Navigator.pop(context);
-                              // }
+                            onPressed: () async {
+                              final error = await vm.save(context);
+                              if (error.isNotEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(error)),
+                                );
+                                return;
+                              }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Guardado ✔️')),
+                              );
+                              Navigator.pop(context);
                             },
                             child: const Text('Guardar'),
                           ),

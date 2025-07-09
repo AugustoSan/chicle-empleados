@@ -24,7 +24,7 @@ Future<void> setupLocator(AppDatabase db) async {
     () => UserRepositoryImpl(db),
   );
   getIt.registerFactory<UserProvider>(
-    () => UserProvider(getIt<UserRepository>()),
+    () => UserProvider(getIt<UserRepository>(), getIt<AuthProvider>()),
   );
 
   // --- Ventas ---

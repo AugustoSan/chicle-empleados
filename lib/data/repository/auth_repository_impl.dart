@@ -26,7 +26,7 @@ class AuthRepositoryImpl implements AuthRepository {
         ..where((u) => u.name.equals(username));
     final user = await query.getSingleOrNull();
 
-    if (user != null && AuthService.verifyPassword(password, user.password)) {
+    if (user != null && user.password == AuthService.hashPassword(password)) {
       final authBox = await Hive.openBox<String>(_AUTH_BOX);
       await authBox.put(_AUTH_KEY, username);
       return true;

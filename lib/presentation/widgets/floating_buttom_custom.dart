@@ -1,7 +1,10 @@
-import 'package:chicle_app_empleados/presentation/screens/modules/add_menu.dart';
+import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../presentation.dart';
+
+import '../screens/modules/add_menu.dart';
+import '../screens/home/add_sale.dart';
 
 class FloatingButtomCustom extends StatelessWidget {
   const FloatingButtomCustom({super.key});
@@ -28,8 +31,8 @@ class FloatingButtomCustom extends StatelessWidget {
           navigatorKey.navigatorKey.currentState!.push(
             MaterialPageRoute(
               builder: (context) => ChangeNotifierProvider(
-                create: (ctx) => AddMenuItemController(ctx.read<MenuItemProvider>()), 
-                child: const AddMenuScreen()
+                create: (ctx) => AddSaleController(ctx.read<SalesRepository>(), ctx.read<UserProvider>()), 
+                child: const AddSaleScreen()
               )
             )
           );

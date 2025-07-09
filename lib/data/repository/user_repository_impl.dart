@@ -48,7 +48,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<bool> validatePassword(String username, String password) async {
     final user = await getUser(username);
-    return user != null && AuthService.verifyPassword(password, user.passwordHash);
+    return user != null && user.passwordHash == AuthService.hashPassword(password);
   }
 
   @override

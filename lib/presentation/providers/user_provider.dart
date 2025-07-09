@@ -1,18 +1,26 @@
 // lib/presentation/providers/user_provider.dart
 import 'package:flutter/material.dart';
 import '../../domain/domain.dart';
+import '../providers/providers.dart';
 
 class UserProvider with ChangeNotifier {
   final UserRepository _repo;
+  final AuthProvider _auth;
   bool   _initialized = false;
-  User?  _currentUser;
 
-  UserProvider(this._repo);
+  UserProvider(this._repo, this._auth);
 
   Future<void> initialize() async {
     if (_initialized) return;
     await _repo.initialize();
     _initialized = true;
+  }
+
+  Future<User?> getCurrentUser() async {
+    final username = _auth.username;
+    final user = await _repo.getUser(username);
+    notifyListeners();
+    return user;
   }
 
   Future<User?> getUser(String username) async {
@@ -24,8 +32,6 @@ class UserProvider with ChangeNotifier {
   Future<bool> validatePassword(String username, String password) async {
     return await _repo.validatePassword(username, password);
   }
-
-  User? get currentUser => _currentUser;
 
   Future<bool> saveUser(User user) async {
     await _repo.saveUser(user);
