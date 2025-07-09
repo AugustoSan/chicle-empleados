@@ -13,7 +13,7 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
   Sales sales = Sales.withAll(
     id: 1,
     userId: 0,
-    consumer: 'Publico en general',
+    customer: 'Publico en general',
     status: EnumSalesStatus.completed,
     date: DateTime.now(),
     items: [SaleItemMenu(

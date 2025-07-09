@@ -23,7 +23,7 @@ class SalesModel extends Table {
   DateTimeColumn get date      => dateTime()();
   RealColumn     get total     => real()();
   IntColumn      get userId    => integer().references(UsersModel, #id)();
-  TextColumn     get consumer  => text()();
+  TextColumn     get customer  => text()();
 }
 
 class SaleItemsModel extends Table {

@@ -1,3 +1,4 @@
+import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../presentation.dart';
@@ -8,6 +9,7 @@ class AddSaleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<AddSaleController>();
+    final listCustomers = context.watch<CustomerProvider>().customers; 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Nueva orden'),
@@ -45,6 +47,17 @@ class AddSaleScreen extends StatelessWidget {
                                     : 'Nombre inválido',
                               ),
                               const SizedBox(height: 12),
+                              DropdownButtonFormField<Customer>(
+                                value: vm.customer.value,
+                                decoration: const InputDecoration(labelText: 'Cliente'),
+                                items: listCustomers != null ? listCustomers.map((c) =>
+                                  DropdownMenuItem(value: c, child: Text(c.name))
+                                ).toList() : [],
+                                onChanged: (c) {
+                                  if (c != null) vm.customer.value = c;
+                                },
+                              ),
+                              const SizedBox(height: 12),
                               // TextFormField(
                               //   controller: vm.phoneC,
                               //   decoration: const InputDecoration(labelText: 'Telefono'),
@@ -68,7 +81,7 @@ class AddSaleScreen extends StatelessWidget {
                               );
                               Navigator.pop(context);
                             },
-                            child: const Text('Guardar'),
+                            child: const Text('Siguiente'),
                           ),
                         ),
                       ],

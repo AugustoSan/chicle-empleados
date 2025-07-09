@@ -1,7 +1,6 @@
-// lib/di/locator.dart
 import 'package:hive/hive.dart';
 import 'package:get_it/get_it.dart';
-import '../../../models/businessModel.dart';
+import '../../../models/models.dart';
 import '../../../data/data.dart';
 import '../domain.dart';
 import '../../../presentation/presentation.dart';
@@ -17,6 +16,15 @@ Future<void> setupLocator(AppDatabase db) async {
   );
   getIt.registerFactory<BusinessProvider>(
     () => BusinessProvider(getIt<BusinessRepository>()),
+  );
+
+  // --- Clientes ---
+  final customerBox = await Hive.openBox<CustomerModel>(Boxes.customersBox);
+  getIt.registerLazySingleton<CustomerRepository>(
+    () => CustomerRepositoryImpl(customerBox),
+  );
+  getIt.registerFactory<CustomerProvider>(
+    () => CustomerProvider(getIt<CustomerRepository>()),
   );
 
   // --- Usuarios ---

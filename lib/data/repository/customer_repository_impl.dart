@@ -1,11 +1,21 @@
 import 'package:hive/hive.dart';
 import '../../domain/domain.dart';
-import '../../models/consumerModel.dart';
+import 'package:chicle_app_empleados/models/customerModel.dart';
 
-class ConsumerRepositoryImpl implements CustomerRepository {
-  final Box<ConsumerModel> box;
+class CustomerRepositoryImpl implements CustomerRepository {
+  final Box<CustomerModel> box;
 
-  ConsumerRepositoryImpl(this.box);
+  CustomerRepositoryImpl(this.box);
+
+  @override
+  Future<void> initialize() async {
+    if (box.isNotEmpty) return;
+    await box.add(CustomerModel(
+      name: 'Público en general',
+      phone: '0000000000',
+      email: 'publico@general.com',
+    ));
+  }
 
   @override
   Future<List<Customer>> getAll(CustomerFilter filter) async {
@@ -37,7 +47,7 @@ class ConsumerRepositoryImpl implements CustomerRepository {
 
   @override
   Future<Customer> create(Customer customer) async {
-    final model = ConsumerModel(
+    final model = CustomerModel(
       name: customer.name,
       phone: customer.phone,
       email: customer.email,
@@ -48,7 +58,7 @@ class ConsumerRepositoryImpl implements CustomerRepository {
 
   @override
   Future<Customer> update(Customer customer) async {
-    final model = ConsumerModel(
+    final model = CustomerModel(
       name: customer.name,
       phone: customer.phone,
       email: customer.email,

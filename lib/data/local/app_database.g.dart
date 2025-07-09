@@ -680,15 +680,15 @@ class $SalesModelTable extends SalesModel
       requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('REFERENCES users_model (id)'));
-  static const VerificationMeta _consumerMeta =
-      const VerificationMeta('consumer');
+  static const VerificationMeta _customerMeta =
+      const VerificationMeta('customer');
   @override
-  late final GeneratedColumn<String> consumer = GeneratedColumn<String>(
-      'consumer', aliasedName, false,
+  late final GeneratedColumn<String> customer = GeneratedColumn<String>(
+      'customer', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, status, date, total, userId, consumer];
+      [id, status, date, total, userId, customer];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -726,11 +726,11 @@ class $SalesModelTable extends SalesModel
     } else if (isInserting) {
       context.missing(_userIdMeta);
     }
-    if (data.containsKey('consumer')) {
-      context.handle(_consumerMeta,
-          consumer.isAcceptableOrUnknown(data['consumer']!, _consumerMeta));
+    if (data.containsKey('customer')) {
+      context.handle(_customerMeta,
+          customer.isAcceptableOrUnknown(data['customer']!, _customerMeta));
     } else if (isInserting) {
-      context.missing(_consumerMeta);
+      context.missing(_customerMeta);
     }
     return context;
   }
@@ -751,8 +751,8 @@ class $SalesModelTable extends SalesModel
           .read(DriftSqlType.double, data['${effectivePrefix}total'])!,
       userId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
-      consumer: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}consumer'])!,
+      customer: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}customer'])!,
     );
   }
 
@@ -768,14 +768,14 @@ class SalesModelData extends DataClass implements Insertable<SalesModelData> {
   final DateTime date;
   final double total;
   final int userId;
-  final String consumer;
+  final String customer;
   const SalesModelData(
       {required this.id,
       required this.status,
       required this.date,
       required this.total,
       required this.userId,
-      required this.consumer});
+      required this.customer});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -784,7 +784,7 @@ class SalesModelData extends DataClass implements Insertable<SalesModelData> {
     map['date'] = Variable<DateTime>(date);
     map['total'] = Variable<double>(total);
     map['user_id'] = Variable<int>(userId);
-    map['consumer'] = Variable<String>(consumer);
+    map['customer'] = Variable<String>(customer);
     return map;
   }
 
@@ -795,7 +795,7 @@ class SalesModelData extends DataClass implements Insertable<SalesModelData> {
       date: Value(date),
       total: Value(total),
       userId: Value(userId),
-      consumer: Value(consumer),
+      customer: Value(customer),
     );
   }
 
@@ -808,7 +808,7 @@ class SalesModelData extends DataClass implements Insertable<SalesModelData> {
       date: serializer.fromJson<DateTime>(json['date']),
       total: serializer.fromJson<double>(json['total']),
       userId: serializer.fromJson<int>(json['userId']),
-      consumer: serializer.fromJson<String>(json['consumer']),
+      customer: serializer.fromJson<String>(json['customer']),
     );
   }
   @override
@@ -820,7 +820,7 @@ class SalesModelData extends DataClass implements Insertable<SalesModelData> {
       'date': serializer.toJson<DateTime>(date),
       'total': serializer.toJson<double>(total),
       'userId': serializer.toJson<int>(userId),
-      'consumer': serializer.toJson<String>(consumer),
+      'customer': serializer.toJson<String>(customer),
     };
   }
 
@@ -830,14 +830,14 @@ class SalesModelData extends DataClass implements Insertable<SalesModelData> {
           DateTime? date,
           double? total,
           int? userId,
-          String? consumer}) =>
+          String? customer}) =>
       SalesModelData(
         id: id ?? this.id,
         status: status ?? this.status,
         date: date ?? this.date,
         total: total ?? this.total,
         userId: userId ?? this.userId,
-        consumer: consumer ?? this.consumer,
+        customer: customer ?? this.customer,
       );
   SalesModelData copyWithCompanion(SalesModelCompanion data) {
     return SalesModelData(
@@ -846,7 +846,7 @@ class SalesModelData extends DataClass implements Insertable<SalesModelData> {
       date: data.date.present ? data.date.value : this.date,
       total: data.total.present ? data.total.value : this.total,
       userId: data.userId.present ? data.userId.value : this.userId,
-      consumer: data.consumer.present ? data.consumer.value : this.consumer,
+      customer: data.customer.present ? data.customer.value : this.customer,
     );
   }
 
@@ -858,13 +858,13 @@ class SalesModelData extends DataClass implements Insertable<SalesModelData> {
           ..write('date: $date, ')
           ..write('total: $total, ')
           ..write('userId: $userId, ')
-          ..write('consumer: $consumer')
+          ..write('customer: $customer')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, status, date, total, userId, consumer);
+  int get hashCode => Object.hash(id, status, date, total, userId, customer);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -874,7 +874,7 @@ class SalesModelData extends DataClass implements Insertable<SalesModelData> {
           other.date == this.date &&
           other.total == this.total &&
           other.userId == this.userId &&
-          other.consumer == this.consumer);
+          other.customer == this.customer);
 }
 
 class SalesModelCompanion extends UpdateCompanion<SalesModelData> {
@@ -883,14 +883,14 @@ class SalesModelCompanion extends UpdateCompanion<SalesModelData> {
   final Value<DateTime> date;
   final Value<double> total;
   final Value<int> userId;
-  final Value<String> consumer;
+  final Value<String> customer;
   const SalesModelCompanion({
     this.id = const Value.absent(),
     this.status = const Value.absent(),
     this.date = const Value.absent(),
     this.total = const Value.absent(),
     this.userId = const Value.absent(),
-    this.consumer = const Value.absent(),
+    this.customer = const Value.absent(),
   });
   SalesModelCompanion.insert({
     this.id = const Value.absent(),
@@ -898,19 +898,19 @@ class SalesModelCompanion extends UpdateCompanion<SalesModelData> {
     required DateTime date,
     required double total,
     required int userId,
-    required String consumer,
+    required String customer,
   })  : status = Value(status),
         date = Value(date),
         total = Value(total),
         userId = Value(userId),
-        consumer = Value(consumer);
+        customer = Value(customer);
   static Insertable<SalesModelData> custom({
     Expression<int>? id,
     Expression<int>? status,
     Expression<DateTime>? date,
     Expression<double>? total,
     Expression<int>? userId,
-    Expression<String>? consumer,
+    Expression<String>? customer,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -918,7 +918,7 @@ class SalesModelCompanion extends UpdateCompanion<SalesModelData> {
       if (date != null) 'date': date,
       if (total != null) 'total': total,
       if (userId != null) 'user_id': userId,
-      if (consumer != null) 'consumer': consumer,
+      if (customer != null) 'customer': customer,
     });
   }
 
@@ -928,14 +928,14 @@ class SalesModelCompanion extends UpdateCompanion<SalesModelData> {
       Value<DateTime>? date,
       Value<double>? total,
       Value<int>? userId,
-      Value<String>? consumer}) {
+      Value<String>? customer}) {
     return SalesModelCompanion(
       id: id ?? this.id,
       status: status ?? this.status,
       date: date ?? this.date,
       total: total ?? this.total,
       userId: userId ?? this.userId,
-      consumer: consumer ?? this.consumer,
+      customer: customer ?? this.customer,
     );
   }
 
@@ -957,8 +957,8 @@ class SalesModelCompanion extends UpdateCompanion<SalesModelData> {
     if (userId.present) {
       map['user_id'] = Variable<int>(userId.value);
     }
-    if (consumer.present) {
-      map['consumer'] = Variable<String>(consumer.value);
+    if (customer.present) {
+      map['customer'] = Variable<String>(customer.value);
     }
     return map;
   }
@@ -971,7 +971,7 @@ class SalesModelCompanion extends UpdateCompanion<SalesModelData> {
           ..write('date: $date, ')
           ..write('total: $total, ')
           ..write('userId: $userId, ')
-          ..write('consumer: $consumer')
+          ..write('customer: $customer')
           ..write(')'))
         .toString();
   }
@@ -1863,7 +1863,7 @@ typedef $$SalesModelTableCreateCompanionBuilder = SalesModelCompanion Function({
   required DateTime date,
   required double total,
   required int userId,
-  required String consumer,
+  required String customer,
 });
 typedef $$SalesModelTableUpdateCompanionBuilder = SalesModelCompanion Function({
   Value<int> id,
@@ -1871,7 +1871,7 @@ typedef $$SalesModelTableUpdateCompanionBuilder = SalesModelCompanion Function({
   Value<DateTime> date,
   Value<double> total,
   Value<int> userId,
-  Value<String> consumer,
+  Value<String> customer,
 });
 
 final class $$SalesModelTableReferences
@@ -1930,8 +1930,8 @@ class $$SalesModelTableFilterComposer
   ColumnFilters<double> get total => $composableBuilder(
       column: $table.total, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get consumer => $composableBuilder(
-      column: $table.consumer, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get customer => $composableBuilder(
+      column: $table.customer, builder: (column) => ColumnFilters(column));
 
   $$UsersModelTableFilterComposer get userId {
     final $$UsersModelTableFilterComposer composer = $composerBuilder(
@@ -1996,8 +1996,8 @@ class $$SalesModelTableOrderingComposer
   ColumnOrderings<double> get total => $composableBuilder(
       column: $table.total, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get consumer => $composableBuilder(
-      column: $table.consumer, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get customer => $composableBuilder(
+      column: $table.customer, builder: (column) => ColumnOrderings(column));
 
   $$UsersModelTableOrderingComposer get userId {
     final $$UsersModelTableOrderingComposer composer = $composerBuilder(
@@ -2041,8 +2041,8 @@ class $$SalesModelTableAnnotationComposer
   GeneratedColumn<double> get total =>
       $composableBuilder(column: $table.total, builder: (column) => column);
 
-  GeneratedColumn<String> get consumer =>
-      $composableBuilder(column: $table.consumer, builder: (column) => column);
+  GeneratedColumn<String> get customer =>
+      $composableBuilder(column: $table.customer, builder: (column) => column);
 
   $$UsersModelTableAnnotationComposer get userId {
     final $$UsersModelTableAnnotationComposer composer = $composerBuilder(
@@ -2114,7 +2114,7 @@ class $$SalesModelTableTableManager extends RootTableManager<
             Value<DateTime> date = const Value.absent(),
             Value<double> total = const Value.absent(),
             Value<int> userId = const Value.absent(),
-            Value<String> consumer = const Value.absent(),
+            Value<String> customer = const Value.absent(),
           }) =>
               SalesModelCompanion(
             id: id,
@@ -2122,7 +2122,7 @@ class $$SalesModelTableTableManager extends RootTableManager<
             date: date,
             total: total,
             userId: userId,
-            consumer: consumer,
+            customer: customer,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
@@ -2130,7 +2130,7 @@ class $$SalesModelTableTableManager extends RootTableManager<
             required DateTime date,
             required double total,
             required int userId,
-            required String consumer,
+            required String customer,
           }) =>
               SalesModelCompanion.insert(
             id: id,
@@ -2138,7 +2138,7 @@ class $$SalesModelTableTableManager extends RootTableManager<
             date: date,
             total: total,
             userId: userId,
-            consumer: consumer,
+            customer: customer,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (

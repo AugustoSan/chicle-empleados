@@ -8,8 +8,7 @@ import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:chicle_app_empleados/theme_data.dart';
 import '../data/local/app_database.dart';
 import 'domain/di/locator.dart';
-import '../models/businessModel.dart';
-import '../models/authModel.dart';
+import '../models/models.dart';
 import '../presentation/screens/shellapp.dart';
 import 'package:path/path.dart' as p;
 
@@ -33,6 +32,7 @@ Future<void> main() async {
   // await Hive.deleteBoxFromDisk('business');
   // 2) Inicializa Hive business
   Hive.registerAdapter(BusinessModelAdapter());
+  Hive.registerAdapter(CustomerModelAdapter());
 
   // await deleteOldDatabase();
   // 2) Inicializa Drift
@@ -46,6 +46,9 @@ Future<void> main() async {
   final businessProv = getIt<BusinessProvider>();
   await businessProv.initialize();
 
+  final customerProv = getIt<CustomerProvider>();
+  await customerProv.initialize();
+
   runApp(
     MultiProvider(
       providers: [
@@ -58,6 +61,7 @@ Future<void> main() async {
         // ViewModels
         ChangeNotifierProvider<LoginController>(create: (ctx) => LoginController(ctx.read<AuthProvider>())),
         ChangeNotifierProvider<BusinessController>(create: (ctx) => BusinessController(ctx.read<BusinessProvider>())),
+        ChangeNotifierProvider<CustomerProvider>(create: (ctx) => getIt<CustomerProvider>()),
         ChangeNotifierProvider<SaleProvider>(create: (ctx) => getIt<SaleProvider>()),
         // ChangeNotifierProvider<AddMenuItemController>(create: (ctx) => AddMenuItemController(ctx.read<MenuItemProvider>())),
         // 5) ProfileController — si necesita “reactivar” cada vez que currentUser cambie,

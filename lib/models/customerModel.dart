@@ -1,10 +1,10 @@
 import 'package:hive/hive.dart';
 
-part 'consumerModel.g.dart';
+part 'customerModel.g.dart';
 
 
-@HiveType(typeId: 1)
-class ConsumerModel extends HiveObject {
+@HiveType(typeId: 2)
+class CustomerModel extends HiveObject {
 
   @HiveField(0)
   String name;
@@ -15,19 +15,19 @@ class ConsumerModel extends HiveObject {
   @HiveField(2)
   String? email;
 
-  ConsumerModel({
+  CustomerModel({
     required this.name,
     required this.phone,
     this.email,
   });
 
   /// Este es el método `copyWith` que te faltaba:
-  ConsumerModel copyWith({
+  CustomerModel copyWith({
     String? name,
     String? phone,
     String? email
   }) {
-    return ConsumerModel(
+    return CustomerModel(
       name:   name ?? this.name,
       phone:  phone ?? this.phone,
       email:  email ?? this.email,

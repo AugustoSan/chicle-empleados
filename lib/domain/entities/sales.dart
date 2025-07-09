@@ -7,13 +7,13 @@ class Sales {
   late EnumSalesStatus   status;
   late DateTime  date;  // Opcional
   final int  userId;     // Usuario que realizo la venta
-  final String  consumer;
+  final String  customer;
   late List<SaleItemMenu> items;
 
   Sales({
     this.id,
     required this.userId,
-    required this.consumer,
+    required this.customer,
     required this.items,
   })
   {
@@ -23,7 +23,7 @@ class Sales {
   Sales.withDate({
     this.id,
     required this.userId,
-    required this.consumer,
+    required this.customer,
     required this.date,
     required this.items,
   })
@@ -34,7 +34,7 @@ class Sales {
   Sales.withoutItems({
     this.id,
     required this.userId,
-    required this.consumer,
+    required this.customer,
     required this.date,
     required this.status,
   })
@@ -44,7 +44,7 @@ class Sales {
 
   Sales.withoutId({
     required this.userId,
-    required this.consumer,
+    required this.customer,
     required this.status,
     required this.date,
     required this.items,
@@ -59,7 +59,7 @@ class Sales {
     required this.date,
     required this.items,
     required this.userId,
-    required this.consumer,
+    required this.customer,
   });
   double  get total => items.fold(0.0, (sum, item) => sum + item.total);
 }

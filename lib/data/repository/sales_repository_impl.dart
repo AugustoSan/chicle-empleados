@@ -19,7 +19,7 @@ class SalesRepositoryImpl extends SalesRepository {
         id: item.id,
         status: EnumSalesStatus.values[item.status],
         date: item.date,
-        consumer: item.consumer,
+        customer: item.customer,
         items: items,
         userId: item.userId,
       );
@@ -37,7 +37,7 @@ class SalesRepositoryImpl extends SalesRepository {
       id: id,
       status: EnumSalesStatus.values[sale.status],
       date: sale.date,
-      consumer: sale.consumer,
+      customer: sale.customer,
       items: await getSaleItems(id),
       userId: sale.userId,
     );
@@ -52,7 +52,7 @@ class SalesRepositoryImpl extends SalesRepository {
       status: EnumSalesStatus.values.indexOf(sales.status),
       date: sales.date,
       userId: sales.userId,
-      consumer: sales.consumer,
+      customer: sales.customer,
       total: sales.total,
     );
     
@@ -85,7 +85,7 @@ class SalesRepositoryImpl extends SalesRepository {
       status: EnumSalesStatus.values.indexOf(sales.status),
       date: sales.date,
       userId: sales.userId,
-      consumer: sales.consumer,
+      customer: sales.customer,
       total: sales.total,
     );
     

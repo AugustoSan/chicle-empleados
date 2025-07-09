@@ -3,6 +3,8 @@ import 'package:chicle_app_empleados/domain/entities/customer.dart' show Custome
 import 'package:chicle_app_empleados/domain/filters/filters.dart';
 
 abstract class CustomerRepository {
+  // Inicializar el repositorio
+  Future<void> initialize();
   // Obtener todos los clientes
   Future<List<Customer>> getAll(CustomerFilter filter);
   // Crear un cliente

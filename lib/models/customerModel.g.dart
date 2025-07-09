@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'consumerModel.dart';
+part of 'customerModel.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ConsumerModelAdapter extends TypeAdapter<ConsumerModel> {
+class CustomerModelAdapter extends TypeAdapter<CustomerModel> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
-  ConsumerModel read(BinaryReader reader) {
+  CustomerModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ConsumerModel(
+    return CustomerModel(
       name: fields[0] as String,
       phone: fields[1] as String,
       email: fields[2] as String?,
@@ -24,7 +24,7 @@ class ConsumerModelAdapter extends TypeAdapter<ConsumerModel> {
   }
 
   @override
-  void write(BinaryWriter writer, ConsumerModel obj) {
+  void write(BinaryWriter writer, CustomerModel obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)
@@ -41,7 +41,7 @@ class ConsumerModelAdapter extends TypeAdapter<ConsumerModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ConsumerModelAdapter &&
+      other is CustomerModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

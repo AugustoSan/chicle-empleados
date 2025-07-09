@@ -5,6 +5,7 @@ import '../providers/providers.dart';
 class AddSaleController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   final nameC = TextEditingController();
+  final ValueNotifier<Customer?> customer = ValueNotifier<Customer?>(null);
 
   bool  _loading = false;
   String? _error;
@@ -38,7 +39,7 @@ class AddSaleController extends ChangeNotifier {
     final res = await _saleRepository.saveSale(
       Sales.withoutId(
         userId: user.id, 
-        consumer: nameC.text, 
+        customer: nameC.text, 
         status: EnumSalesStatus.pending, 
         date: DateTime.now(), 
         items: []
