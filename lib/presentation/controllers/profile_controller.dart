@@ -23,7 +23,6 @@ class ProfileController extends ChangeNotifier {
   Future<void> loadFromUser(String username) async {
     final user = await _userProvider.getUser(username);
     if (user == null) return;
-    print('user: ${user.imageUrl}');
     id = user.id;
     nameC.text     = user.name;
     usernameC.text = user.username;
@@ -32,8 +31,8 @@ class ProfileController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> save(BuildContext context) async {
-    if (!formKey.currentState!.validate()) return;
+  Future<String> save(BuildContext context) async {
+    if (!formKey.currentState!.validate()) return 'Formulario inválido';
     _loading = true;
     _error   = null;
     notifyListeners();
@@ -51,6 +50,7 @@ class ProfileController extends ChangeNotifier {
     _loading = false;
     if (!ok) _error = 'Ocurrio un error al guardar';
     notifyListeners();
+    return _error ?? '';
   }
 
   Future<void> saveImage() async {

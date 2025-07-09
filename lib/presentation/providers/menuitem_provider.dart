@@ -27,6 +27,8 @@ class MenuItemProvider with ChangeNotifier {
   List<MenuItem> get extras =>
     _allItems.where((i) => i.category == EnumMenuItemCategory.extra).toList();
 
+  List<MenuItem> get allItems => _allItems;
+
   Future<MenuItem?> getMenuItem(int id) async {
     final menuItem = await _repo.getMenuItem(id);
     notifyListeners();

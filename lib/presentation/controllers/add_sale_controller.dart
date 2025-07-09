@@ -16,16 +16,11 @@ class AddSaleController extends ChangeNotifier {
 
   final SalesRepository _saleRepository;
   final UserProvider _userProvider;
+  final CustomerProvider _customerProvider;
 
-  AddSaleController(this._saleRepository, this._userProvider);
+  AddSaleController(this._saleRepository, this._userProvider, this._customerProvider);
   
   Future<String> saveSale(BuildContext context) async {
-    
-    final error = validate();
-    if (error != '') {
-      _error = error;
-      return error;
-    }
     _loading = true;
     _error   = null;
     notifyListeners();
@@ -33,13 +28,13 @@ class AddSaleController extends ChangeNotifier {
     final user = await _userProvider.getCurrentUser();
     if (user == null) {
       _error = 'Usuario no encontrado';
-      return error;
+      return _error!;
     }
 
     final res = await _saleRepository.saveSale(
       Sales.withoutId(
         userId: user.id, 
-        customer: nameC.text, 
+        customer: nameC.text == '' ? '0000000000' : nameC.text, 
         status: EnumSalesStatus.pending, 
         date: DateTime.now(), 
         items: []
@@ -47,11 +42,11 @@ class AddSaleController extends ChangeNotifier {
     );
     if(res == -1) {
       _error = 'Ocurrio un error al guardar';
-      return error;
+      return _error!;
     }
     _loading = false;
     notifyListeners();
-    return error;
+    return _error!;
   }
 
   Future<String> addItems(BuildContext context, int saleId, List<SaleItemMenu> items) async {
@@ -63,9 +58,11 @@ class AddSaleController extends ChangeNotifier {
     notifyListeners();
   }
 
-  String validate() {
-    if(nameC.text.isEmpty) return 'Nombre inválido';
-    return '';
+  Future<List<Customer>> searchCustomer(String filter) async {
+    final customers = await _customerProvider.searchCustomer(filter);
+    print('Customers: $customers');
+    notifyListeners();
+    return customers;
   }
 
   @override

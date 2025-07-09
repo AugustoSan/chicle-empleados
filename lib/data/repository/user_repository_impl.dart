@@ -66,10 +66,14 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<bool> saveUser(User user) async {
+    List<User> list = await getAllUsers();
+    for (User us in list) {
+      if(us.id == user.id && us.passwordHash == AuthService.hashPassword(user.passwordHash)) return false;
+    }
     final companion = UsersModelCompanion.insert(
       name: user.name,
       username: user.username,
-      password: user.passwordHash,
+      password: AuthService.hashPassword(user.passwordHash),
       imageUrl: user.imageUrl,
     );
       

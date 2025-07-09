@@ -9,6 +9,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
 
   @override
   Future<void> initialize() async {
+    print('Initializing customer repository');
     if (box.isNotEmpty) return;
     await box.add(CustomerModel(
       name: 'Público en general',
@@ -19,7 +20,9 @@ class CustomerRepositoryImpl implements CustomerRepository {
 
   @override
   Future<List<Customer>> getAll(CustomerFilter filter) async {
+    print('Getting all customers');
     if (box.isEmpty) return [];
+    print('Customers: ${box.values}');
     
     // obtenemos todos los registros
     final models = box.values.toList();

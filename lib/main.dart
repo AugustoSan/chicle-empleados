@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,9 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(AuthModelAdapter());
 
-  // await Hive.deleteBoxFromDisk('business');
+  // await Hive.deleteBoxFromDisk(Boxes.authBox);
+  // await Hive.deleteBoxFromDisk(Boxes.businessBox);
+  // await Hive.deleteBoxFromDisk(Boxes.customersBox);
   // 2) Inicializa Hive business
   Hive.registerAdapter(BusinessModelAdapter());
   Hive.registerAdapter(CustomerModelAdapter());
@@ -54,7 +57,9 @@ Future<void> main() async {
       providers: [
         // Singletons
         ChangeNotifierProvider<BusinessProvider>.value(value: businessProv..loadBusinessData()),
-        ChangeNotifierProvider<UserProvider>.value(value: userProv),
+        ChangeNotifierProvider<CustomerProvider>.value(value: customerProv..loadCustomerData()),
+        ChangeNotifierProvider<UserProvider>.value(value: userProv..getCurrentUser()),
+        ChangeNotifierProvider<MenuItemProvider>.value(value: getIt<MenuItemProvider>()..loadAll()),
         // Providers
         ChangeNotifierProvider<MenuItemProvider>(create: (_) => getIt<MenuItemProvider>()),
         ChangeNotifierProvider<AuthProvider>(create: (_) => getIt<AuthProvider>()),
@@ -63,9 +68,13 @@ Future<void> main() async {
         ChangeNotifierProvider<BusinessController>(create: (ctx) => BusinessController(ctx.read<BusinessProvider>())),
         ChangeNotifierProvider<CustomerProvider>(create: (ctx) => getIt<CustomerProvider>()),
         ChangeNotifierProvider<SaleProvider>(create: (ctx) => getIt<SaleProvider>()),
-        // ChangeNotifierProvider<AddMenuItemController>(create: (ctx) => AddMenuItemController(ctx.read<MenuItemProvider>())),
-        // 5) ProfileController — si necesita “reactivar” cada vez que currentUser cambie,
-        //    mejor usar ProxyProvider. Sino un create normal basta.
+        ChangeNotifierProvider<AddSaleController>(
+          create: (ctx) => AddSaleController(
+            getIt<SalesRepository>(),
+            getIt<UserProvider>(),
+            getIt<CustomerProvider>()
+          )
+        ),
         ChangeNotifierProxyProvider<AuthProvider, ProfileController>(
           create: (ctx) => ProfileController(ctx.read<UserProvider>()),
           update: (ctx, authProv, ctrl) {

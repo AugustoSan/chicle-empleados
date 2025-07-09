@@ -7,8 +7,11 @@ class UserProvider with ChangeNotifier {
   final UserRepository _repo;
   final AuthProvider _auth;
   bool   _initialized = false;
+  User? _currentUser;
 
   UserProvider(this._repo, this._auth);
+
+  User? get currentUser => _currentUser;
 
   Future<void> initialize() async {
     if (_initialized) return;
@@ -20,6 +23,7 @@ class UserProvider with ChangeNotifier {
     final username = _auth.username;
     final user = await _repo.getUser(username);
     notifyListeners();
+    _currentUser = user;
     return user;
   }
 

@@ -6,10 +6,12 @@ class CustomerProvider with ChangeNotifier {
   final CustomerRepository _repo;
   bool _initialized = false;
 
-  List<Customer>? _customers;
-  List<Customer>? get customers => _customers;
+  List<Customer> _customers = [];
+  List<Customer> get customers => _customers;
 
-  CustomerProvider(this._repo);
+  CustomerProvider(this._repo) {
+    loadCustomerData();
+  }
 
   Future<void> initialize() async {
     if (_initialized) return;
@@ -18,8 +20,13 @@ class CustomerProvider with ChangeNotifier {
   }
 
   Future<void> loadCustomerData() async {
-    _customers  = await _repo.getAll(CustomerFilter());
+    _customers = await _repo.getAll(CustomerFilter());
     notifyListeners();
+  }
+
+  Future<List<Customer>> searchCustomer(String filter) async {
+    final customers = await _repo.getAll(CustomerFilter(name: filter, phone: filter, email: filter));
+    return customers;
   }
 
   // Future<void> updateCustomerName(String name) async {

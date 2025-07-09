@@ -1,3 +1,4 @@
+import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import '../../domain/entities/menuItem.dart';
@@ -12,20 +13,24 @@ class AlertDialogShow extends StatelessWidget {
     return AlertDialog(
       title: Text(item.name),
       content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,  // para que el dialog se ajuste al contenido
         children: [
           if (mostrarImagen) 
             ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.file(
-                File(item.imageUrl!),
-                width: 200,
-                height: 150,
-                fit: BoxFit.cover,
+              borderRadius:
+                  const BorderRadius.all(Radius.circular(12)),
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: mostrarImagen
+                    ? Image.file(File(item.imageUrl!), fit: BoxFit.cover)
+                    : const SizedBox.shrink(),
               ),
             ),
           const SizedBox(height: 12),
           Text(item.description?.isEmpty ?? true ? 'Sin descripción' : item.description!),
+          const SizedBox(height: 12),
+          Text('Precio: ${PriceUtils.getStringPrice(item.price)}'),
         ],
       ),
       actions: [
