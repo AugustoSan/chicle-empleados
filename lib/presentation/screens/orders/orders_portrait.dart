@@ -18,7 +18,9 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
     super.initState();
     context.read<SaleProvider>().loadAll();
     final items = context.read<SaleProvider>().allSales;
-    _sales.addAll(items);
+    if (_sales.isEmpty && items.isNotEmpty) {
+      _sales.addAll(items);
+    }
   }
 
   @override
@@ -29,7 +31,7 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final items = context.read<SaleProvider>().allSales;
+    final items = context.watch<SaleProvider>().allSales;
     if (_sales.isEmpty && items.isNotEmpty) {
       _sales.addAll(items);
     }

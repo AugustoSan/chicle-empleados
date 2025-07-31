@@ -45,6 +45,20 @@ class SaleProvider with ChangeNotifier {
     return res;
   }
 
+  Future<int> cancelSale(Sales sales) async {
+    sales.status = EnumSalesStatus.cancelled;
+    final res = await _repo.updateSale(sales.id!, sales);
+    loadAll();
+    return res;
+  }
+
+  Future<int> completeSale(Sales sales) async {
+    sales.status = EnumSalesStatus.completed;
+    final res = await _repo.updateSale(sales.id!, sales);
+    loadAll();
+    return res;
+  }
+
   Future<int> deleteSale(int id) async {
     final res = await _repo.deleteSale(id);
     loadAll();

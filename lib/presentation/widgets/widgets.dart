@@ -8,7 +8,7 @@ export 'header_custom.dart';
 export 'seccion_title.dart';
 export 'item_card.dart';
 export 'alert_dialog_show.dart';
-export 'alert_dialog_show_order.dart';
+export 'alert_dialog_show_sale.dart';
 export 'card_menu_custom.dart';
 export 'card_menu_custom_landscape.dart';
 export 'card_order_custom_landscape.dart';

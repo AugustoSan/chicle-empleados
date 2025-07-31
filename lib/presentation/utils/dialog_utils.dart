@@ -30,7 +30,7 @@ Future<void> mostrarSaleDialog(BuildContext context, Sales item) {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
-    builder: (_) => AlertDialogShowOrder(item: item),
+    builder: (_) => AlertDialogShowSale(item: item),
   );
 }
 

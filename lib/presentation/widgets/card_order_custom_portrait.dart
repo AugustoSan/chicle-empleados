@@ -13,7 +13,13 @@ class CardOrderCustomPortrait extends StatelessWidget {
   Widget build(BuildContext context) {
     print('CardOrderCustomPortrait: ${item.id}');
     return InkWell(
-      onTap: () => mostrarTicketDialog(context, item),
+      onTap: () => {
+        if (item.status == EnumSalesStatus.completed || item.status == EnumSalesStatus.cancelled) {
+          mostrarTicketDialog(context, item),
+        } else {
+          mostrarSaleDialog(context, item),
+        }
+      },
       child: Container(
         // margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(12),
