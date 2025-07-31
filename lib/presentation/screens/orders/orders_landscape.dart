@@ -37,6 +37,11 @@ class _OrdersLandscapeState extends State<OrdersLandscape> {
     final salesPending = provider.pendientes;
     final salesCompleted = provider.completados;
     final salesCancelled = provider.cancelados;
+    final salesAll = provider.allSales;
+
+    for (var i = 0; i < salesAll.length; i++) {
+      print('ID sale : ${salesAll[i].id}');
+    }
 
     if(salesPending.isEmpty && salesCompleted.isEmpty && salesCancelled.isEmpty) {
       // return const Center(child: Text('No hay ordenes'));

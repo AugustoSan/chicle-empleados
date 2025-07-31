@@ -1,6 +1,8 @@
+// import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
+import 'package:provider/provider.dart';
 
 class OrdersPortrait extends StatefulWidget {
   const OrdersPortrait({Key? key}) : super(key: key);
@@ -10,20 +12,38 @@ class OrdersPortrait extends StatefulWidget {
 }
 
 class _OrdersPortraitState extends State<OrdersPortrait> {
-  Sales sales = Sales.withAll(
-    id: 1,
-    userId: 0,
-    customer: 'Publico en general',
-    status: EnumSalesStatus.completed,
-    date: DateTime.now(),
-    items: [SaleItemMenu(
-      quantity: 1, 
-      menuItem: MenuItem.empty(),
-      specialIndications: '',
-    )]);
+  final List<Sales> _sales = [];
+  @override
+  void initState() {
+    super.initState();
+    context.read<SaleProvider>().loadAll();
+    final items = context.read<SaleProvider>().allSales;
+    _sales.addAll(items);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final items = context.read<SaleProvider>().allSales;
+    if (_sales.isEmpty && items.isNotEmpty) {
+      _sales.addAll(items);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    // final provider = context.watch<SaleProvider>();
+    
+    // final salesAll = provider.allSales;
+
+    for (var i = 0; i < _sales.length; i++) {
+      print('ID sale : ${_sales[i].id}');
+    }
 
     return Column(
       children: [
@@ -40,12 +60,9 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
                   padding: const EdgeInsets.all(12),
                   child: ListView.separated(
                     padding: const EdgeInsets.all(8),
-                    itemCount: 38,
+                    itemCount: _sales.length,
                     itemBuilder: (BuildContext context, int index) {
-                      final item = sales;
-                      item.id = index + 1;
-                      item.date = DateTime.now();
-                      item.status = EnumSalesStatus.values[index % 3]; // quitar
+                      final item = _sales[index];
                       return CardOrderCustomPortrait(item: item);
                     },
                     separatorBuilder: (BuildContext context, int index) => const Divider(),

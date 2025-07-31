@@ -23,6 +23,9 @@ class SaleProvider with ChangeNotifier {
 
   List<Sales> get cancelados =>
     _items.where((i) => i.status == EnumSalesStatus.cancelled).toList();
+  
+  List<Sales> get allSales =>
+    _items;
 
   Future<Sales?> getSale(int id) async {
     final sale = await _repo.getSale(id);

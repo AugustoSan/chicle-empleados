@@ -28,20 +28,15 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<User?> getUser(String username) async {
     List<User> list = await getAllUsers();
-    for (User user in list) {
-      print(user.username);
-    }
-    final query = _db.select(_db.usersModel)
-      ..where((u) => u.name.equals(username));
-    final row = await query.getSingleOrNull();
-    if (row == null) return null;
+    final user = list.where((us) => us.username == username).firstOrNull;
+    if (user == null) return null;
 
     return User(
-      id: row.id,
-      name: row.name,
-      username: row.username,
-      passwordHash: row.password,
-      imageUrl: row.imageUrl,
+      id: user.id,
+      name: user.name,
+      username: user.username,
+      passwordHash: user.passwordHash,
+      imageUrl: user.imageUrl,
     );
   }
 

@@ -20,7 +20,7 @@ class AddSaleController extends ChangeNotifier {
 
   AddSaleController(this._saleRepository, this._userProvider, this._customerProvider);
   
-  Future<String> saveSale(BuildContext context) async {
+  Future<String> saveSale(BuildContext context, List<SaleItemMenu> items) async {
     _loading = true;
     _error   = null;
     notifyListeners();
@@ -37,7 +37,7 @@ class AddSaleController extends ChangeNotifier {
         customer: nameC.text == '' ? '0000000000' : nameC.text, 
         status: EnumSalesStatus.pending, 
         date: DateTime.now(), 
-        items: []
+        items: items
       )
     );
     if(res == -1) {
@@ -46,7 +46,7 @@ class AddSaleController extends ChangeNotifier {
     }
     _loading = false;
     notifyListeners();
-    return _error!;
+    return _error ?? '';
   }
 
   Future<String> addItems(BuildContext context, int saleId, List<SaleItemMenu> items) async {

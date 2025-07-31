@@ -8,6 +8,29 @@ class ReceiptWidget extends StatelessWidget {
   final Sales data;
   const ReceiptWidget({Key? key, required this.data}) : super(key: key);
 
+  Widget _buildSaleItemRow(SaleItemMenu item) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(flex: 4, child: Text(item.menuItem.name, style: const TextStyle(fontSize: 12))),
+              Expanded(flex: 1, child: Text('${item.quantity}', textAlign: TextAlign.right, style: const TextStyle(fontSize: 12))),
+              Expanded(flex: 2, child: Text(PriceUtils.getStringPrice(item.total), textAlign: TextAlign.right, style: const TextStyle(fontSize: 12))),
+            ],
+          ),
+          if (item.specialIndications.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, top: 2.0),
+                child: Text(item.specialIndications, style: const TextStyle(fontSize: 12)),
+              ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -16,11 +39,12 @@ class ReceiptWidget extends StatelessWidget {
     // Cálculos
     final subtotal = data.items.fold<double>(
       0,
-      (sum, it) => sum + it.total * it.quantity,
+      (sum, it) => sum + it.total,
     );
-    final taxPercent = business?.taxPercent ?? 0.16;
-    final tax = subtotal * taxPercent;
-    final total = subtotal + tax;
+    // final taxPercent = business?.taxPercent ?? 0.16;
+    // final tax = subtotal * taxPercent;
+    // final total = subtotal + tax;
+    final total = subtotal;
 
     print('Business: ${business?.name}, address: ${business?.address}, phone: ${business?.phone}');
 
@@ -66,25 +90,13 @@ class ReceiptWidget extends StatelessWidget {
           const SizedBox(height: 4),
 
           // Filas de artículos
-          ...data.items.map((it) {
-            final lineTotal = it.total * it.quantity;
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2),
-              child: Row(
-                children: [
-                  Expanded(flex: 4, child: Text(it.menuItem.name, style: const TextStyle(fontSize: 12))),
-                  Expanded(flex: 1, child: Text('${it.quantity}', textAlign: TextAlign.right, style: const TextStyle(fontSize: 12))),
-                  Expanded(flex: 2, child: Text(PriceUtils.getStringPrice(lineTotal), textAlign: TextAlign.right, style: const TextStyle(fontSize: 12))),
-                ],
-              ),
-            );
-          }).toList(),
+          ...data.items.map((it) => _buildSaleItemRow(it)),
 
           const Divider(height: 24, thickness: 1),
 
           // Subtotales, impuesto y total
-          _buildInfoRow('Subtotal:', PriceUtils.getStringPrice(subtotal), alignRight: true),
-          _buildInfoRow('IVA (${(taxPercent).toInt()}%):', PriceUtils.getStringPrice(tax), alignRight: true),
+          // _buildInfoRow('Subtotal:', PriceUtils.getStringPrice(subtotal), alignRight: true),
+          // _buildInfoRow('IVA (${(taxPercent).toInt()}%):', PriceUtils.getStringPrice(tax), alignRight: true),
           _buildInfoRow(
             'Total:',
             PriceUtils.getStringPrice(total),

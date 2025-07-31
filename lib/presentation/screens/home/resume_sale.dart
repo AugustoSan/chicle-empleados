@@ -1,5 +1,6 @@
 import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 import '../../presentation.dart';
 
@@ -67,7 +68,6 @@ class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final vm = context.watch<AddSaleController>();
     // final business     = context.watch<BusinessProvider>().business;
     final _formKey = GlobalKey<FormState>();
 
@@ -127,9 +127,7 @@ class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
                             const SizedBox(height: 4),
 
                             // Filas de artículos
-                            ..._items.map((it) {
-                              return _buildSaleItemRow(it);
-                            }),
+                            ..._items.map((it) => _buildSaleItemRow(it)),
 
                             const Divider(height: 24, thickness: 1),
 
@@ -166,7 +164,10 @@ class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
                           child: SizedBox(
                             height: 50,
                             child: ElevatedButton(
-                              onPressed: () => Navigator.pop(context),
+                              onPressed: () async {
+                                await context.read<AddSaleController>().saveSale(context, _items);
+                                Navigator.pop(context);
+                              },
                               child: const Text('Confirmar'),
                             ),
                           ),
