@@ -19,5 +19,5 @@ export 'card_add_menu_order_custom.dart';
 export 'alert_dialog_add_descrption_order_item.dart';
 export 'list_tile_custom.dart';
 export 'order_ticket.dart';
-
+export 'alert_dialog_add_descrption_order_menu_item.dart';
 

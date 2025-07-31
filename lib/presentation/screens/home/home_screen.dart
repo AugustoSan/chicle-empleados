@@ -14,25 +14,45 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   // <-- FormKey local, único para esta instancia de pantalla
   final _formKey = GlobalKey<FormState>();
-  final Map<MenuItem,int> _quantities = {};
+  // final Map<MenuItem,int> _quantities = {};
+  final List<MenuItem> _listMenuItems = [];
+  final Map<MenuItem,SaleItemMenu> _saleItems = {};
 
   @override
   void initState() {
     super.initState();
     context.read<MenuItemProvider>().loadAll();
-    final items = context.read<MenuItemProvider>().allItems;
-    for (var item in items) {
-      _quantities[item] = 0;
+    final menuItems = context.read<MenuItemProvider>().allItems;
+    _listMenuItems.addAll(menuItems);
+    for (var item in menuItems) {
+      _saleItems[item] = SaleItemMenu(
+        menuItem: item,
+        quantity: 0,
+        specialIndications: '',
+      );
     }
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+    void didChangeDependencies() {
+      super.didChangeDependencies();
+      final menuItems = context.watch<MenuItemProvider>().allItems;
+      if (_listMenuItems.isEmpty && menuItems.isNotEmpty) {
+        _listMenuItems.addAll(menuItems);
+        for (var item in menuItems) {
+          _saleItems[item] = SaleItemMenu(menuItem: item, quantity: 0, specialIndications: '');
+        }
+      }
+    }
+
+  @override
   Widget build(BuildContext context) {
     final vm = context.watch<AddSaleController>();
-
-    final listMenuItems = context.watch<MenuItemProvider>().allItems;
-
-    print('listMenuItems: ${listMenuItems.length}');
 
     return SafeArea(
       child: Form(
@@ -70,43 +90,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                     const SizedBox(height: 12),
                     Expanded(
-                      // child: GridView.builder(
-                      //   primary: false,
-                      //   padding: const EdgeInsets.all(20),
-                      //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      //     crossAxisCount: 2,
-                      //     crossAxisSpacing: 10,
-                      //     mainAxisSpacing: 10,
-                      //   ),
-                      //   itemBuilder: (context, index) {
-                      //     final item = listMenuItems[index];
-                      //     final qty = _quantities[item] ?? 0;
-                      //     return GridCardAddMenuOrderCustom(
-                      //       item: item,
-                      //       quantity: qty,
-                      //       onIncrement: () => setState(() {
-                      //         if (qty < 100) _quantities[item] = qty + 1;
-                      //       }),
-                      //       onDecrement: () => setState(() {
-                      //         if (qty > 0) _quantities[item] = qty - 1;
-                      //       }),
-                      //     );
-                      //   },
-                      //   itemCount: listMenuItems.length,
-                      // )
                       child: ListView.builder(
-                        itemCount: listMenuItems.length,
+                        itemCount: _listMenuItems.length,
                         itemBuilder: (context, index) {
-                          final item = listMenuItems[index];
-                          final qty = _quantities[item] ?? 0;
+                          final menuItem = _listMenuItems[index];
+                          final item = _saleItems[menuItem]!;
                           return CardAddMenuOrderCustom(
-                            item: item,
-                            quantity: qty,
+                            saleItemMenu: item,
                             onIncrement: () => setState(() {
-                              if (qty < 100) _quantities[item] = qty + 1;
+                              if (item.quantity < 100) item.quantity = item.quantity + 1;
                             }),
                             onDecrement: () => setState(() {
-                              if (qty > 0) _quantities[item] = qty - 1;
+                              if (item.quantity > 0) item.quantity = item.quantity - 1;
                             }),
                           );
                         },
@@ -116,12 +111,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           print('onpress');
-                          final seleccionados = _quantities.entries
-                            .where((e) => e.value > 0)
+                          final seleccionados = _saleItems.entries
+                            .where((e) => e.value.quantity > 0)
                             .map((e) => SaleItemMenu(
                               menuItem: e.key,
-                              quantity: e.value,
-                              specialIndications: '',
+                              quantity: e.value.quantity,
+                              specialIndications: e.value.specialIndications,
                             )).toList();
                           for (var item in seleccionados) {
                             print('item: ${item.menuItem.name}, quantity: ${item.quantity}');

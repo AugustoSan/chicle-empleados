@@ -1,28 +1,33 @@
 import 'dart:io';
+import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
 // import 'package:chicle_app_empleados/presentation/screens/modules/update_menu.dart';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
-import '../../domain/entities/menuItem.dart';
 
 class CardAddMenuOrderCustom extends StatelessWidget {
-  final MenuItem item;
-  final int quantity;
+  // final MenuItem item;
+  final SaleItemMenu saleItemMenu;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
 
-  const CardAddMenuOrderCustom({super.key, required this.item, required this.quantity, required this.onIncrement, required this.onDecrement});
+  const CardAddMenuOrderCustom({super.key, required this.saleItemMenu, required this.onIncrement, required this.onDecrement});
 
   @override
   Widget build(BuildContext context) {
     final bool mostrarImagen =
-        item.imageUrl != null && File(item.imageUrl!).existsSync();
+        saleItemMenu.menuItem.imageUrl != null && File(saleItemMenu.menuItem.imageUrl!).existsSync();
 
       return ListTile(
-        onTap: () => mostrarMenuItemDialog(context, item),
-      leading: mostrarImagen ? Image.file(File(item.imageUrl!), width: 40, height: 40) : const SizedBox.shrink(),
-      title: Text(item.name),
-      subtitle: Text('\$${item.price}'),
+        onTap: () async {
+          String? description = await agregarDescripcionOrdenMenuItemDialog(context, saleItemMenu.specialIndications);
+          if (description != null) {
+            saleItemMenu.specialIndications = description;
+          }
+        },
+      leading: mostrarImagen ? Image.file(File(saleItemMenu.menuItem.imageUrl!), width: 40, height: 40) : const SizedBox.shrink(),
+      title: Text(saleItemMenu.menuItem.name),
+      subtitle: Text('\$${saleItemMenu.menuItem.price}'),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -30,7 +35,7 @@ class CardAddMenuOrderCustom extends StatelessWidget {
             icon: Icon(Icons.remove_circle_outline),
             onPressed: onDecrement,
           ),
-          Text('${quantity}'),
+          Text('${saleItemMenu.quantity}'),
           IconButton(
             icon: Icon(Icons.add_circle_outline),
             onPressed: onIncrement,

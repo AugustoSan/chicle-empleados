@@ -10,6 +10,14 @@ Future<void> mostrarMenuItemDialog(BuildContext context, MenuItem item) {
   );
 }
 
+Future<String?> agregarDescripcionOrdenMenuItemDialog(BuildContext context, String indications) {
+  return showDialog<String>(
+    context: context,
+    barrierDismissible: true,
+    builder: (_) => AlertDialogAddDescrptionOrderMenuItem(indications: indications),
+  );
+}
+
 Future<void> mostrarDescriptionOrderMenuItemDialog(BuildContext context, MenuItem item) {
   return showDialog<void>(
     context: context,

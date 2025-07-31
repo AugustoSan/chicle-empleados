@@ -66,8 +66,8 @@ class Sales {
 
 class SaleItemMenu {
   final MenuItem menuItem;
-  final int quantity;
-  final String specialIndications;
+  late int quantity;
+  late String specialIndications;
   
   SaleItemMenu({
     required this.menuItem,
