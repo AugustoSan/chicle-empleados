@@ -1,6 +1,5 @@
 
 import 'package:chicle_app_empleados/presentation/presentation.dart';
-import 'package:chicle_app_empleados/presentation/widgets/order_ticket.dart';
 // import 'package:chicle_app_empleados/presentation/screens/modules/update_menu.dart';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
@@ -14,12 +13,7 @@ class CardOrderCustomPortrait extends StatelessWidget {
   Widget build(BuildContext context) {
     print('CardOrderCustomPortrait: ${item.id}');
     return InkWell(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (_) => ReceiptWidget(data: item),
-        );
-      },
+      onTap: () => mostrarTicketDialog(context, item),
       child: Container(
         // margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(12),

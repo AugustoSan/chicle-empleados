@@ -13,12 +13,7 @@ class CardOrderCustomLandscape extends StatelessWidget {
   Widget build(BuildContext context) {
     // final navigatorKey = context.watch<ShellNavigatorController>();
     return InkWell(
-                onLongPress: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) => AlertDialogShowOrder(item: item),
-                  );
-                },
+                onLongPress: () => mostrarSaleDialog(context, item),
                 child: Container(
                   // margin: const EdgeInsets.only(bottom: 12),
                   padding: const EdgeInsets.all(12),

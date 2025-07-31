@@ -19,13 +19,7 @@ class CardAddMenuOrderCustom extends StatelessWidget {
         item.imageUrl != null && File(item.imageUrl!).existsSync();
 
       return ListTile(
-        onTap: () {
-        showDialog<void>(
-          context: context,
-          barrierDismissible: true,
-          builder: (_) => AlertDialogShow(item: item),
-        );
-      },
+        onTap: () => mostrarMenuItemDialog(context, item),
       leading: mostrarImagen ? Image.file(File(item.imageUrl!), width: 40, height: 40) : const SizedBox.shrink(),
       title: Text(item.name),
       subtitle: Text('\$${item.price}'),
@@ -45,20 +39,8 @@ class CardAddMenuOrderCustom extends StatelessWidget {
       ),
     );
     // return InkWell(
-    //   onTap: () {
-    //     showDialog<void>(
-    //       context: context,
-    //       barrierDismissible: true,
-    //       builder: (_) => AlertDialogShow(item: item),
-    //     );
-    //   },
-    //   onLongPress: () {
-    //     showDialog<void>(
-    //       context: context,
-    //       barrierDismissible: true,
-    //       builder: (_) => AlertDialogShow(item: item),
-    //     );
-    //   },
+    //   onTap: () => mostrarMenuItemDialog(context, item),
+    //   onLongPress: () => mostrarMenuItemDialog(context, item),
     //   child: SizedBox(
     //     width: 160,
     //     height: 350,

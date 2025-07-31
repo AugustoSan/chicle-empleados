@@ -14,15 +14,7 @@ class CardMenuCustom extends StatelessWidget {
     final navigatorKey = context.watch<ShellNavigatorController>();
     final bool mostrarImagen = item.imageUrl != null && File(item.imageUrl!).existsSync();
     return InkWell(
-      onLongPress: () {
-        showDialog<void>(
-          context: context,
-          barrierDismissible: true, // permite cerrar tocando fuera
-          builder: (ctx) {
-            return AlertDialogShow(item: item);
-          },
-        );
-      },
+      onLongPress: () => mostrarMenuItemDialog(context, item),
       onTap: () {
         navigatorKey.navigatorKey.currentState!.push(
           MaterialPageRoute(

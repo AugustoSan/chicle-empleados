@@ -57,6 +57,7 @@ class AddSaleScreen extends StatelessWidget {
                         Center(
                           child: ElevatedButton(
                             onPressed: () async {
+                              print('Presionado');
                               final res = await vm.saveSale(context);
                               if (res != '') {
                                 ScaffoldMessenger.of(context).showSnackBar(

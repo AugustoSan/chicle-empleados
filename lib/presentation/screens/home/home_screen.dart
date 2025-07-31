@@ -1,4 +1,5 @@
 import 'package:chicle_app_empleados/domain/domain.dart';
+import 'package:chicle_app_empleados/presentation/screens/home/resume_sale.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../presentation.dart';
@@ -79,7 +80,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       //   ),
                       //   itemBuilder: (context, index) {
                       //     final item = listMenuItems[index];
-                      //     return CardAddMenuOrderCustom(item: item);
+                      //     final qty = _quantities[item] ?? 0;
+                      //     return GridCardAddMenuOrderCustom(
+                      //       item: item,
+                      //       quantity: qty,
+                      //       onIncrement: () => setState(() {
+                      //         if (qty < 100) _quantities[item] = qty + 1;
+                      //       }),
+                      //       onDecrement: () => setState(() {
+                      //         if (qty > 0) _quantities[item] = qty - 1;
+                      //       }),
+                      //     );
                       //   },
                       //   itemCount: listMenuItems.length,
                       // )
@@ -115,6 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           for (var item in seleccionados) {
                             print('item: ${item.menuItem.name}, quantity: ${item.quantity}');
                           }
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ResumeSaleScreen(items: seleccionados, customer: vm.nameC.text,)));
                         },
                         child: const Text('Siguiente'),
                       ),

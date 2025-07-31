@@ -20,25 +20,7 @@ class UpdateMenuScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.delete, color: Colors.red),
             onPressed: () async {
-              final confirmar = await showDialog<bool>(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text('Eliminar'),
-                    content: const Text('¿Estás seguro de eliminarlo?'),
-                    actions: [
-                      TextButton(
-                        child: const Text('Cancelar'),
-                        onPressed: () => Navigator.pop(context, false),
-                      ),
-                      TextButton(
-                        child: const Text('Eliminar'),
-                        onPressed: () => Navigator.pop(context, true),
-                      ),
-                    ],
-                  );
-                },
-              );
+              final confirmar = await mostrarDeleteDialog(context);
               if (confirmar == true) {
                 await context.read<MenuItemProvider>().deleteMenuItem(vm.id);
                 ScaffoldMessenger.of(context).showSnackBar(

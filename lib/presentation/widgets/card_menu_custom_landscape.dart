@@ -12,15 +12,7 @@ class CardMenuCustomLandscape extends StatelessWidget {
   Widget build(BuildContext context) {
     final navigatorKey = context.watch<ShellNavigatorController>();
     return InkWell(
-      onLongPress: () {
-        showDialog<void>(
-          context: context,
-          barrierDismissible: true, // permite cerrar tocando fuera
-          builder: (ctx) {
-            return AlertDialogShow(item: item);
-          },
-        );
-      },
+      onLongPress: () => mostrarMenuItemDialog(context, item),
       onTap: () {
         navigatorKey.navigatorKey.currentState!.push(
           MaterialPageRoute(
