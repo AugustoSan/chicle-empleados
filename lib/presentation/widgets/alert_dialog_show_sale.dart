@@ -1,4 +1,5 @@
 import 'package:chicle_app_empleados/presentation/presentation.dart';
+import 'package:chicle_app_empleados/presentation/screens/orders/update_order.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import './../presentation.dart';
@@ -23,24 +24,26 @@ class AlertDialogShowSale extends StatelessWidget {
       //   ],
       // ),
       actions: [
-        TextButton(
+        TextButton.icon(
           onPressed: () {
             saleProvider.cancelSale(item);
             Navigator.of(context).pop();
           },
-          child: const Text('Cancelar cuenta'),
+          icon: const Icon(Icons.cancel, color: Colors.red, size: 13),
+          label: const Text('Cancelar', style: TextStyle(color: Colors.red, fontSize: 13)),
         ),
-        TextButton(
+        TextButton.icon(
           onPressed: () {
             saleProvider.completeSale(item);
             Navigator.of(context).pop();
           },
-          child: const Text('Finalizar cuenta'),
+          icon: const Icon(Icons.done, color: Colors.green, size: 13),
+          label: const Text('Finalizar', style: TextStyle(color: Colors.green, fontSize: 13)),
         ),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Agregar de la carta'),
-        ),
+        TextButton.icon(
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateOrder(sale: item))), 
+          icon: const Icon(Icons.edit, color: Colors.black, size: 13),
+          label: const Text('Editar', style: TextStyle(color: Colors.black, fontSize: 13))),
       ],
     );
   }

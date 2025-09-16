@@ -1,8 +1,8 @@
 import 'package:chicle_app_empleados/domain/domain.dart';
+import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:chicle_app_empleados/presentation/screens/home/resume_sale.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../presentation.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -89,28 +89,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ),
                     const SizedBox(height: 12),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: _listMenuItems.length,
-                        itemBuilder: (context, index) {
-                          final menuItem = _listMenuItems[index];
-                          final item = _saleItems[menuItem]!;
-                          return CardAddMenuOrderCustom(
-                            saleItemMenu: item,
-                            onIncrement: () => setState(() {
-                              if (item.quantity < 100) item.quantity = item.quantity + 1;
-                            }),
-                            onDecrement: () => setState(() {
-                              if (item.quantity > 0) item.quantity = item.quantity - 1;
-                            }),
-                          );
-                        },
-                      ),
-                    ),
+                    ListItemsPriceQuantity(saleItems: _saleItems),
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
-                          print('onpress');
                           final seleccionados = _saleItems.entries
                             .where((e) => e.value.quantity > 0)
                             .map((e) => SaleItemMenu(
