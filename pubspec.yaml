@@ -49,6 +49,7 @@ dependencies:
   # Biblioteca nativa de SQLite para iOS/Android
   sqlite3_flutter_libs: ^0.5.10
   image_picker: ^1.0.4
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,13 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  # Opción simple: un solo archivo para ambos
+  image_path: "assets/icon/app_icon.png"
+
 
 # The following section is specific to Flutter packages.
 flutter:
