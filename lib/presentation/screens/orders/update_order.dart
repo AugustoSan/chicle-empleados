@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UpdateOrder extends StatefulWidget {
-  final Sales sale;
-  const UpdateOrder({Key? key, required this.sale}) : super(key: key);
+  final int idSale;
+  const UpdateOrder({Key? key, required this.idSale}) : super(key: key);
 
   @override
   _UpdateOrderState createState() => _UpdateOrderState();
@@ -14,38 +14,86 @@ class UpdateOrder extends StatefulWidget {
 class _UpdateOrderState extends State<UpdateOrder> {
   final Map<MenuItem,SaleItemMenu> _saleItems = {};
   final List<MenuItem> _listMenuItems = [];
+  Sales? _sale;
 
   @override
   void initState() {
     super.initState();
-    final saleItems = widget.sale.items;
-    for (var item in saleItems) {
-      print('id: ${item.menuItem.id}');
-      print('name: ${item.menuItem.name}');
-      print('price: ${item.menuItem.price}');
-      print('quantity: ${item.quantity}');
-      print('specialIndications: ${item.specialIndications}');
+    _init();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _listMenuItems.clear();
+    _saleItems.clear();
+  }
+
+  Future<void> _init() async {
+    final menuProv = context.read<MenuItemProvider>();
+    final saleProv = context.read<SaleProvider>();
+    await menuProv.loadAll();
+
+    final sale = await saleProv.getSale(widget.idSale);
+
+    if(!mounted || sale == null) return;
+
+    print('customer: ${sale.customer}');
+
+    final items = menuProv.allItems;
+
+    final Map<int, SaleItemMenu> map = {};
+    for (final item in items) {
+      final existing = sale.items.firstWhere(
+        (e) => e.menuItem.id == item.id,
+        orElse: () => SaleItemMenu(
+          menuItem: item, 
+          quantity: 0, 
+          specialIndications: '',
+        ),
+      );
+      map[item.id!] = existing;
     }
-    context.read<MenuItemProvider>().loadAll();
-    final menuItems = context.read<MenuItemProvider>().allItems;
-    _listMenuItems.addAll(menuItems);
-    for (var item in menuItems) {
-      SaleItemMenu saleItemMenu = saleItems.firstWhere((element) => element.menuItem.id == item.id, orElse: () => SaleItemMenu(menuItem: item, quantity: 0, specialIndications: ''));
-      print('id: ${item.id}           == ${saleItemMenu.menuItem.id}');
-      print('name: ${item.name}       == ${saleItemMenu.menuItem.name}');
-      print('price: ${item.price}     == ${saleItemMenu.menuItem.price}');
-      print('quantity: ${saleItemMenu.quantity}');
-      print('specialIndications: ${saleItemMenu.specialIndications}');
-      _saleItems[item] = saleItemMenu;
-    }
-      
+
+    setState(() {
+      _sale = sale;
+      _listMenuItems
+        ..clear()
+        ..addAll(items);
+      _saleItems
+        ..clear()
+        ..addEntries(
+          map.entries.map((e) => MapEntry(
+            items.firstWhere((it) => it.id == e.key),
+            e.value,
+          )),
+        );
+    });
+    
+  }
+
+  Future<void> _save(List<SaleItemMenu> items) async {
+    if(_sale == null) return;
+    _sale!.items = items;
+    final saleProv = context.read<SaleProvider>();
+    await saleProv.updateSale(_sale!.id!, _sale!);
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_sale == null) {
+      return const Center(
+        child: Text('No se encontro la orden'),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Editar orden'),
+        title: Row(
+          children: [
+            const Text('Orden'),
+            Text(' # ${_sale!.id}')
+          ],
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -63,13 +111,25 @@ class _UpdateOrderState extends State<UpdateOrder> {
         child: Column(
         children: [
           const SizedBox(height: 12),
-          Text('Orden # ${widget.sale.id}', style: const TextStyle(fontSize: 20)),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextTitleWithContent(title: 'Cliente: ', content: _sale!.customer),
+                const SizedBox(height: 12),
+                TextTitleWithContent(title: 'Fecha: ', content: _sale!.date.toString()),
+              ],
+            )
+          ),
           const SizedBox(height: 12),
           ListItemsPriceQuantity(saleItems: _saleItems),
           const SizedBox(height: 12),
           Center(
             child: ElevatedButton(
               onPressed: () {
+                print('Presionado');
                 final seleccionados = _saleItems.entries
                   .where((e) => e.value.quantity > 0)
                   .map((e) => SaleItemMenu(
@@ -80,7 +140,10 @@ class _UpdateOrderState extends State<UpdateOrder> {
                 for (var item in seleccionados) {
                   print('item: ${item.menuItem.name}, quantity: ${item.quantity}');
                 }
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => ResumeSaleScreen(items: seleccionados, customer: vm.nameC.text,)));
+  
+                _save(seleccionados);
+                Navigator.pop(context);
+                Navigator.pop(context);
               },
               child: const Text('Guardar'),
             ),

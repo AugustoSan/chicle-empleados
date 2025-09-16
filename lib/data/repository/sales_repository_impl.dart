@@ -60,17 +60,7 @@ class SalesRepositoryImpl extends SalesRepository {
     final newId = await _db.into(_db.salesModel).insert(companion);
 
     if(newId > 0){
-      final newItemSales = sales.items.map((item) async {
-        final companion = SaleItemsModelCompanion.insert(
-          saleId: newId,
-          menuItemId: item.menuItem.id!,
-          quantity: item.quantity,
-          subtotal: item.total,
-          specialIndications: item.specialIndications,
-        );
-        await _db.into(_db.saleItemsModel).insert(companion);
-      }).toList();
-      await Future.wait(newItemSales);
+      await saveSalesMenuItems(newId, sales.items);
     }
 
     return newId;
@@ -93,6 +83,9 @@ class SalesRepositoryImpl extends SalesRepository {
     final rowsAffected = await (_db.update(_db.salesModel)
       ..where((tbl) => tbl.id.equals(id))
     ).write(companion);
+
+    await clearSaleItemsBySaleId(id);
+    await saveSalesMenuItems(id, sales.items);
 
     // Devolvemos true si al menos una fila fue actualizada
     return rowsAffected > 0 ? 1 : 0;
@@ -133,6 +126,27 @@ class SalesRepositoryImpl extends SalesRepository {
     }).toList();
 
     return await Future.wait(futures);
+  }
+
+  Future<int> saveSalesMenuItems(int salesId, List<SaleItemMenu> items) async {
+    final newItemSales = items.map((item) async {
+        final companion = SaleItemsModelCompanion.insert(
+          saleId: salesId,
+          menuItemId: item.menuItem.id!,
+          quantity: item.quantity,
+          subtotal: item.total,
+          specialIndications: item.specialIndications,
+        );
+        return await _db.into(_db.saleItemsModel).insert(companion);
+      }).toList();
+    final result = await Future.wait(newItemSales);
+    return result.length;
+  }
+
+  Future<int> clearSaleItemsBySaleId(int saleId) {
+    return (_db.delete(_db.saleItemsModel)
+        ..where((t) => t.saleId.equals(saleId)))
+      .go(); // devuelve el número de filas borradas
   }
 
   Future<MenuItem?> _getMenuItem(int id) async {

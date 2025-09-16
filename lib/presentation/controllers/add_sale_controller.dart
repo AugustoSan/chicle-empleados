@@ -34,7 +34,7 @@ class AddSaleController extends ChangeNotifier {
     final res = await _saleRepository.saveSale(
       Sales.withoutId(
         userId: user.id, 
-        customer: nameC.text == '' ? '0000000000' : nameC.text, 
+        customer: nameC.text == '' ? 'Público en general' : nameC.text, 
         status: EnumSalesStatus.pending, 
         date: DateTime.now(), 
         items: items

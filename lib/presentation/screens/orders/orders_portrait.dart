@@ -16,37 +16,37 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
   @override
   void initState() {
     super.initState();
-    context.read<SaleProvider>().loadAll();
-    final items = context.read<SaleProvider>().allSales;
-    if (_sales.isEmpty && items.isNotEmpty) {
-      _sales.addAll(items);
-    }
+    _init();
   }
 
   @override
   void dispose() {
     super.dispose();
+    _sales.clear();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final items = context.watch<SaleProvider>().allSales;
-    if (_sales.isEmpty && items.isNotEmpty) {
+  }
+
+  Future<void> _init() async {
+    final saleProv = context.read<SaleProvider>();
+    await saleProv.loadAll();
+
+    if(!mounted) return;
+
+    final items = saleProv.allSales;
+
+    setState(() {
+      _sales.clear();
       _sales.addAll(items);
-    }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // final provider = context.watch<SaleProvider>();
-    
-    // final salesAll = provider.allSales;
-
-    for (var i = 0; i < _sales.length; i++) {
-      print('ID sale : ${_sales[i].id}');
-    }
-
+    context.watch<SaleProvider>();
     return Column(
       children: [
         Expanded(
