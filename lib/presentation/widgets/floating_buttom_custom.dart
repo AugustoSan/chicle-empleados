@@ -11,23 +11,20 @@ class FloatingButtomCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final navigatorKey = context.watch<ShellNavigatorController>();
-    // bool showFloatingButton = navigatorKey.selectedBottomMenuIndex >= 0 && navigatorKey.selectedBottomMenuIndex < menuBottomItems.length;
-    print('Floating button pressed ${navigatorKey.currentRoute}');
-    bool showFloatingButton = navigatorKey.currentRoute == DrawerMenuItems.menu.route;
+    final shell = context.watch<ShellNavigatorController>();
+    // bool showFloatingButton = shell.selectedBottomMenuIndex >= 0 && shell.selectedBottomMenuIndex < menuBottomItems.length;
+    bool showFloatingButton = shell.secondRoute.isNotEmpty;
     return showFloatingButton ? FloatingActionButton(
       onPressed: (){
-        print('Floating button pressed ${navigatorKey.currentRoute}');
-        if(navigatorKey.currentRoute == DrawerMenuItems.menu.route){
-          navigatorKey.navigatorKey.currentState!.push(
-            MaterialPageRoute(
-              builder: (context) => ChangeNotifierProvider(
-                create: (ctx) => AddMenuItemController(ctx.read<MenuItemProvider>()), 
-                child: const AddMenuScreen()
-              )
+        shell.setSecondRoute('');
+        shell.navigatorKey.currentState!.push(
+          MaterialPageRoute(
+            builder: (context) => ChangeNotifierProvider(
+              create: (ctx) => AddMenuItemController(ctx.read<MenuItemProvider>()), 
+              child: const AddMenuScreen()
             )
-          );
-        }
+          )
+        );
       },
       child: Icon(Icons.add),
     ) : const SizedBox.shrink();

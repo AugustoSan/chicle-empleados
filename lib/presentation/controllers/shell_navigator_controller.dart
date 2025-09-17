@@ -14,8 +14,17 @@ class ShellNavigatorController extends ChangeNotifier {
 
   String _currentRoute = '/';
   String get currentRoute => _currentRoute;
+
+  String _secondRoute = '';
+  String get secondRoute => _secondRoute;
+
+  void setSecondRoute(String value) {
+    _secondRoute = value; 
+    notifyListeners();
+  }
   
   void navigatePopupMenu(String route) {
+    setSecondRoute('');
     if (route == _currentRoute) return;
     switch (route) {
       case '/settings':
@@ -33,6 +42,7 @@ class ShellNavigatorController extends ChangeNotifier {
   }
 
   void navigateBottomMenu(int index) {
+    setSecondRoute('');
     if (index == _selectedBottomMenuIndex) return;
     if(index >= 0 && index < menuBottomItems.length) {
       print('------------------------------------------------------------');
@@ -47,6 +57,7 @@ class ShellNavigatorController extends ChangeNotifier {
           navigatorKey.currentState!.pushNamed(DrawerMenuItems.home.route);
           break;
         case '/menuItems':
+          setSecondRoute('/addMenu');
           navigatorKey.currentState!.pushNamed(DrawerMenuItems.menu.route);
           break;
         case '/orders':

@@ -9,12 +9,16 @@ class AddMenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<AddMenuItemController>();
+    final shell = context.watch<ShellNavigatorController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Agregar a la carta'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => {
+            Navigator.pushNamed(context, DrawerMenuItems.menu.route),
+            shell.setSecondRoute('/addMenu'),
+          }
         ),
       ),
       body: SafeArea(
