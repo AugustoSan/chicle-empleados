@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
-import 'package:chicle_app_empleados/presentation/screens/info/acerca_de.dart';
 import 'package:chicle_app_empleados/presentation/screens/settings/company_screen.dart';
 import 'package:chicle_app_empleados/presentation/screens/settings/profile_screen.dart';
 // import 'package:chicle_app_empleados/presentation/screens/settings/users_screen.dart';
@@ -58,6 +57,7 @@ class SettingsScreen extends StatelessWidget {
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AcercaDeScreen())),
                   ),
+                  PrivacyTile(),
                 ],
               ),
             ),

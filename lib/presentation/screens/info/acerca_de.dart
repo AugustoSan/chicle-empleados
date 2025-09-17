@@ -38,7 +38,7 @@ class AcercaDeScreen extends StatelessWidget {
                 SizedBox(height: 16),
                 Expanded(
                   child: Text(
-                    'Esta aplicación fue desarrollada unica y exclusivamente para la cafetería "Chicle" para tener un mejor control de ventas,asi como el control de menus ofrecidos a sus clientes.',
+                    'Esta aplicación fue desarrollada unica y exclusivamente para la cafetería "Chicle Café & Snacks" para tener control de ventas,asi como la gestion de menus ofrecidos a sus clientes.',
                     textAlign: TextAlign.justify,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),

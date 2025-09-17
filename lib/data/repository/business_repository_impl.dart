@@ -12,7 +12,7 @@ class BusinessRepositoryImpl implements BusinessRepository {
     // box.clear();
     if (box.isEmpty) {
       await saveBusiness(Business(
-        name:           'Cafetería',
+        name:           'Chicle Café & Snacks',
         currency:       'MXN',
         taxPercent:     16.0,
         type:           BusinessType.cafeteria,

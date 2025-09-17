@@ -59,6 +59,11 @@ class DrawerMenuItems {
     title: 'Acerca de',
     route: '/acercaDe',
   );
+  static const DrawerItem politicaPriv = DrawerItem(
+    icon: Icons.privacy_tip,
+    title: 'Política de privacidad',
+    route: '/poliPriv',
+  );
   static const DrawerItem companySettings = DrawerItem(
     icon: Icons.business,
     title: 'Negocio',

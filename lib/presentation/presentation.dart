@@ -3,3 +3,4 @@ export './providers/providers.dart';
 export './widgets/widgets.dart';
 export './utils/utils.dart';
 export './screens/modules/modules.dart';
+export './screens/info/info.dart';
