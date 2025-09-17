@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class PrivacyTile extends StatelessWidget {
   final Uri privacyUri = Uri.parse(
-    'https://github.com/AugustoSan/chicle-empleados'
+    'https://augustosan.github.io/chicle-empleados/'
   );
 
   @override
