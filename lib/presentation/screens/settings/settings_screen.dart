@@ -1,3 +1,4 @@
+import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
@@ -14,8 +15,8 @@ class SettingsScreen extends StatelessWidget {
     final company = DrawerMenuItems.companySettings;
     final acercaDe = DrawerMenuItems.acercaDe;
     final profile = DrawerMenuItems.profile;
-    final currentUser = context.read<AuthProvider>().username;
-    print('currentUser: ${currentUser}');
+    final currentRole = context.read<AuthProvider>().role;
+    print('currentRole: ${currentRole}');
     return SafeArea(
       child: Column(
         children: [
@@ -36,7 +37,7 @@ class SettingsScreen extends StatelessWidget {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen())),
                 ),
-                currentUser == 'admin'
+                currentRole == EnumRole.administrador.name
                     ? ListTile(
                         title: Text(users.title),
                         leading: Icon(users.icon),

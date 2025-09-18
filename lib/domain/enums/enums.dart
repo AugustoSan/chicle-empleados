@@ -24,3 +24,9 @@ enum EnumSalesStatus {
   completed,
   cancelled
 }
+
+
+enum EnumRole {
+  administrador,
+  usuario
+}

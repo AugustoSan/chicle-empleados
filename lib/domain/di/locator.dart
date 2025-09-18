@@ -45,7 +45,7 @@ Future<void> setupLocator(AppDatabase db) async {
 
   // --- Autenticación ---
   getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(db),
+    () => AuthRepositoryImpl(),
   );
   getIt.registerFactory<AuthProvider>(
     () => AuthProvider(getIt<AuthRepository>())..checkLogin(),

@@ -2,9 +2,6 @@ import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
-// import '../../../domain/domain.dart';
-
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -41,32 +38,29 @@ class ProfileScreen extends StatelessWidget {
                         Expanded(
                           child: ListView(
                             children: [
-                              ContainerAddPicture(onSaveImage: vm.saveImage, rutaImagen: vm.imageProfile.value),
+                              // ContainerAddPicture(onSaveImage: vm.saveImage, rutaImagen: vm.imageProfile.value),
                               const SizedBox(height: 12),
-                              TextFormField(
-                                controller: vm.nameC,
-                                decoration: const InputDecoration(labelText: 'Nombre'),
-                                validator: (v) => v != null && v.isNotEmpty
-                                    ? null
-                                    : 'Nombre inválido',
-                              ),
-                              const SizedBox(height: 12),
-                              TextFormField(
-                                enabled: false,
+                              // TextFieldCustom(
+                              //   controller: vm.nameC,
+                              //   title: 'Nombre',
+                              //   validator: (v) => v != null && v.isNotEmpty
+                              //       ? null
+                              //       : 'Nombre inválido',
+                              // ),
+                              // const SizedBox(height: 12),
+                              TextFieldCustom(
+                                enabled: true,
                                 controller: vm.usernameC,
-                                decoration: const InputDecoration(labelText: 'Nombre de usuario'),
+                                title: 'Nombre de usuario',
                                 validator: (v) =>
                                     v != null && v.isNotEmpty ? null : 'Nombre de usuario inválido',
                               ),
                               const SizedBox(height: 12),
-                              TextFormField(
-                                enabled: false,
-                                obscureText: true,
-                                controller: vm.passwordC,
-                                decoration: const InputDecoration(labelText: 'Contraseña'),
-                                validator: (v) =>
-                                    v != null && v.isNotEmpty ? null : 'Contraseña inválida',
-                              ),
+                              PasswordField(controller: vm.passwordC, title: 'Contraseña actual',),
+                              const SizedBox(height: 12),
+                              PasswordField(controller: vm.passwordNewC, title: 'Contraseña nueva'),
+                              const SizedBox(height: 12),
+                              PasswordField(controller: vm.passwordConfirmC, title: 'Confirmar contraseña nueva', validator: (v) => vm.passwordNewC.text == vm.passwordConfirmC.text ? null : 'Las contraseñas no coinciden'),
                             ],
                           ),
                         ),
@@ -74,17 +68,6 @@ class ProfileScreen extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () async {
                               if (vm.formKey.currentState!.validate()) {
-                                // final userSave = User(
-                                //   id: vm.id,
-                                //   name: vm.nameC.text.trim(),
-                                //   username: vm.usernameC.text.trim(),
-                                //   passwordHash: vm.passwordC.text.trim(),
-                                //   imageUrl: vm.imageProfile.value ?? '',
-                                // );
-                                // context.read<UserProvider>().saveUser(userSave);
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //   const SnackBar(content: Text('Guardado ✔️')),
-                                // );
                                 final res = await vm.save(context);
                                 if (res.isNotEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(

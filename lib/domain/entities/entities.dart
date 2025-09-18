@@ -4,3 +4,4 @@ export 'user.dart';
 export 'business.dart';
 export 'sales.dart';
 export 'customer.dart';
+export 'auth.dart';

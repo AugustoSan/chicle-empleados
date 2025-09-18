@@ -76,12 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 12),
-                    TextFormField(
-                            controller: vm.nameC,
-                            decoration: const InputDecoration(
-                              labelText: 'Nombre del cliente',
-                            ),
-                            validator: (value) {
+                    TextFieldCustom(
+                      controller: vm.nameC,
+                      title: 'Nombre del cliente',
+                      validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Nombre inválido';
                               }

@@ -21,4 +21,6 @@ export 'list_tile_custom.dart';
 export 'text_title_with_content.dart';
 export 'order_ticket.dart';
 export 'alert_dialog_add_descrption_order_menu_item.dart';
+export 'password_field.dart';
+export 'text_field.dart';
 

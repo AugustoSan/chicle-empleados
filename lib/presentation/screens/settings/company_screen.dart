@@ -42,63 +42,53 @@ class CompanyScreen extends StatelessWidget {
                             children: [
                               ContainerAddPicture(onSaveImage: vm.saveLogo, rutaImagen: vm.logoC.value),
                               const SizedBox(height: 12),
-                              TextFormField(
+                              TextFieldCustom(
                                 controller: vm.nameC,
-                                decoration: const InputDecoration(labelText: 'Nombre del negocio'),
+                                title: 'Nombre del negocio',
                                 validator: (v) => v != null && v.isNotEmpty
                                     ? null
                                     : 'Nombre del negocio inválido',
                               ),
                               const SizedBox(height: 12),
-                              TextFormField(
+                              TextFieldCustom(
                                 controller: vm.addressC,
-                                decoration: const InputDecoration(labelText: 'Dirección'),
+                                title: 'Dirección',
                                 validator: (v) => v != null && v.isNotEmpty
                                     ? null
                                     : 'Dirección inválida',
                               ),
                               const SizedBox(height: 12),
-                              TextFormField(
+                              TextFieldCustom(
                                 controller: vm.phoneC,
+                                title: 'Teléfono',
                                 keyboardType: TextInputType.phone,
-                                decoration: const InputDecoration(labelText: 'Teléfono'),
                                 validator: (v) => v != null && v.isNotEmpty && v.length == 10
                                     ? null
                                     : 'Teléfono inválido',
                               ),
                               const SizedBox(height: 12),
-                              TextFormField(
+                              TextFieldCustom(
                                 controller: vm.currencyC,
-                                decoration: const InputDecoration(labelText: 'Moneda'),
+                                title: 'Moneda',
                                 validator: (v) =>
                                     v != null && v.isNotEmpty ? null : 'Moneda inválida',
                                     ),
-                                    const SizedBox(height: 12),
-                                    TextFormField(
-                                      controller: vm.taxC,
-                                      decoration: const InputDecoration(labelText: 'Porcentaje de IVA'),
-                                      keyboardType: TextInputType.number,
-                                      validator: (v) {
-                                        if (v == null || v.isEmpty) return 'IVA requerido';
-                                        if (double.tryParse(v) == null) return 'Debe ser un número';
-                                        return null;
-                                      },
-                                    ),
-                                    const SizedBox(height: 12),
-                                    // DropdownButtonFormField<BusinessType>(
-                                    //   value: vm.selectedType.value,
-                                    //   decoration: const InputDecoration(labelText: 'Tipo de negocio'),
-                                    //   items: BusinessType.values.map((t) =>
-                                    //     DropdownMenuItem(value: t, child: Text(t.name))
-                                    //   ).toList(),
-                                    //   onChanged: (t) {
-                                    //     if (t != null) setState(() => _selectedType = t);
-                                    //   },
-                                    // ),
-                                    const SizedBox(height: 24),
-                                  ],
-                                ),
+                              const SizedBox(height: 12),
+                              TextFieldCustom(
+                                controller: vm.taxC,
+                                title: 'Porcentaje de IVA',
+                                keyboardType: TextInputType.number,
+                                validator: (v) {
+                                  if (v == null || v.isEmpty) return 'IVA requerido';
+                                  if (double.tryParse(v) == null) return 'Debe ser un número';
+                                  return null;
+                                },
                               ),
+                              const SizedBox(height: 12),
+                              const SizedBox(height: 24),
+                            ],
+                          ),
+                        ),
                         Center(
                           child: ElevatedButton(
                             onPressed: () {

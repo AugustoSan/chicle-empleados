@@ -37,8 +37,13 @@ class UserProvider with ChangeNotifier {
     return await _repo.validatePassword(username, password);
   }
 
-  Future<bool> saveUser(User user) async {
-    await _repo.saveUser(user);
+  Future<bool> saveName(int id, String name) async {
+    await _repo.changeName(id, name);
+    notifyListeners();
+    return true;
+  }
+  Future<bool> savePassword(int id, String currentPassword, String newPassword) async {
+    await _repo.changePassword(id, currentPassword, newPassword);
     notifyListeners();
     return true;
   }

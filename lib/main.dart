@@ -33,6 +33,7 @@ Future<void> main() async {
   // await Hive.deleteBoxFromDisk(Boxes.authBox);
   // await Hive.deleteBoxFromDisk(Boxes.businessBox);
   // await Hive.deleteBoxFromDisk(Boxes.customersBox);
+  // await Hive.deleteBoxFromDisk(Boxes.usersBox);
   // 2) Inicializa Hive business
   Hive.registerAdapter(BusinessModelAdapter());
   Hive.registerAdapter(CustomerModelAdapter());
@@ -51,6 +52,9 @@ Future<void> main() async {
 
   final customerProv = getIt<CustomerProvider>();
   await customerProv.initialize();
+
+  final authProv = getIt<AuthProvider>();
+  await authProv.initialize();
 
   runApp(
     MultiProvider(
@@ -76,10 +80,10 @@ Future<void> main() async {
           )
         ),
         ChangeNotifierProxyProvider<AuthProvider, ProfileController>(
-          create: (ctx) => ProfileController(ctx.read<UserProvider>()),
+          create: (ctx) => ProfileController(ctx.read<UserProvider>(), ctx.read<AuthProvider>()),
           update: (ctx, authProv, ctrl) {
             final u = authProv.username;
-            if (u.isNotEmpty) ctrl!.loadFromUser(u);
+            if (u.isNotEmpty) ctrl!.loadFromUser();
             return ctrl!;
           },
         ),

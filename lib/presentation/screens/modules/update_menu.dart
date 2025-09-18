@@ -54,23 +54,23 @@ class UpdateMenuScreen extends StatelessWidget {
                             children: [
                               ContainerAddPicture(onSaveImage: vm.saveImage, rutaImagen: vm.image.value),
                               const SizedBox(height: 12),
-                              TextFormField(
+                              TextFieldCustom(
                                 controller: vm.nameC,
-                                decoration: const InputDecoration(labelText: 'Nombre'),
+                                title: 'Nombre',
                                 validator: (v) => v != null && v.isNotEmpty
                                     ? null
                                     : 'Nombre inválido',
                               ),
                               const SizedBox(height: 12),
-                              TextFormField(
+                              TextFieldCustom(
                                 controller: vm.descriptionC,
-                                decoration: const InputDecoration(labelText: 'Descripción'),
+                                title: 'Descripción',
                               ),
                               const SizedBox(height: 12),
-                              TextFormField(
+                              TextFieldCustom(
                                 controller: vm.priceC,
                                 keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(labelText: 'Precio'),
+                                title: 'Precio',
                                 validator: (v) =>
                                     v != null && v.isNotEmpty ? null : 'Precio inválido',
                               ),

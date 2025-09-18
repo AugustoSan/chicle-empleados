@@ -61,32 +61,15 @@ class LoginScreen extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              TextFormField(
+                              TextFieldCustom(
                                 controller: vm.usernameController,
-                                decoration: const InputDecoration(
-                                  hintText: 'Usuario',
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 20),
-                                ),
+                                title: 'Usuario',
                                 validator: (v) => 
                                   (v == null || v.isEmpty)
                                     ? 'Ingresa tu usuario' : null,
                               ),
                               const SizedBox(height: 12),
-                              TextFormField(
-                                controller: vm.passwordController,
-                                decoration: const InputDecoration(
-                                  hintText: 'Contraseña',
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 20),
-                                ),
-                                obscureText: true,
-                                validator: (v) => 
-                                  (v == null || v.isEmpty)
-                                    ? 'Ingresa tu contraseña' : null,
-                              ),
+                              PasswordField(controller: vm.passwordController, title: 'Contraseña', validator: (v) => v != null && v.isNotEmpty ? null : 'Contraseña inválida'),
                             ],
                           ),
                         ),

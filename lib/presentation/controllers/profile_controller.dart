@@ -6,9 +6,13 @@ import '../utils/utils.dart';
 class ProfileController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   int id = -1;
-  final nameC = TextEditingController();
+  // final nameC = TextEditingController();
   final usernameC = TextEditingController();
   final passwordC = TextEditingController();
+  final passwordNewC = TextEditingController();
+  final passwordConfirmC = TextEditingController();
+  late String currentName;
+  late String currentPassword;
   final ValueNotifier<String?> imageProfile = ValueNotifier<String?>(null);
 
   bool  _loading = false;
@@ -16,19 +20,30 @@ class ProfileController extends ChangeNotifier {
   bool  get loading => _loading;
   String? get error => _error;
 
+  
   final UserProvider _userProvider;
+  final AuthProvider _authProvider;
 
-  ProfileController(this._userProvider);
+  ProfileController(this._userProvider, this._authProvider);
 
-  Future<void> loadFromUser(String username) async {
-    final user = await _userProvider.getUser(username);
+  Future<void> loadFromUser() async {
+    final user = await _userProvider.getCurrentUser();
     if (user == null) return;
     id = user.id;
-    nameC.text     = user.name;
-    usernameC.text = user.username;
-    passwordC.text = user.passwordHash;
+    // nameC.text     = user.name;
+    usernameC.text = _authProvider.username;
+    passwordC.text = '';
+    passwordNewC.text = '';
+    passwordConfirmC.text = '';
     imageProfile.value = user.imageUrl;
+    currentName = user.name;
     notifyListeners();
+  }
+
+  Future<void> clean() async {
+    passwordC.text = '';
+    passwordNewC.text = '';
+    passwordConfirmC.text = '';
   }
 
   Future<String> save(BuildContext context) async {
@@ -37,18 +52,35 @@ class ProfileController extends ChangeNotifier {
     _error   = null;
     notifyListeners();
 
-    final ok = await _userProvider.saveUser(
-      User(
-        id:           id,
-        name:         nameC.text,
-        username:     usernameC.text,
-        passwordHash: passwordC.text,
-        imageUrl:     imageProfile.value!,
-      )
-    );
+    if(_authProvider.username != usernameC.text) {
+      final ok = await _authProvider.changeUsername(newUsername: usernameC.text);
+      if (!ok) _error = 'Ocurrio un error al guardar';
+    }
 
-    _loading = false;
-    if (!ok) _error = 'Ocurrio un error al guardar';
+    if(passwordC.text.isNotEmpty) {
+      final validPassword = await _authProvider.validatePassword(usernameC.text, passwordC.text);
+      if (!validPassword) {
+        _error = 'La contraseña actual no es correcta';
+        return _error!;
+      }
+      if(passwordNewC.text.isNotEmpty) {
+        if(passwordConfirmC.text.isEmpty) {
+          _error = 'La confirmación de la contraseña es requerida';
+          return _error!;
+        }
+        if(passwordConfirmC.text.isNotEmpty && passwordConfirmC.text != passwordNewC.text) {
+          _error = 'Las contraseñas no coinciden';
+          return _error!;
+        }
+        final result = await _authProvider.changePassword(
+          currentPassword: passwordC.text,
+          newPassword: passwordNewC.text
+        );
+        if (!result) _error = 'Ocurrio un error al guardar la contraseña';
+        clean();
+      }
+    }
+
     notifyListeners();
     return _error ?? '';
   }
@@ -62,12 +94,16 @@ class ProfileController extends ChangeNotifier {
     notifyListeners();
   }
 
+  
+
   @override
   void dispose() {
-    nameC.dispose();
+    // nameC.dispose();
     usernameC.dispose();
     passwordC.dispose();
     imageProfile.dispose();
+    passwordNewC.dispose();
+    passwordConfirmC.dispose();
     super.dispose();
   }
 }

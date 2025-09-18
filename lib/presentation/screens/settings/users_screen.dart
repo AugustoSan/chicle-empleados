@@ -1,5 +1,6 @@
-import 'dart:io';
+// import 'dart:io';
 
+import 'package:chicle_app_empleados/presentation/screens/settings/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,8 @@ class UsersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.read<AuthProvider>();
+    final currentUser = authProvider.username;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Usuarios'),
@@ -19,8 +22,8 @@ class UsersScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: FutureBuilder<List<User>>(
-        future: context.read<UserProvider>().getAllUsers(),
+      body: FutureBuilder<List<Auth>>(
+        future: authProvider.getAllUsers(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -40,15 +43,15 @@ class UsersScreen extends StatelessWidget {
               return Card(
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 child: ListTile(
-                  leading: u.imageUrl.isNotEmpty
-                      ? CircleAvatar(backgroundImage: FileImage(File(u.imageUrl)))
-                      : const CircleAvatar(child: Icon(Icons.person)),
-                  title: Text(u.name),
+                  leading: CircleAvatar(child: Text(u.username[0], style: const TextStyle(fontSize: 20))),
+                  title: Text(u.username),
                   subtitle: Text('@${u.username}'),
                   trailing: IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () {
-                      // Abre edición: cargar ProfileController con u y navegar
+                      if(u.username == currentUser) {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+                      }
                     },
                   ),
                 ),

@@ -26,6 +26,9 @@ class ShellNavigatorController extends ChangeNotifier {
   void navigatePopupMenu(String route) {
     setSecondRoute('');
     if (route == _currentRoute) return;
+    print('------------------------------------------------------------');
+    print('desde: ${_currentRoute}    ---->   hacia: ${route}');
+    print('------------------------------------------------------------');
     switch (route) {
       case '/settings':
         _currentRoute = route;
@@ -62,9 +65,6 @@ class ShellNavigatorController extends ChangeNotifier {
           break;
         case '/orders':
           navigatorKey.currentState!.pushNamed(DrawerMenuItems.order.route);
-          break;
-        case '/profile':
-          navigatorKey.currentState!.pushNamed(DrawerMenuItems.profile.route);
           break;
         default:
           print('entro en default');

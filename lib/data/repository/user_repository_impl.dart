@@ -1,3 +1,5 @@
+import 'package:drift/drift.dart';
+
 import '../../data/local/app_database.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/user_repository.dart';
@@ -60,24 +62,48 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<bool> saveUser(User user) async {
+  Future<bool> changeName(int id, String name) async {
+    final trimmed = name.trim();
+    if (trimmed.isEmpty) return false;
+
+    final user = await findUserById(id);
+    if (user == null) return false;
+
+    final rows = await (_db.update(_db.usersModel)
+        ..where((t) => t.id.equals(id)))
+      .write(UsersModelCompanion(name: Value(trimmed)));
+
+    return rows > 0;
+  }
+
+  @override
+  Future<bool> changePassword(int id, String currentPassword, String newPassword) async {
+    final trimmed = newPassword.trim();
+    if (trimmed.isEmpty) return false;
+
+    final user = await findUserById(id);
+    if (user == null) return false;
+
+    final currentHash = AuthService.hashPassword(currentPassword);
+    if (currentHash != user.passwordHash) return false;
+    
+    final rows = await (_db.update(_db.usersModel)
+        ..where((t) => t.id.equals(id)))
+      .write(UsersModelCompanion(name: Value(trimmed)));
+
+    return rows > 0;
+  }
+
+  Future<User?> findUserById(int id) async {
     List<User> list = await getAllUsers();
-    for (User us in list) {
-      if(us.id == user.id && us.passwordHash == AuthService.hashPassword(user.passwordHash)) return false;
-    }
-    final companion = UsersModelCompanion.insert(
+    final user = list.where((us) => us.id == id).firstOrNull;
+    if (user == null) return null;
+    return User(
+      id: user.id,
       name: user.name,
       username: user.username,
-      password: AuthService.hashPassword(user.passwordHash),
+      passwordHash: user.passwordHash,
       imageUrl: user.imageUrl,
     );
-      
-    // Ejecutamos el update y recogemos cuántas filas se vieron afectadas
-    final rowsAffected = await (_db.update(_db.usersModel)
-      ..where((tbl) => tbl.id.equals(user.id))
-    ).write(companion);
-
-    // Devolvemos true si al menos una fila fue actualizada
-    return rowsAffected > 0;
   }
 }
