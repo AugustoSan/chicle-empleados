@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../presentation.dart';
 
-import '../screens/modules/add_menu.dart';
-// import '../screens/home/add_sale.dart';
-
 class FloatingButtomCustom extends StatelessWidget {
   const FloatingButtomCustom({super.key});
 
@@ -17,14 +14,16 @@ class FloatingButtomCustom extends StatelessWidget {
     return showFloatingButton ? FloatingActionButton(
       onPressed: (){
         shell.setSecondRoute('');
-        shell.navigatorKey.currentState!.push(
-          MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider(
-              create: (ctx) => AddMenuItemController(ctx.read<MenuItemProvider>()), 
-              child: const AddMenuScreen()
+        if(shell.secondRoute == '/addMenu') {
+          shell.navigatorKey.currentState!.push(
+            MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider(
+                create: (ctx) => AddMenuItemController(ctx.read<MenuItemProvider>()), 
+                child: const AddMenuScreen()
+              )
             )
-          )
-        );
+          );
+        }
       },
       child: Icon(Icons.add),
     ) : const SizedBox.shrink();

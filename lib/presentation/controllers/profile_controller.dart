@@ -27,16 +27,15 @@ class ProfileController extends ChangeNotifier {
   ProfileController(this._userProvider, this._authProvider);
 
   Future<void> loadFromUser() async {
-    final user = await _userProvider.getCurrentUser();
+    final username = _authProvider.username;
+    final user = await _userProvider.getUser(username);
     if (user == null) return;
     id = user.id;
     // nameC.text     = user.name;
-    usernameC.text = _authProvider.username;
+    usernameC.text = username;
     passwordC.text = '';
     passwordNewC.text = '';
     passwordConfirmC.text = '';
-    imageProfile.value = user.imageUrl;
-    currentName = user.name;
     notifyListeners();
   }
 

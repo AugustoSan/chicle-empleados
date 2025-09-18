@@ -46,7 +46,7 @@ Future<void> main() async {
 
   // Obtén la instancia y espera a que cargue
   final userProv = getIt<UserProvider>();
-  await userProv.initialize();
+  // await userProv.initialize();
   final businessProv = getIt<BusinessProvider>();
   await businessProv.initialize();
 

@@ -18,34 +18,14 @@ class $UsersModelTable extends UsersModel
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _usernameMeta =
       const VerificationMeta('username');
   @override
   late final GeneratedColumn<String> username = GeneratedColumn<String>(
       'username', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      $customConstraints: 'NOT NULL UNIQUE');
-  static const VerificationMeta _passwordMeta =
-      const VerificationMeta('password');
-  @override
-  late final GeneratedColumn<String> password = GeneratedColumn<String>(
-      'password', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _imageUrlMeta =
-      const VerificationMeta('imageUrl');
-  @override
-  late final GeneratedColumn<String> imageUrl = GeneratedColumn<String>(
-      'image_url', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, name, username, password, imageUrl];
+  List<GeneratedColumn> get $columns => [id, username];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -59,29 +39,11 @@ class $UsersModelTable extends UsersModel
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('name')) {
-      context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
     if (data.containsKey('username')) {
       context.handle(_usernameMeta,
           username.isAcceptableOrUnknown(data['username']!, _usernameMeta));
     } else if (isInserting) {
       context.missing(_usernameMeta);
-    }
-    if (data.containsKey('password')) {
-      context.handle(_passwordMeta,
-          password.isAcceptableOrUnknown(data['password']!, _passwordMeta));
-    } else if (isInserting) {
-      context.missing(_passwordMeta);
-    }
-    if (data.containsKey('image_url')) {
-      context.handle(_imageUrlMeta,
-          imageUrl.isAcceptableOrUnknown(data['image_url']!, _imageUrlMeta));
-    } else if (isInserting) {
-      context.missing(_imageUrlMeta);
     }
     return context;
   }
@@ -94,14 +56,8 @@ class $UsersModelTable extends UsersModel
     return UsersModelData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       username: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}username'])!,
-      password: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}password'])!,
-      imageUrl: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}image_url'])!,
     );
   }
 
@@ -113,34 +69,20 @@ class $UsersModelTable extends UsersModel
 
 class UsersModelData extends DataClass implements Insertable<UsersModelData> {
   final int id;
-  final String name;
   final String username;
-  final String password;
-  final String imageUrl;
-  const UsersModelData(
-      {required this.id,
-      required this.name,
-      required this.username,
-      required this.password,
-      required this.imageUrl});
+  const UsersModelData({required this.id, required this.username});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['name'] = Variable<String>(name);
     map['username'] = Variable<String>(username);
-    map['password'] = Variable<String>(password);
-    map['image_url'] = Variable<String>(imageUrl);
     return map;
   }
 
   UsersModelCompanion toCompanion(bool nullToAbsent) {
     return UsersModelCompanion(
       id: Value(id),
-      name: Value(name),
       username: Value(username),
-      password: Value(password),
-      imageUrl: Value(imageUrl),
     );
   }
 
@@ -149,10 +91,7 @@ class UsersModelData extends DataClass implements Insertable<UsersModelData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return UsersModelData(
       id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
       username: serializer.fromJson<String>(json['username']),
-      password: serializer.fromJson<String>(json['password']),
-      imageUrl: serializer.fromJson<String>(json['imageUrl']),
     );
   }
   @override
@@ -160,33 +99,18 @@ class UsersModelData extends DataClass implements Insertable<UsersModelData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
       'username': serializer.toJson<String>(username),
-      'password': serializer.toJson<String>(password),
-      'imageUrl': serializer.toJson<String>(imageUrl),
     };
   }
 
-  UsersModelData copyWith(
-          {int? id,
-          String? name,
-          String? username,
-          String? password,
-          String? imageUrl}) =>
-      UsersModelData(
+  UsersModelData copyWith({int? id, String? username}) => UsersModelData(
         id: id ?? this.id,
-        name: name ?? this.name,
         username: username ?? this.username,
-        password: password ?? this.password,
-        imageUrl: imageUrl ?? this.imageUrl,
       );
   UsersModelData copyWithCompanion(UsersModelCompanion data) {
     return UsersModelData(
       id: data.id.present ? data.id.value : this.id,
-      name: data.name.present ? data.name.value : this.name,
       username: data.username.present ? data.username.value : this.username,
-      password: data.password.present ? data.password.value : this.password,
-      imageUrl: data.imageUrl.present ? data.imageUrl.value : this.imageUrl,
     );
   }
 
@@ -194,78 +118,46 @@ class UsersModelData extends DataClass implements Insertable<UsersModelData> {
   String toString() {
     return (StringBuffer('UsersModelData(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('username: $username, ')
-          ..write('password: $password, ')
-          ..write('imageUrl: $imageUrl')
+          ..write('username: $username')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, username, password, imageUrl);
+  int get hashCode => Object.hash(id, username);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is UsersModelData &&
           other.id == this.id &&
-          other.name == this.name &&
-          other.username == this.username &&
-          other.password == this.password &&
-          other.imageUrl == this.imageUrl);
+          other.username == this.username);
 }
 
 class UsersModelCompanion extends UpdateCompanion<UsersModelData> {
   final Value<int> id;
-  final Value<String> name;
   final Value<String> username;
-  final Value<String> password;
-  final Value<String> imageUrl;
   const UsersModelCompanion({
     this.id = const Value.absent(),
-    this.name = const Value.absent(),
     this.username = const Value.absent(),
-    this.password = const Value.absent(),
-    this.imageUrl = const Value.absent(),
   });
   UsersModelCompanion.insert({
     this.id = const Value.absent(),
-    required String name,
     required String username,
-    required String password,
-    required String imageUrl,
-  })  : name = Value(name),
-        username = Value(username),
-        password = Value(password),
-        imageUrl = Value(imageUrl);
+  }) : username = Value(username);
   static Insertable<UsersModelData> custom({
     Expression<int>? id,
-    Expression<String>? name,
     Expression<String>? username,
-    Expression<String>? password,
-    Expression<String>? imageUrl,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (name != null) 'name': name,
       if (username != null) 'username': username,
-      if (password != null) 'password': password,
-      if (imageUrl != null) 'image_url': imageUrl,
     });
   }
 
-  UsersModelCompanion copyWith(
-      {Value<int>? id,
-      Value<String>? name,
-      Value<String>? username,
-      Value<String>? password,
-      Value<String>? imageUrl}) {
+  UsersModelCompanion copyWith({Value<int>? id, Value<String>? username}) {
     return UsersModelCompanion(
       id: id ?? this.id,
-      name: name ?? this.name,
       username: username ?? this.username,
-      password: password ?? this.password,
-      imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 
@@ -275,17 +167,8 @@ class UsersModelCompanion extends UpdateCompanion<UsersModelData> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
     if (username.present) {
       map['username'] = Variable<String>(username.value);
-    }
-    if (password.present) {
-      map['password'] = Variable<String>(password.value);
-    }
-    if (imageUrl.present) {
-      map['image_url'] = Variable<String>(imageUrl.value);
     }
     return map;
   }
@@ -294,10 +177,7 @@ class UsersModelCompanion extends UpdateCompanion<UsersModelData> {
   String toString() {
     return (StringBuffer('UsersModelCompanion(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('username: $username, ')
-          ..write('password: $password, ')
-          ..write('imageUrl: $imageUrl')
+          ..write('username: $username')
           ..write(')'))
         .toString();
   }
@@ -1345,17 +1225,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 
 typedef $$UsersModelTableCreateCompanionBuilder = UsersModelCompanion Function({
   Value<int> id,
-  required String name,
   required String username,
-  required String password,
-  required String imageUrl,
 });
 typedef $$UsersModelTableUpdateCompanionBuilder = UsersModelCompanion Function({
   Value<int> id,
-  Value<String> name,
   Value<String> username,
-  Value<String> password,
-  Value<String> imageUrl,
 });
 
 final class $$UsersModelTableReferences
@@ -1390,17 +1264,8 @@ class $$UsersModelTableFilterComposer
   ColumnFilters<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnFilters(column));
-
   ColumnFilters<String> get username => $composableBuilder(
       column: $table.username, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get password => $composableBuilder(
-      column: $table.password, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get imageUrl => $composableBuilder(
-      column: $table.imageUrl, builder: (column) => ColumnFilters(column));
 
   Expression<bool> salesModelRefs(
       Expression<bool> Function($$SalesModelTableFilterComposer f) f) {
@@ -1436,17 +1301,8 @@ class $$UsersModelTableOrderingComposer
   ColumnOrderings<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<String> get username => $composableBuilder(
       column: $table.username, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get password => $composableBuilder(
-      column: $table.password, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get imageUrl => $composableBuilder(
-      column: $table.imageUrl, builder: (column) => ColumnOrderings(column));
 }
 
 class $$UsersModelTableAnnotationComposer
@@ -1461,17 +1317,8 @@ class $$UsersModelTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
   GeneratedColumn<String> get username =>
       $composableBuilder(column: $table.username, builder: (column) => column);
-
-  GeneratedColumn<String> get password =>
-      $composableBuilder(column: $table.password, builder: (column) => column);
-
-  GeneratedColumn<String> get imageUrl =>
-      $composableBuilder(column: $table.imageUrl, builder: (column) => column);
 
   Expression<T> salesModelRefs<T extends Object>(
       Expression<T> Function($$SalesModelTableAnnotationComposer a) f) {
@@ -1519,31 +1366,19 @@ class $$UsersModelTableTableManager extends RootTableManager<
               $$UsersModelTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
             Value<String> username = const Value.absent(),
-            Value<String> password = const Value.absent(),
-            Value<String> imageUrl = const Value.absent(),
           }) =>
               UsersModelCompanion(
             id: id,
-            name: name,
             username: username,
-            password: password,
-            imageUrl: imageUrl,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            required String name,
             required String username,
-            required String password,
-            required String imageUrl,
           }) =>
               UsersModelCompanion.insert(
             id: id,
-            name: name,
             username: username,
-            password: password,
-            imageUrl: imageUrl,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (

@@ -2,10 +2,7 @@ import 'package:drift/drift.dart';
 
 class UsersModel extends Table {
   IntColumn    get id       => integer().autoIncrement()();
-  TextColumn   get name     => text()();
-  TextColumn   get username    => text().customConstraint('NOT NULL UNIQUE')();
-  TextColumn   get password => text()();
-  TextColumn   get imageUrl => text()();
+  TextColumn   get username    => text()();
 }
 
 class MenuItemModel extends Table {

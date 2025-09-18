@@ -1,5 +1,6 @@
 // import 'dart:io';
 
+import 'package:chicle_app_empleados/presentation/screens/auth/add_users.dart';
 import 'package:chicle_app_empleados/presentation/screens/settings/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ class UsersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final authProvider = context.read<AuthProvider>();
     final currentUser = authProvider.username;
+    final shell = context.watch<ShellNavigatorController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Usuarios'),
@@ -46,19 +48,30 @@ class UsersScreen extends StatelessWidget {
                   leading: CircleAvatar(child: Text(u.username[0], style: const TextStyle(fontSize: 20))),
                   title: Text(u.username),
                   subtitle: Text('@${u.username}'),
-                  trailing: IconButton(
+                  trailing: u.username == currentUser ? IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () {
                       if(u.username == currentUser) {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
                       }
                     },
-                  ),
+                  ) : const SizedBox.shrink(),
                 ),
               );
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () => shell.navigatorKey.currentState!.push(
+            MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider(
+                create: (ctx) => AddUserController(ctx.read<AuthProvider>()), 
+                child: const AddUserScreen()
+              )
+            )
+          ),
       ),
     );
   }

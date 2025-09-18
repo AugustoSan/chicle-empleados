@@ -24,7 +24,7 @@ class SettingsScreen extends StatelessWidget {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-            height: 300,
+            height: 320,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),

@@ -66,6 +66,10 @@ class ShellNavigatorController extends ChangeNotifier {
         case '/orders':
           navigatorKey.currentState!.pushNamed(DrawerMenuItems.order.route);
           break;
+        case '/users':
+          setSecondRoute('/addUser');
+          navigatorKey.currentState!.pushNamed(DrawerMenuItems.users.route);
+          break;
         default:
           print('entro en default');
           navigatorKey.currentState!.pushNamed(DrawerMenuItems.home.route);

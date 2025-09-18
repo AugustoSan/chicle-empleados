@@ -1,7 +1,6 @@
 import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:chicle_app_empleados/models/models.dart';
 import 'package:hive/hive.dart';
-// import '../local/app_database.dart';
 import '../services/auth_service.dart';
 
 /// Contrato que define cómo obtener y guardar la configuración del negocio.
@@ -10,10 +9,10 @@ class AuthRepositoryImpl implements AuthRepository {
   static const _AUTH_KEY    = Boxes.key;
   static const _USERS_BOX   = Boxes.usersBox;
 
-  // final AppDatabase _db;
+  final UserRepository _userRepository;
 
-  // AuthRepositoryImpl(this._db);
-  AuthRepositoryImpl();
+  AuthRepositoryImpl(this._userRepository);
+  // AuthRepositoryImpl();
 
   Future<Box<AuthModel>> _usersBox() async {
     if(Hive.isBoxOpen(_USERS_BOX)) return await Hive.openBox<AuthModel>(_USERS_BOX);
@@ -30,11 +29,13 @@ class AuthRepositoryImpl implements AuthRepository {
     final box = await _usersBox();
     // box.clear();
     if (box.isEmpty) {
+      final username = 'admin';
       await addUser(
-        username: 'admin',
-        password: 'admin',
+        username: username,
+        password: username,
         role: EnumRole.administrador,
       );
+      await _userRepository.addUserDB(username);
     }
   }
 
@@ -116,7 +117,7 @@ class AuthRepositoryImpl implements AuthRepository {
     if (trimmed.isEmpty || trimmed == username) return false;
     if (users.containsKey(trimmed)) return false;
 
-    await deleteUser(username: username);
+    await deleteUserOnlyAuth(username: username);
     final model = AuthModel(
       username: trimmed,
       password: user.password,
@@ -124,6 +125,9 @@ class AuthRepositoryImpl implements AuthRepository {
     );
     await users.put(trimmed, model);
     logout();
+    final userBD = await _userRepository.findUserByUsernameDB(username);
+    if (userBD == null) return false;
+    await _userRepository.changeUsernameDB(userBD.id, trimmed);
     return true;
   }
 
@@ -162,12 +166,24 @@ class AuthRepositoryImpl implements AuthRepository {
       role: role.name,
     );
     await users.put(key, model);
+
+    await _userRepository.addUserDB(key);
     return true;
   }
 
   /// Elimina un usuario.
   @override
   Future<bool> deleteUser({
+    required String username,
+  }) async {
+    final users = await _usersBox();
+    if (!users.containsKey(username)) return false;
+    await users.delete(username);
+    await _userRepository.deleteUserDB(username);
+    return true;
+  }
+
+  Future<bool> deleteUserOnlyAuth({
     required String username,
   }) async {
     final users = await _usersBox();

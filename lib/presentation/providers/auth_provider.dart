@@ -29,7 +29,9 @@ class AuthProvider with ChangeNotifier {
   Future<bool> login(String username, String password) async {
     final ok = await _repo.login(username, password);
     if (ok) {
-      _username   = username;
+      final user = await _repo.getLoggedInUser();
+      _username   = user?.username ?? '';
+      _role       = user?.role ?? '';
       _isLoggedIn = true;
       notifyListeners();
     }
