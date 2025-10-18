@@ -56,7 +56,12 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<bool> deleteUserDB(String username) async {
-    final rows = await _db.delete(_db.usersModel).delete(UsersModelCompanion(username: Value(username)));
+    final user = await findUserByUsernameDB(username);
+    if (user == null) return false;
+    final rows = await _db.delete(_db.usersModel).delete(UsersModelCompanion(
+      id: Value(user.id),
+      username: Value(username),
+    ));
     return rows > 0;
   }
 

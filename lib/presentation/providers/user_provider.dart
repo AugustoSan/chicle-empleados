@@ -39,4 +39,10 @@ class UserProvider with ChangeNotifier {
   Future<List<User>> getAllUsers() async {
     return await _repo.getAllUsersDB();
   }
+
+  Future<bool> deleteUserDB(String username) async {
+    final result = await _repo.deleteUserDB(username);
+    notifyListeners();
+    return result;
+  }
 }
