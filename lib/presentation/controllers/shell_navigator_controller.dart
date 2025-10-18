@@ -18,6 +18,14 @@ class ShellNavigatorController extends ChangeNotifier {
   String _secondRoute = '';
   String get secondRoute => _secondRoute;
 
+  void initialize() {
+    _selectedPopupMenuIndex = 0;
+    _selectedBottomMenuIndex = 0;
+    _currentRoute = '/';
+    _secondRoute = '';
+    notifyListeners();
+  }
+
   void setSecondRoute(String value) {
     _secondRoute = value; 
     notifyListeners();

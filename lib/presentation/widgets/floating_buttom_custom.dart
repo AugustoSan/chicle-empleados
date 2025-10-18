@@ -13,7 +13,6 @@ class FloatingButtomCustom extends StatelessWidget {
     bool showFloatingButton = shell.secondRoute.isNotEmpty;
     return showFloatingButton ? FloatingActionButton(
       onPressed: (){
-        shell.setSecondRoute('');
         if(shell.secondRoute == '/addMenu') {
           shell.navigatorKey.currentState!.push(
             MaterialPageRoute(
@@ -23,6 +22,7 @@ class FloatingButtomCustom extends StatelessWidget {
               )
             )
           );
+          shell.setSecondRoute('');
         }
       },
       child: Icon(Icons.add),

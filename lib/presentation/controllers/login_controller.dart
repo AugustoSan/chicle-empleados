@@ -1,3 +1,4 @@
+import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 import '../providers/providers.dart';
 
@@ -15,7 +16,7 @@ class LoginController extends ChangeNotifier {
 
   LoginController(this._auth);
 
-  Future<void> submit(BuildContext context) async {
+  Future<void> submit(BuildContext context, ShellNavigatorController shell) async {
     if (!formKey.currentState!.validate()) return;
 
     _loading = true;
@@ -29,6 +30,7 @@ class LoginController extends ChangeNotifier {
 
     _loading = false;
     if (!ok) _error = 'Credenciales incorrectas';
+    shell.initialize();
     notifyListeners();
   }
 
