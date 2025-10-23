@@ -57,7 +57,10 @@ class _ListItemsPriceQuantityState extends State<ListItemsPriceQuantity> {
         itemCount: _listProducts.length,
         itemBuilder: (context, index) {
           final menuItem = _listProducts[index];
-          final item = widget.saleItems[menuItem]!;
+          final item = widget.saleItems[menuItem];
+          if (item == null) {
+            return const SizedBox.shrink();
+          }
           return CardAddOrderItemCustom(
             orderItem: item,
             onIncrement: () => setState(() {

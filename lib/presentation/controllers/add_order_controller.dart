@@ -40,7 +40,7 @@ class AddOrderController extends ChangeNotifier {
         items: items
       )
     );
-    if(res == -1) {
+    if(!res) {
       _error = 'Ocurrio un error al guardar';
       return _error!;
     }
