@@ -71,7 +71,7 @@ class ProductRepositoryImpl extends ProductRepository {
   Future<bool> _save(Product product) async {
     final box = await _openProductBox();
     final exists = await getProduct(product.id);
-    if (exists == null) return false;
+    if (exists != null) return false;
 
     final model = product.parseToModel();
     

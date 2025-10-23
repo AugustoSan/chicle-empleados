@@ -16,9 +16,9 @@ class AddMenuItemController extends ChangeNotifier {
   bool  get loading => _loading;
   String? get error => _error;
 
-  final ProductProvider _menuItemProvider;
+  final ProductProvider _ProductProvider;
 
-  AddMenuItemController(this._menuItemProvider);
+  AddMenuItemController(this._ProductProvider);
 
   Future<String> save(BuildContext context) async {
     
@@ -31,7 +31,7 @@ class AddMenuItemController extends ChangeNotifier {
     _error   = null;
     notifyListeners();
 
-    final ok = await _menuItemProvider.saveProduct(
+    final ok = await _ProductProvider.saveProduct(
       Product.withoutId(
         name:         nameC.text,
         description:  descriptionC.text,

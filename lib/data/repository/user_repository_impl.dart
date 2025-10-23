@@ -139,7 +139,7 @@ class UserRepositoryImpl implements UserRepository {
     final model = UserModel(
       id: id,
       username: newUser.username,
-      passwordHash: AuthService.hashPassword(newUser.password),
+      passwordHash: newUser.password,
       role: newUser.role.index,
     );
 
