@@ -41,7 +41,7 @@ class MenuCarousel extends StatelessWidget {
             separatorBuilder: (_, __) => const SizedBox(width: 12),
             itemBuilder: (context, index) {
               final item = items[index];
-              return CardMenuCustom(item: item);
+              return CardProductCustom(item: item);
             },
           ),
         ),

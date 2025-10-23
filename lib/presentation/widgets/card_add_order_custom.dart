@@ -5,13 +5,13 @@ import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 
-class CardAddMenuOrderCustom extends StatelessWidget {
+class CardAddOrderItemCustom extends StatelessWidget {
   // final MenuItem item;
   final OrderItem orderItem;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
 
-  const CardAddMenuOrderCustom({super.key, required this.orderItem, required this.onIncrement, required this.onDecrement});
+  const CardAddOrderItemCustom({super.key, required this.orderItem, required this.onIncrement, required this.onDecrement});
 
   @override
   Widget build(BuildContext context) {

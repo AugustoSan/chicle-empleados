@@ -22,7 +22,7 @@ Future<void> mostrarDescriptionOrderItemDialog(BuildContext context, Product ite
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
-    builder: (_) => AlertDialogAddDescrptionOrderItem(product: item),
+    builder: (_) => AlertDialogAddDescrptionProduct(product: item),
   );
 }
 

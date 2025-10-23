@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../domain/entities/product.dart';
 
-class CardMenuCustom extends StatelessWidget {
+class CardProductCustom extends StatelessWidget {
   final Product item;
-  const CardMenuCustom({super.key, required this.item});
+  const CardProductCustom({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {

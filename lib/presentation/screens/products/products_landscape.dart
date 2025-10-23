@@ -51,7 +51,7 @@ class _MenuItemsListLandscapeState extends State<MenuItemsListLandscape> {
                       itemCount: menuList.length,
                       itemBuilder: (context, index) {
                         final item = menuList[index];
-                        return CardMenuCustomLandscape(item: item);
+                        return CardProductCustomLandscape(item: item);
                       },
                     ),
               ),
@@ -77,7 +77,7 @@ class _MenuItemsListLandscapeState extends State<MenuItemsListLandscape> {
                         childAspectRatio: 1,
                         physics: const BouncingScrollPhysics(),
                         padding: const EdgeInsets.all(4),
-                        children: bebidasList.map((item) => CardMenuCustom(item: item)).toList(),
+                        children: bebidasList.map((item) => CardProductCustom(item: item)).toList(),
                       )
               ),
             ],
@@ -102,7 +102,7 @@ class _MenuItemsListLandscapeState extends State<MenuItemsListLandscape> {
                             // SON grids independientes, scrolling vertical propio:
                             physics: const BouncingScrollPhysics(),
                         padding: const EdgeInsets.all(4),
-                        children: alimentosList.map((item) => CardMenuCustom(item: item)).toList(),
+                        children: alimentosList.map((item) => CardProductCustom(item: item)).toList(),
                       )
               ),
             ],

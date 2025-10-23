@@ -3,10 +3,10 @@ import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-class AlertDialogAddDescrptionOrderItem extends StatelessWidget {
+class AlertDialogAddDescrptionProduct extends StatelessWidget {
   // final OrderItem orderItem;
   final Product product;
-  const AlertDialogAddDescrptionOrderItem({super.key, required this.product});
+  const AlertDialogAddDescrptionProduct({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {

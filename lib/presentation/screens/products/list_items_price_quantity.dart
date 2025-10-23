@@ -53,7 +53,7 @@ class _ListItemsPriceQuantityState extends State<ListItemsPriceQuantity> {
         itemBuilder: (context, index) {
           final menuItem = _listProducts[index];
           final item = widget.saleItems[menuItem]!;
-          return CardAddMenuOrderCustom(
+          return CardAddOrderItemCustom(
             orderItem: item,
             onIncrement: () => setState(() {
               if (item.quantity < 100) item.quantity = item.quantity + 1;

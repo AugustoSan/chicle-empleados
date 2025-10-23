@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../domain/entities/product.dart';
 
-class CardMenuCustomLandscape extends StatelessWidget {
+class CardProductCustomLandscape extends StatelessWidget {
   final Product item;
-  const CardMenuCustomLandscape({super.key, required this.item});
+  const CardProductCustomLandscape({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {

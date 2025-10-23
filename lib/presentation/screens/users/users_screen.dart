@@ -1,12 +1,12 @@
 // import 'dart:io';
 
-import 'package:chicle_app_empleados/presentation/screens/auth/add_users.dart';
 import 'package:chicle_app_empleados/presentation/screens/settings/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../domain/domain.dart';
 import '../../presentation.dart';
+import './add_users.dart';
 
 class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
