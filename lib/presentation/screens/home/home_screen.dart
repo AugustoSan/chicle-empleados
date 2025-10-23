@@ -89,7 +89,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () {
                           final seleccionados = _orderItems.entries
                             .where((item) => item.value.quantity > 0)
-                            .map((item) => OrderItem.fromProduct(item.key)).toList();
+                            .map((item) => OrderItem.fromNewOrderItem(cantidad: item.value.quantity, producto: item.key, precio: item.value.priceAtOrder, indicaciones: item.value.specialIndications))
+                            .toList();
+                          //key)).toList();
                           for (var item in seleccionados) {
                             print('item: ${item.product.name}, quantity: ${item.quantity}');
                           }

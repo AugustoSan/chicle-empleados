@@ -36,6 +36,7 @@ class _ProductsPortraitState extends State<ProductsPortrait> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    _init();
   }
 
   Future<void> _init() async {

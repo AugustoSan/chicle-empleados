@@ -56,10 +56,18 @@ class _ListItemsPriceQuantityState extends State<ListItemsPriceQuantity> {
           return CardAddOrderItemCustom(
             orderItem: item,
             onIncrement: () => setState(() {
-              if (item.quantity < 100) item.quantity = item.quantity + 1;
+              if (item.quantity < 100) {
+                setState(() {
+                  item.quantity = item.quantity + 1;
+                });
+              }
             }),
             onDecrement: () => setState(() {
-              if (item.quantity > 0) item.quantity = item.quantity - 1;
+              if (item.quantity > 0){
+                setState(() {
+                  item.quantity = item.quantity - 1;
+                });
+              }
             }),
           );
         },

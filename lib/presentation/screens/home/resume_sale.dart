@@ -80,108 +80,111 @@ class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
     // final total = subtotal + tax;
     final total = subtotal;
 
-    return SafeArea(
-      child: Form(
-        key: _formKey,  // ← usa la key local, no la de vm
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  children: [
-                    // Encabezado
-                    Text("Resumen de venta", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 16),
-                    Expanded(
-                      child: Container(
-                        width: 300, // ancho fijo para impresión en POS
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey.shade300),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            // Info de ticket
-                            _buildInfoRow('Cliente:', nameCustomer),
-                            _buildInfoRow('Fecha:', DateUtil.formatDate(DateTime.now())),
-                            const Divider(height: 24, thickness: 1),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        child: Form(
+          key: _formKey,  // ← usa la key local, no la de vm
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    children: [
+                      // Encabezado
+                      Text("Resumen de venta", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 16),
+                      Expanded(
+                        child: Container(
+                          width: 300, // ancho fijo para impresión en POS
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.grey.shade300),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              // Info de ticket
+                              _buildInfoRow('Cliente:', nameCustomer),
+                              _buildInfoRow('Fecha:', DateUtil.formatDate(DateTime.now())),
+                              const Divider(height: 24, thickness: 1),
 
-                            // Encabezados de la tabla
-                            Row(
-                              children: const [
-                                Expanded(flex: 4, child: Text('Concepto', style: TextStyle(fontWeight: FontWeight.bold))),
-                                Expanded(flex: 1, child: Text('Cant.', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold))),
-                                Expanded(flex: 2, child: Text('Importe', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold))),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
+                              // Encabezados de la tabla
+                              Row(
+                                children: const [
+                                  Expanded(flex: 4, child: Text('Concepto', style: TextStyle(fontWeight: FontWeight.bold))),
+                                  Expanded(flex: 1, child: Text('Cant.', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold))),
+                                  Expanded(flex: 2, child: Text('Importe', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold))),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
 
-                            // Filas de artículos
-                            ..._items.map((it) => _buildSaleItemRow(it)),
+                              // Filas de artículos
+                              ..._items.map((it) => _buildSaleItemRow(it)),
 
-                            const Divider(height: 24, thickness: 1),
+                              const Divider(height: 24, thickness: 1),
 
-                            // Subtotales, impuesto y total
-                            // _buildInfoRow('Subtotal:', PriceUtils.getStringPrice(subtotal), alignRight: true),
-                            // _buildInfoRow('IVA (${(taxPercent).toInt()}%):', PriceUtils.getStringPrice(tax), alignRight: true),
-                            _buildInfoRow(
-                              'Total:',
-                              PriceUtils.getStringPrice(total),
-                              alignRight: true,
-                              valueStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                              // Subtotales, impuesto y total
+                              // _buildInfoRow('Subtotal:', PriceUtils.getStringPrice(subtotal), alignRight: true),
+                              // _buildInfoRow('IVA (${(taxPercent).toInt()}%):', PriceUtils.getStringPrice(tax), alignRight: true),
+                              _buildInfoRow(
+                                'Total:',
+                                PriceUtils.getStringPrice(total),
+                                alignRight: true,
+                                valueStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: 50,
-                            child: ElevatedButton(
-                              onPressed: () => Navigator.pop(context),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red,
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              height: 50,
+                              child: ElevatedButton(
+                                onPressed: () => Navigator.pop(context),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                ),
+                                child: const Text('Cancelar'),
                               ),
-                              child: const Text('Cancelar'),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: SizedBox(
-                            height: 50,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                await context.read<AddOrderController>().saveSale(context, _items);
-                                //  Navigator.pushNamed(context, '/home');
-                                 Navigator.pop(context);
-                              },
-                              child: const Text('Confirmar'),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: SizedBox(
+                              height: 50,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  await context.read<AddOrderController>().saveSale(context, _items);
+                                  //  Navigator.pushNamed(context, '/home');
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Confirmar'),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 }

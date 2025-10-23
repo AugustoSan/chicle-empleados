@@ -118,6 +118,19 @@ class OrderItem {
     quantity = 0,
     priceAtOrder = _product.price,
     specialIndications = '';
+  
+  OrderItem.fromNewOrderItem({
+    required int cantidad, 
+    required Product producto, 
+    double? precio, 
+    String? indicaciones
+  }) : 
+    id = const Uuid().v4(),
+    orderId = const Uuid().v4(),
+    product = producto,
+    quantity = cantidad,
+    priceAtOrder = precio ?? producto.price,
+    specialIndications = indicaciones;
 
   OrderItem.fromModel(OrderItemModel model) :
     id = model.id,
