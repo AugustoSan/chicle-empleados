@@ -16,7 +16,7 @@ class AddUserScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () => {
-            Navigator.pushNamed(context, DrawerMenuItems.menu.route),
+            Navigator.pushNamed(context, DrawerProducts.menu.route),
             shell.setSecondRoute('/addUser'),
           }
         ),

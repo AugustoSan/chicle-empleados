@@ -18,7 +18,7 @@ class DrawerItem {
   });
 }
 
-class DrawerMenuItems {
+class DrawerProducts {
   static const DrawerItem home = DrawerItem(
     icon: Icons.home,
     title: 'Inicio',
@@ -78,27 +78,27 @@ class DrawerMenuItems {
 
 // Lista de todos los elementos del nav
 const List<DrawerItem> navMenuItems = [
-  DrawerMenuItems.home,
-  DrawerMenuItems.menu,
-  DrawerMenuItems.order,
-  DrawerMenuItems.settings,
-  DrawerMenuItems.profile,
-  DrawerMenuItems.users,
-  DrawerMenuItems.help,
-  DrawerMenuItems.logout,
+  DrawerProducts.home,
+  DrawerProducts.menu,
+  DrawerProducts.order,
+  DrawerProducts.settings,
+  DrawerProducts.profile,
+  DrawerProducts.users,
+  DrawerProducts.help,
+  DrawerProducts.logout,
 ];
 
 /// Lista de todos los elementos del drawer
 const List<DrawerItem> popupMenuItems = [
-  DrawerMenuItems.settings,
-  DrawerMenuItems.logout,
+  DrawerProducts.settings,
+  DrawerProducts.logout,
 ];
 
 /// Lista de todos los elementos del bottom
 const List<DrawerItem> menuBottomItems = [
-  DrawerMenuItems.home,
-  DrawerMenuItems.menu,
-  DrawerMenuItems.order,
+  DrawerProducts.home,
+  DrawerProducts.menu,
+  DrawerProducts.order,
 ];
 
 

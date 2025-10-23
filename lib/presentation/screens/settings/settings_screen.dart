@@ -10,10 +10,10 @@ class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    final users = DrawerMenuItems.users;
-    final company = DrawerMenuItems.companySettings;
-    final acercaDe = DrawerMenuItems.acercaDe;
-    final profile = DrawerMenuItems.profile;
+    final users = DrawerProducts.users;
+    final company = DrawerProducts.companySettings;
+    final acercaDe = DrawerProducts.acercaDe;
+    final profile = DrawerProducts.profile;
     final isAdmin = context.read<AuthProvider>().isAdmin;
     print('isAdmin: ${isAdmin}');
     return SafeArea(

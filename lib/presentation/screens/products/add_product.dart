@@ -8,7 +8,7 @@ class AddProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.watch<AddMenuItemController>();
+    final vm = context.watch<AddProductController>();
     final shell = context.watch<ShellNavigatorController>();
     return Scaffold(
       appBar: AppBar(
@@ -16,7 +16,7 @@ class AddProductScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () => {
-            Navigator.pushNamed(context, DrawerMenuItems.menu.route),
+            Navigator.pushNamed(context, DrawerProducts.menu.route),
             shell.setSecondRoute('/addMenu'),
           }
         ),

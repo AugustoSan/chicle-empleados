@@ -3,7 +3,7 @@ import '../../domain/domain.dart';
 import '../providers/providers.dart';
 import '../utils/utils.dart';
 
-class AddMenuItemController extends ChangeNotifier {
+class AddProductController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   final nameC = TextEditingController();
   final descriptionC = TextEditingController();
@@ -18,7 +18,7 @@ class AddMenuItemController extends ChangeNotifier {
 
   final ProductProvider _ProductProvider;
 
-  AddMenuItemController(this._ProductProvider);
+  AddProductController(this._ProductProvider);
 
   Future<String> save(BuildContext context) async {
     

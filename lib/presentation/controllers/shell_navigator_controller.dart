@@ -41,12 +41,12 @@ class ShellNavigatorController extends ChangeNotifier {
       case '/settings':
         _currentRoute = route;
         _selectedBottomMenuIndex = -1;
-        navigatorKey.currentState!.pushNamed(DrawerMenuItems.settings.route);
+        navigatorKey.currentState!.pushNamed(DrawerProducts.settings.route);
         break;
       case '/help':
         _currentRoute = route;
         _selectedBottomMenuIndex = -1;
-        navigatorKey.currentState!.pushNamed(DrawerMenuItems.help.route);
+        navigatorKey.currentState!.pushNamed(DrawerProducts.help.route);
         break;
     }
     notifyListeners();
@@ -65,22 +65,22 @@ class ShellNavigatorController extends ChangeNotifier {
 
       switch (menuBottomItems[index].route) {
         case '/home':
-          navigatorKey.currentState!.pushNamed(DrawerMenuItems.home.route);
+          navigatorKey.currentState!.pushNamed(DrawerProducts.home.route);
           break;
         case '/menuItems':
           setSecondRoute('/addMenu');
-          navigatorKey.currentState!.pushNamed(DrawerMenuItems.menu.route);
+          navigatorKey.currentState!.pushNamed(DrawerProducts.menu.route);
           break;
         case '/orders':
-          navigatorKey.currentState!.pushNamed(DrawerMenuItems.order.route);
+          navigatorKey.currentState!.pushNamed(DrawerProducts.order.route);
           break;
         case '/users':
           setSecondRoute('/addUser');
-          navigatorKey.currentState!.pushNamed(DrawerMenuItems.users.route);
+          navigatorKey.currentState!.pushNamed(DrawerProducts.users.route);
           break;
         default:
           print('entro en default');
-          navigatorKey.currentState!.pushNamed(DrawerMenuItems.home.route);
+          navigatorKey.currentState!.pushNamed(DrawerProducts.home.route);
           break;
       }
     }
