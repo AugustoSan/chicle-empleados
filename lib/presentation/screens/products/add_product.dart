@@ -3,34 +3,23 @@ import 'package:provider/provider.dart';
 import '../../../domain/domain.dart';
 import '../../presentation.dart';
 
-class UpdateMenuScreen extends StatelessWidget {  
-  const UpdateMenuScreen({Key? key}) : super(key: key);
+class AddProductScreen extends StatelessWidget {
+  const AddProductScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.watch<UpdateProductController>();
+    final vm = context.watch<AddMenuItemController>();
+    final shell = context.watch<ShellNavigatorController>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Editar la carta'),
+        title: const Text('Agregar a la carta'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => {
+            Navigator.pushNamed(context, DrawerMenuItems.menu.route),
+            shell.setSecondRoute('/addMenu'),
+          }
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
-            onPressed: () async {
-              final confirmar = await mostrarDeleteDialog(context);
-              if (confirmar == true) {
-                await context.read<ProductProvider>().deleteProduct(vm.id);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Eliminado ✔️')),
-                );
-                Navigator.pop(context);
-              }
-            },
-          )
-        ],
       ),
       body: SafeArea(
           child: Form(
@@ -57,6 +46,7 @@ class UpdateMenuScreen extends StatelessWidget {
                               TextFieldCustom(
                                 controller: vm.nameC,
                                 title: 'Nombre',
+                                keyboardType: TextInputType.text,
                                 validator: (v) => v != null && v.isNotEmpty
                                     ? null
                                     : 'Nombre inválido',
@@ -69,8 +59,8 @@ class UpdateMenuScreen extends StatelessWidget {
                               const SizedBox(height: 12),
                               TextFieldCustom(
                                 controller: vm.priceC,
-                                keyboardType: TextInputType.number,
                                 title: 'Precio',
+                                keyboardType: TextInputType.number,
                                 validator: (v) =>
                                     v != null && v.isNotEmpty ? null : 'Precio inválido',
                               ),
@@ -92,15 +82,15 @@ class UpdateMenuScreen extends StatelessWidget {
                         Center(
                           child: ElevatedButton(
                             onPressed: () async {
-                              final error = await vm.save(context);
-                              if (error.isNotEmpty) {
+                              final res = await vm.save(context);
+                              if (res != '') {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(error)),
+                                  SnackBar(content: Text(res)),
                                 );
                                 return;
                               }
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Guardado ✔️')),
+                                SnackBar(content: Text('Guardado ✔️')),
                               );
                               Navigator.pop(context);
                             },

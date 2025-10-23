@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/settings/settings.dart';
 import '../screens/home/home.dart';
-import '../screens/modules/modules.dart';
+import '../screens/products/products.dart';
 import '../screens/orders/orders.dart';
 
 class DrawerItem {

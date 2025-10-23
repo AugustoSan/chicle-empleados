@@ -17,7 +17,7 @@ class CardMenuCustomLandscape extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => ChangeNotifierProvider(
               create: (ctx) => UpdateProductController(ctx.read<ProductProvider>(), item),
-              child: const UpdateMenuScreen()
+              child: const UpdateProductScreen()
             )
           )
         );

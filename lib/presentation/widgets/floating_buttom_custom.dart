@@ -18,7 +18,7 @@ class FloatingButtomCustom extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => ChangeNotifierProvider(
                 create: (ctx) => AddMenuItemController(ctx.read<ProductProvider>()), 
-                child: const AddMenuScreen()
+                child: const AddProductScreen()
               )
             )
           );

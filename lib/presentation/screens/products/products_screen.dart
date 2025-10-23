@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './modules.dart';
+import 'products.dart';
 
 /// Pantalla que muestra dos secciones: Bebidas y Menús.
 /// Usa un BottomNavigationBar para alternar entre ellas.
