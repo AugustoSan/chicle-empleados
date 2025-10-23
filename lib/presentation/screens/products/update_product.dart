@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:chicle_app_empleados/theme_data.dart';
 import 'package:provider/provider.dart';
 import '../../../domain/domain.dart';
 import '../../presentation.dart';
@@ -13,7 +14,7 @@ class UpdateProductScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Editar la carta'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(ChicleIcons.backPage),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [

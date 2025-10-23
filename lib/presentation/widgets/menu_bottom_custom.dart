@@ -17,7 +17,7 @@ class MenuBottomCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final showSelected = currentIndex >= 0 && currentIndex < menuBottomItems.length;
+    final showSelected = currentIndex >= 0 && currentIndex < menuTabsItems.length;
     return ClipRRect(
         borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
         child: NavigationBar(
@@ -35,7 +35,7 @@ class MenuBottomCustom extends StatelessWidget {
             } 
           }),
           indicatorColor: showSelected ? Theme.of(context).bottomNavigationBarTheme.selectedItemColor : null,
-          destinations: menuBottomItems.map(
+          destinations: menuTabsItems.map(
             (item) => 
             NavigationDestination(
               icon: Icon(item.icon, color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor),

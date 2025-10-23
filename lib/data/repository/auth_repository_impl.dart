@@ -28,15 +28,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final username = meta.get(_AUTH_KEY);
     if (username == null) return null;
 
-    final users = await _openUsersBox();
-    final user = users.get(username);
-    if (user == null) return null;
-    return User(
-      id: user.id,
-      username: user.username,
-      password: user.passwordHash,
-      role: EnumRole.values[user.role],
-    );
+    return await findUserByUsername(username);
   }
 
   @override

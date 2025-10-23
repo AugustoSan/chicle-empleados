@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../domain/entities/product.dart';
 
 class CardProductCustom extends StatelessWidget {
@@ -10,19 +9,12 @@ class CardProductCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final navigatorKey = context.watch<ShellNavigatorController>();
+    // final navigatorKey = context.watch<ShellNavigatorController>();
     final bool mostrarImagen = item.imageUrl != null && File(item.imageUrl!).existsSync();
     return InkWell(
       onLongPress: () => mostrarProductDialog(context, item),
       onTap: () {
-        navigatorKey.navigatorKey.currentState!.push(
-          MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider(
-              create: (ctx) => UpdateProductController(ctx.read<ProductProvider>(), item),
-              child: const UpdateProductScreen()
-            )
-          )
-        );
+        Navigator.push(context, RouteUtils().getRouteUpdateProduct(item));
       },
       child: Container(
         width: 160, // Ancho fijo para cada card

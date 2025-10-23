@@ -16,7 +16,7 @@ class LoginController extends ChangeNotifier {
 
   LoginController(this._auth);
 
-  Future<void> submit(BuildContext context, ShellNavigatorController shell) async {
+  Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;
 
     _loading = true;
@@ -30,7 +30,7 @@ class LoginController extends ChangeNotifier {
 
     _loading = false;
     if (!ok) _error = 'Credenciales incorrectas';
-    shell.initialize();
+    // shell.initialize();
     notifyListeners();
   }
 

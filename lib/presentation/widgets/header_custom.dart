@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:chicle_app_empleados/theme_data.dart';
 
 class HeaderCustom extends StatelessWidget {
   final String title;
@@ -19,7 +20,7 @@ class HeaderCustom extends StatelessWidget {
             children: [
               // Botón de retroceso opcional
               onBack ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                icon: const Icon(ChicleIcons.backPage, color: Colors.white),
                 onPressed: () => Navigator.pop(context),
               ) : const SizedBox(width: 48),
 

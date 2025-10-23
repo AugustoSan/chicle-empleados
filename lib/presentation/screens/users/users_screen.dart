@@ -1,12 +1,13 @@
 // import 'dart:io';
-
-import 'package:chicle_app_empleados/presentation/screens/settings/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:chicle_app_empleados/theme_data.dart';
+import 'package:chicle_app_empleados/presentation/screens/settings/profile_screen.dart';
+
 import '../../../domain/domain.dart';
 import '../../presentation.dart';
-import './add_users.dart';
+// import './add_users.dart';
 
 class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
@@ -49,14 +50,15 @@ class _UsersScreenState extends State<UsersScreen> {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.read<AuthProvider>();
-    final currentUser = authProvider.user;
+    final currentUserEntity = authProvider.user;
+    final currentUser = currentUserEntity?.username;
     final isAdmin = authProvider.isAdmin;
-    final shell = context.watch<ShellNavigatorController>();
+    // final shell = context.watch<ShellNavigatorController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Usuarios'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(ChicleIcons.backPage),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -135,14 +137,9 @@ class _UsersScreenState extends State<UsersScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => shell.navigatorKey.currentState!.push(
-            MaterialPageRoute(
-              builder: (context) => ChangeNotifierProvider(
-                create: (ctx) => AddUserController(ctx.read<UserProvider>()), 
-                child: const AddUserScreen()
-              )
-            )
-          ),
+        onPressed: () => {
+          Navigator.push(context, RouteUtils().getRouteAddUser()).then((_) => _refreshUsers()),
+        }
       ),
     );
   }

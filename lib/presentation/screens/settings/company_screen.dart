@@ -1,5 +1,6 @@
-import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
+import 'package:chicle_app_empleados/theme_data.dart';
+import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
 
@@ -16,7 +17,7 @@ class CompanyScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Negocio'),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
+            icon: const Icon(ChicleIcons.backPage),
             onPressed: () => Navigator.pop(context),
           ),
         ),

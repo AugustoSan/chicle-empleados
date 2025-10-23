@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chicle_app_empleados/domain/domain.dart';
+import 'package:chicle_app_empleados/presentation/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +12,6 @@ import 'package:chicle_app_empleados/theme_data.dart';
 import '../models/models.dart';
 import '../presentation/screens/shellapp.dart';
 import 'package:path/path.dart' as p;
-
-import 'presentation/screens/login/login_screen.dart';
 
 Future<void> deleteOldDatabase() async {
   final dir = await getApplicationDocumentsDirectory();
@@ -60,8 +59,8 @@ Future<void> main() async {
   // final customerProv = getIt<CustomerProvider>();
   // await customerProv.initialize();
 
-  // final authProv = getIt<AuthProvider>();
-  // await authProv.initialize();
+  final authProv = getIt<AuthProvider>();
+  await authProv.checkLogin();
 
   runApp(
     MultiProvider(
@@ -95,9 +94,9 @@ Future<void> main() async {
           },
         ),
         // 6) ShellNavigatorController
-        ChangeNotifierProvider<ShellNavigatorController>(
-          create: (ctx) => ShellNavigatorController(),
-        ),
+        // ChangeNotifierProvider<ShellNavigatorController>(
+        //   create: (ctx) => ShellNavigatorController(),
+        // ),
       ],
       child: MyApp(),
     ),

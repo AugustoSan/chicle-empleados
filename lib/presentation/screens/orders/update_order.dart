@@ -1,5 +1,6 @@
 import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
+import 'package:chicle_app_empleados/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -91,7 +92,7 @@ class _UpdateOrderState extends State<UpdateOrder> {
           ],
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(ChicleIcons.backPage),
           onPressed: () {
             Navigator.pop(context);
             Navigator.pop(context);

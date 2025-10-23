@@ -99,6 +99,13 @@ final ThemeData chicleTheme = ThemeData(
       backgroundColor: Colors.blue.shade50,
     ),
   ),
-
-  
 );
+
+class ChicleIcons {
+  static const IconData home = Icons.home;
+  static const IconData person = Icons.person;
+  static const IconData settings = Icons.settings;
+  static const IconData shoppingCart = Icons.shopping_cart;
+  static const IconData list = Icons.list;
+  static const IconData backPage = Icons.arrow_back_ios;
+}

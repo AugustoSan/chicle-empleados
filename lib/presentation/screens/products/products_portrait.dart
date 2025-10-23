@@ -5,14 +5,14 @@ import '../../presentation.dart';
 
 /// Pantalla que muestra dos secciones: Bebidas y Menús.
 /// Usa un BottomNavigationBar para alternar entre ellas.
-class MenuItemsListPortrait extends StatefulWidget {
-  const MenuItemsListPortrait({Key? key}) : super(key: key);
+class ProductsPortrait extends StatefulWidget {
+  const ProductsPortrait({Key? key}) : super(key: key);
 
   @override
-  State<MenuItemsListPortrait> createState() => _MenuItemsListPortraitState();
+  State<ProductsPortrait> createState() => _ProductsPortraitState();
 }
 
-class _MenuItemsListPortraitState extends State<MenuItemsListPortrait> {
+class _ProductsPortraitState extends State<ProductsPortrait> {
   List<Product> menuList = [];
   List<Product> bebidasList = [];
   List<Product> alimentosList = [];

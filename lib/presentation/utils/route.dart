@@ -1,10 +1,13 @@
+import 'package:chicle_app_empleados/domain/domain.dart';
+import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 import '../screens/settings/settings.dart';
 import '../screens/home/home.dart';
-import '../screens/products/products.dart';
 import '../screens/orders/orders.dart';
+import '../screens/users/add_users.dart';
 
 class DrawerItem {
   final IconData icon;
@@ -24,10 +27,10 @@ class DrawerProducts {
     title: 'Inicio',
     route: '/home',
   );
-  static const DrawerItem menu = DrawerItem(
+  static const DrawerItem products = DrawerItem(
     icon: Icons.fastfood,
     title: 'Carta',
-    route: '/menuItems',
+    route: '/products',
   );
   static const DrawerItem order = DrawerItem(
     icon: Icons.assignment,
@@ -79,7 +82,7 @@ class DrawerProducts {
 // Lista de todos los elementos del nav
 const List<DrawerItem> navMenuItems = [
   DrawerProducts.home,
-  DrawerProducts.menu,
+  DrawerProducts.products,
   DrawerProducts.order,
   DrawerProducts.settings,
   DrawerProducts.profile,
@@ -95,9 +98,9 @@ const List<DrawerItem> popupMenuItems = [
 ];
 
 /// Lista de todos los elementos del bottom
-const List<DrawerItem> menuBottomItems = [
+const List<DrawerItem> menuTabsItems = [
   DrawerProducts.home,
-  DrawerProducts.menu,
+  DrawerProducts.products,
   DrawerProducts.order,
 ];
 
@@ -111,7 +114,7 @@ class RouteUtils {
         page = const HomeScreen();
         break;
       case '/menuItems':
-        page = const MenuItemsListScreen();
+        page = const ProductScreen();
         break;
       case '/orders':
         // page = const OrdersScreen();
@@ -135,4 +138,62 @@ class RouteUtils {
     }
     return page;
   }
+
+  Route getRouteAddProduct() {
+    return MaterialPageRoute(
+      builder: (context) => ChangeNotifierProvider(
+        create: (ctx) => AddProductController(ctx.read<ProductProvider>()), 
+        child: const AddProductScreen()
+      )
+    );
+  }
+
+  Route getRouteAddUser() {
+    return MaterialPageRoute(
+      builder: (context) => ChangeNotifierProvider(
+        create: (ctx) => AddUserController(ctx.read<UserProvider>()), 
+        child: const AddUserScreen()
+      )
+    );
+  }
+
+  Route getRouteUpdateProduct(Product item) {
+    return MaterialPageRoute(
+      builder: (context) => ChangeNotifierProvider(
+        create: (ctx) => UpdateProductController(ctx.read<ProductProvider>(), item),
+        child: const UpdateProductScreen()
+      )
+    );
+  }
+
+  Route getRouteSettings() {
+    return MaterialPageRoute(
+      builder: (context) => const SettingsScreen()
+    );
+  }
+
+  Route getRouteSettingsUsers() {
+    return MaterialPageRoute(
+      builder: (context) => const UsersScreen()
+    );
+  }
+
+  Route getRouteSettingsProfile() {
+    return MaterialPageRoute(
+      builder: (context) => const ProfileScreen()
+    );
+  }
+
+  Route getRouteSettingsCompany() {
+    return MaterialPageRoute(
+      builder: (context) => const CompanyScreen()
+    );
+  }
+
+  Route getRouteSettingsAcercaDe() {
+    return MaterialPageRoute(
+      builder: (context) => AcercaDeScreen()
+    );
+  }
+
 }

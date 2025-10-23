@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:chicle_app_empleados/theme_data.dart';
 import 'package:provider/provider.dart';
 import '../../../domain/domain.dart';
 import '../../presentation.dart';
@@ -9,15 +10,15 @@ class AddProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<AddProductController>();
-    final shell = context.watch<ShellNavigatorController>();
+    // final shell = context.watch<ShellNavigatorController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Agregar a la carta'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(ChicleIcons.backPage),
           onPressed: () => {
-            Navigator.pushNamed(context, DrawerProducts.menu.route),
-            shell.setSecondRoute('/addMenu'),
+            Navigator.pop(context),
+            // shell.setSecondRoute('/addMenu'),
           }
         ),
       ),

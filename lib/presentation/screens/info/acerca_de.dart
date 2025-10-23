@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:chicle_app_empleados/theme_data.dart';
 
 class AcercaDeScreen extends StatelessWidget {
   @override
@@ -6,7 +7,7 @@ class AcercaDeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
+            icon: const Icon(ChicleIcons.backPage),
             onPressed: () => Navigator.pop(context),
         ),
         title: Text('Acerca de'),

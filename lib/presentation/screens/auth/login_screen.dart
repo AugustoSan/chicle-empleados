@@ -85,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: vm.loading
                                 ? null
-                                : () => vm.submit(ctx, ctx.read<ShellNavigatorController>()),
+                                : () => vm.submit(ctx),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: primaryColor,
                               shape: RoundedRectangleBorder(

@@ -3,8 +3,8 @@ import 'products.dart';
 
 /// Pantalla que muestra dos secciones: Bebidas y Menús.
 /// Usa un BottomNavigationBar para alternar entre ellas.
-class MenuItemsListScreen extends StatelessWidget {
-  const MenuItemsListScreen({Key? key}) : super(key: key);
+class ProductScreen extends StatelessWidget {
+  const ProductScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +13,9 @@ class MenuItemsListScreen extends StatelessWidget {
     print('orientation: $orientation');
 
     // return orientation == Orientation.portrait
-    //     ? MenuItemsListPortrait()
-    //     : MenuItemsListLandscape();
-    return const MenuItemsListPortrait();
+    //     ? ProductsPortrait()
+    //     : ProductsLandscape();
+    return const ProductsPortrait();
   }
 }
 

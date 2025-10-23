@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:chicle_app_empleados/theme_data.dart';
 import '../../../domain/domain.dart';
 import '../../presentation.dart';
 
@@ -9,15 +10,16 @@ class AddUserScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<AddUserController>();
-    final shell = context.watch<ShellNavigatorController>();
+    // final shell = context.watch<ShellNavigatorController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Agregar usuario'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(ChicleIcons.backPage),
           onPressed: () => {
-            Navigator.pushNamed(context, DrawerProducts.menu.route),
-            shell.setSecondRoute('/addUser'),
+            Navigator.pop(context),
+            // Navigator.pushNamed(context, DrawerProducts.products.route),
+            // shell.setSecondRoute('/addUser'),
           }
         ),
       ),

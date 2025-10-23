@@ -4,12 +4,13 @@ import 'package:provider/provider.dart';
 import '../presentation.dart';
 
 class AppBarCustom extends StatelessWidget implements PreferredSizeWidget{
-  final String currentRoute;
-  final Function(String) onTap;
-  const AppBarCustom({super.key, required this.currentRoute, required this.onTap});
+  // final String currentRoute;
+  // final Function(String) onTap;
+  final TabController tabController;
+  const AppBarCustom({super.key,required this.tabController});
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kTextTabBarHeight + kToolbarHeight + 10);
 
   @override
   Widget build(BuildContext ctx) {
@@ -29,19 +30,32 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget{
           onSelected: (value) {
             switch (value) {
               case '/settings':
-                onTap(value);
+                Navigator.push(ctx, RouteUtils().getRouteSettings());
                 break;
               case '/logout':
+              default:
                 ctx.read<AuthProvider>().logout();
-                break;
-              case '/help':
-                onTap(value);
                 break;
             }
           },
           itemBuilder: (ctx) => popupMenuItems.map((item) => PopupMenuItem(value: item.route, child: Text(item.title))).toList(),
         ),
       ],
+      bottom: TabBar(
+        controller: tabController,
+        indicatorColor: Theme.of(ctx).primaryColor,
+        indicatorWeight: 3,
+        indicatorSize: TabBarIndicatorSize.tab,
+        labelColor: Theme.of(ctx).primaryColorDark,
+        tabs: 
+        menuTabsItems.map(
+          (item) => 
+            Tab(
+              icon: Icon(item.icon), 
+              text: item.title
+            )
+        ).toList(),
+      ),
     );
   }
 }

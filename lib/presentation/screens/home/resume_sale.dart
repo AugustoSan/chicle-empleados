@@ -166,7 +166,8 @@ class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
                             child: ElevatedButton(
                               onPressed: () async {
                                 await context.read<AddOrderController>().saveSale(context, _items);
-                                 Navigator.pushNamed(context, '/home');
+                                //  Navigator.pushNamed(context, '/home');
+                                 Navigator.pop(context);
                               },
                               child: const Text('Confirmar'),
                             ),
