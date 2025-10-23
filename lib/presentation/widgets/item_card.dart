@@ -2,10 +2,10 @@
 // import 'dart:io';
 
 import 'package:flutter/material.dart';
-import '../../domain/entities/menuItem.dart';
+import '../../domain/entities/product.dart';
 
 class ItemCard extends StatelessWidget {
-  final MenuItem item;
+  final Product item;
 
   const ItemCard({
     required this.item,

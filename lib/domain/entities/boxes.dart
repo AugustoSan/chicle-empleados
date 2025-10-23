@@ -1,9 +1,9 @@
 class Boxes {
-  static const authBox    = 'auth';
-  static const usersBox   = 'users';
+  static const authBox = 'auth';
+  static const authKey = 'loggedInUser';
   static const businessBox = 'business';
-  static const customersBox = 'customers';
-  static const key = 'loggedInUser';
-
-  
+  static const ordersBox = 'orders';
+  static const ordersItemBox = 'ordersItems';
+  static const productsBox = 'products';
+  static const usersBox   = 'users';
 }

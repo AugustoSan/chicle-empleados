@@ -18,21 +18,15 @@ class AuthModelAdapter extends TypeAdapter<AuthModel> {
     };
     return AuthModel(
       username: fields[0] as String,
-      password: fields[1] as String,
-      role: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, AuthModel obj) {
     writer
-      ..writeByte(3)
-      ..writeByte(0)
-      ..write(obj.username)
       ..writeByte(1)
-      ..write(obj.password)
-      ..writeByte(2)
-      ..write(obj.role);
+      ..writeByte(0)
+      ..write(obj.username);
   }
 
   @override

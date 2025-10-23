@@ -12,7 +12,7 @@ class OrdersPortrait extends StatefulWidget {
 }
 
 class _OrdersPortraitState extends State<OrdersPortrait> {
-  final List<Sales> _sales = [];
+  final List<Order> _orders = [];
   @override
   void initState() {
     super.initState();
@@ -22,7 +22,7 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
   @override
   void dispose() {
     super.dispose();
-    _sales.clear();
+    _orders.clear();
   }
 
   @override
@@ -31,22 +31,22 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
   }
 
   Future<void> _init() async {
-    final saleProv = context.read<SaleProvider>();
-    await saleProv.loadAll();
+    final orderProv = context.read<OrderProvider>();
+    await orderProv.loadAll();
 
     if(!mounted) return;
 
-    final items = saleProv.allSales;
+    final items = orderProv.allOrders;
 
     setState(() {
-      _sales.clear();
-      _sales.addAll(items);
+      _orders.clear();
+      _orders.addAll(items);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    context.watch<SaleProvider>();
+    context.watch<OrderProvider>();
     return Column(
       children: [
         Expanded(
@@ -62,9 +62,9 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
                   padding: const EdgeInsets.all(12),
                   child: ListView.separated(
                     padding: const EdgeInsets.all(8),
-                    itemCount: _sales.length,
+                    itemCount: _orders.length,
                     itemBuilder: (BuildContext context, int index) {
-                      final item = _sales[index];
+                      final item = _orders[index];
                       return CardOrderCustomPortrait(item: item);
                     },
                     separatorBuilder: (BuildContext context, int index) => const Divider(),

@@ -8,4 +8,7 @@ class AuthService {
     final digest = sha256.convert(bytes);
     return digest.toString();
   }
+  static bool checkPassword(String password, String hash) {
+    return hashPassword(password) == hash;
+  }
 }

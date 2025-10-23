@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 
 /// Widget que dibuja el recibo
 class ReceiptWidget extends StatelessWidget {
-  final Sales data;
+  final Order data;
   const ReceiptWidget({Key? key, required this.data}) : super(key: key);
 
-  Widget _buildSaleItemRow(SaleItemMenu item) {
+  Widget _buildSaleItemRow(OrderItem item) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Column(
@@ -16,15 +16,15 @@ class ReceiptWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(flex: 4, child: Text(item.menuItem.name, style: const TextStyle(fontSize: 12))),
+              Expanded(flex: 4, child: Text(item.product.name, style: const TextStyle(fontSize: 12))),
               Expanded(flex: 1, child: Text('${item.quantity}', textAlign: TextAlign.right, style: const TextStyle(fontSize: 12))),
               Expanded(flex: 2, child: Text(PriceUtils.getStringPrice(item.total), textAlign: TextAlign.right, style: const TextStyle(fontSize: 12))),
             ],
           ),
-          if (item.specialIndications.isNotEmpty)
+          if (item.specialIndications != null)
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, top: 2.0),
-                child: Text(item.specialIndications, style: const TextStyle(fontSize: 12)),
+                child: Text(item.specialIndications!, style: const TextStyle(fontSize: 12)),
               ),
         ],
       ),

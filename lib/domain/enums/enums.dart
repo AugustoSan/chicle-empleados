@@ -6,7 +6,7 @@ enum BusinessType {
 }
 
 
-enum EnumMenuItemCategory {
+enum EnumProductCategory {
   bebida,
   alimento,
   menu,
@@ -19,7 +19,7 @@ enum PictureType {
   business
 }
 
-enum EnumSalesStatus {
+enum EnumOrderStatus {
   pending,
   completed,
   cancelled

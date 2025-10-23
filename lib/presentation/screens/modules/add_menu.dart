@@ -64,10 +64,10 @@ class AddMenuScreen extends StatelessWidget {
                                     v != null && v.isNotEmpty ? null : 'Precio inválido',
                               ),
                               const SizedBox(height: 12),
-                              DropdownButtonFormField<EnumMenuItemCategory>(
+                              DropdownButtonFormField<EnumProductCategory>(
                                 value: vm.type.value,
                                 decoration: const InputDecoration(labelText: 'Categoría'),
-                                items: EnumMenuItemCategory.values.map((t) =>
+                                items: EnumProductCategory.values.map((t) =>
                                   DropdownMenuItem(value: t, child: Text(t.name))
                                 ).toList(),
                                 onChanged: (t) {

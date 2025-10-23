@@ -3,30 +3,30 @@ import '../../domain/domain.dart';
 import '../providers/providers.dart';
 import '../utils/utils.dart';
 
-class UpdateMenuItemController extends ChangeNotifier {
+class UpdateProductController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   
   final nameC = TextEditingController();
   final descriptionC = TextEditingController();
   final priceC = TextEditingController();
-  final ValueNotifier<EnumMenuItemCategory> type = ValueNotifier<EnumMenuItemCategory>(EnumMenuItemCategory.bebida);
+  final ValueNotifier<EnumProductCategory> type = ValueNotifier<EnumProductCategory>(EnumProductCategory.bebida);
   final ValueNotifier<String?> image = ValueNotifier<String?>(null);
-  late int id;
+  late String id;
 
   bool  _loading = false;
   String? _error;
   bool  get loading => _loading;
   String? get error => _error;
 
-  final MenuItemProvider _menuItemProvider;
+  final ProductProvider _productProvider;
 
-  UpdateMenuItemController(this._menuItemProvider, MenuItem menuItem){
-    id = menuItem.id!;
-    nameC.text = menuItem.name;
-    descriptionC.text = menuItem.description ?? '';
-    priceC.text = menuItem.price.toString();
-    type.value = menuItem.category;
-    image.value = menuItem.imageUrl;
+  UpdateProductController(this._productProvider, Product product){
+    id = product.id;
+    nameC.text = product.name;
+    descriptionC.text = product.description ?? '';
+    priceC.text = product.price.toString();
+    type.value = product.category;
+    image.value = product.imageUrl;
   }
 
   Future<String> save(BuildContext context) async {
@@ -35,8 +35,8 @@ class UpdateMenuItemController extends ChangeNotifier {
     _error   = null;
     notifyListeners();
 
-    final ok = await _menuItemProvider.updateMenuItem( id,
-      MenuItem.withAll(
+    final ok = await _productProvider.updateProduct( id,
+      Product.withAll(
         id:           id,
         name:         nameC.text,
         description:  descriptionC.text,
@@ -61,12 +61,12 @@ class UpdateMenuItemController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> delete(int id) async {
+  Future<void> delete(String id) async {
     _loading = true;
     _error   = null;
     notifyListeners();
 
-    final ok = await _menuItemProvider.deleteMenuItem(id);
+    final ok = await _productProvider.deleteProduct(id);
 
     _loading = false;
     if (ok == -1) _error = 'Ocurrio un error al eliminar';

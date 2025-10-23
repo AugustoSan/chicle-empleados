@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
 
-Future<void> mostrarMenuItemDialog(BuildContext context, MenuItem item) {
+Future<void> mostrarProductDialog(BuildContext context, Product item) {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
@@ -18,23 +18,23 @@ Future<String?> agregarDescripcionOrdenMenuItemDialog(BuildContext context, Stri
   );
 }
 
-Future<void> mostrarDescriptionOrderMenuItemDialog(BuildContext context, MenuItem item) {
+Future<void> mostrarDescriptionOrderItemDialog(BuildContext context, Product item) {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
-    builder: (_) => AlertDialogAddDescrptionOrderItem(item: item),
+    builder: (_) => AlertDialogAddDescrptionOrderItem(product: item),
   );
 }
 
-Future<void> mostrarSaleDialog(BuildContext context, Sales item) {
+Future<void> mostrarSaleDialog(BuildContext context, Order item) {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
-    builder: (_) => AlertDialogShowSale(item: item),
+    builder: (_) => AlertDialogShowOrder(item: item),
   );
 }
 
-Future<void> mostrarTicketDialog(BuildContext context, Sales item) {
+Future<void> mostrarTicketDialog(BuildContext context, Order item) {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,

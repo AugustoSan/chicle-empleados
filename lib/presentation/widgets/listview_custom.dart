@@ -1,9 +1,9 @@
 import 'package:chicle_app_empleados/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import '../../domain/entities/menuItem.dart';
+import '../../domain/entities/product.dart';
 
 class MenuCarousel extends StatelessWidget {
-  final List<MenuItem> items;
+  final List<Product> items;
   final String title;
   const MenuCarousel({Key? key, required this.items, required this.title}) : super(key: key);
 

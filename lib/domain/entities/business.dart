@@ -1,3 +1,5 @@
+import 'package:chicle_app_empleados/models/models.dart';
+
 import '../enums/enums.dart';
 
 class Business {
@@ -21,6 +23,16 @@ class Business {
     this.logo,
   });
 
+  Business.chicle() :
+    this.name = 'Chicle App',
+    this.currency = 'MXN',
+    this.taxPercent = 16.0,
+    this.type = BusinessType.cafeteria,
+    this.enabledModules = ['mesas', 'takeaway', 'delivery'],
+    this.address = null,
+    this.phone = null,
+    this.logo = null;
+
   Business copyWith({
     String? name,
     String? currency,
@@ -42,4 +54,25 @@ class Business {
       logo:           logo         ?? this.logo,
     );
   }
+
+  Business.fromModel(BusinessModel model) :
+    name = model.name,
+    currency = model.currency,
+    taxPercent = model.taxPercent,
+    type = BusinessType.values[model.type],
+    enabledModules = model.enabledModules,
+    address = model.address,
+    phone = model.phone,
+    logo = model.logo;
+  
+  BusinessModel parseToModel() => BusinessModel(
+    name: name,
+    currency: currency,
+    taxPercent: taxPercent,
+    type: type.index,
+    enabledModules: enabledModules,
+    address: address,
+    phone: phone,
+    logo: logo,
+  );
 }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../../domain/domain.dart';
 import '../providers/providers.dart';
 
-class AddSaleController extends ChangeNotifier {
+class AddOrderController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   final nameC = TextEditingController();
-  final ValueNotifier<Customer?> customer = ValueNotifier<Customer?>(null);
+  // final ValueNotifier<Customer?> customer = ValueNotifier<Customer?>(null);
 
   bool  _loading = false;
   String? _error;
@@ -14,13 +14,13 @@ class AddSaleController extends ChangeNotifier {
   String? get error => _error;
 
 
-  final SalesRepository _saleRepository;
+  final OrderRepository _orderRepository;
   final UserProvider _userProvider;
-  final CustomerProvider _customerProvider;
+  // final CustomerProvider _customerProvider;
 
-  AddSaleController(this._saleRepository, this._userProvider, this._customerProvider);
+  AddOrderController(this._orderRepository, this._userProvider);
   
-  Future<String> saveSale(BuildContext context, List<SaleItemMenu> items) async {
+  Future<String> saveSale(BuildContext context, List<OrderItem> items) async {
     _loading = true;
     _error   = null;
     notifyListeners();
@@ -31,11 +31,11 @@ class AddSaleController extends ChangeNotifier {
       return _error!;
     }
 
-    final res = await _saleRepository.saveSale(
-      Sales.withoutId(
+    final res = await _orderRepository.saveOrder(
+      Order.withoutId(
         userId: user.id, 
         customer: nameC.text == '' ? 'Público en general' : nameC.text, 
-        status: EnumSalesStatus.pending, 
+        status: EnumOrderStatus.pending, 
         date: DateTime.now(), 
         items: items
       )
@@ -49,21 +49,21 @@ class AddSaleController extends ChangeNotifier {
     return _error ?? '';
   }
 
-  Future<String> addItems(BuildContext context, int saleId, List<SaleItemMenu> items) async {
+  Future<String> addItems(BuildContext context, int saleId, List<OrderItem> items) async {
     
     return '';
   }
 
-  Future<void> saveOrder(List<SaleItemMenu> items) async {
+  Future<void> saveOrder(List<OrderItem> items) async {
     notifyListeners();
   }
 
-  Future<List<Customer>> searchCustomer(String filter) async {
-    final customers = await _customerProvider.searchCustomer(filter);
-    print('Customers: $customers');
-    notifyListeners();
-    return customers;
-  }
+  // Future<List<Customer>> searchCustomer(String filter) async {
+  //   final customers = await _customerProvider.searchCustomer(filter);
+  //   print('Customers: $customers');
+  //   notifyListeners();
+  //   return customers;
+  // }
 
   @override
   void dispose() {

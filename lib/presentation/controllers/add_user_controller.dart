@@ -13,9 +13,9 @@ class AddUserController extends ChangeNotifier {
   bool  get loading => _loading;
   String? get error => _error;
 
-  final AuthProvider _authProvider;
+  final UserProvider _userProvider;
 
-  AddUserController(this._authProvider);
+  AddUserController(this._userProvider);
 
   Future<String> save(BuildContext context) async {
     
@@ -28,7 +28,7 @@ class AddUserController extends ChangeNotifier {
     _error   = null;
     notifyListeners();
 
-    final ok = await _authProvider.addUser(username: usernameC.text, password: passwordC.text, role: role.value);
+    final ok = await _userProvider.addUser(username: usernameC.text, password: passwordC.text, role: role.value);
     if (!ok) {
       _error = 'Ocurrio un error al guardar';
       return _error!;

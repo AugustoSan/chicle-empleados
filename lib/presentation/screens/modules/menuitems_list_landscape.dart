@@ -16,11 +16,11 @@ class _MenuItemsListLandscapeState extends State<MenuItemsListLandscape> {
   @override
   void initState() {
     super.initState();
-    context.read<MenuItemProvider>().loadAll();
+    context.read<ProductProvider>().loadAll();
   }
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<MenuItemProvider>();
+    final provider = context.watch<ProductProvider>();
     final menuList = provider.menus;
     final bebidasList = provider.bebidas;
     final alimentosList = provider.alimentos;

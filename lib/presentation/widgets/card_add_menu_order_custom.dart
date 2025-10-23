@@ -7,27 +7,25 @@ import 'package:flutter/material.dart';
 
 class CardAddMenuOrderCustom extends StatelessWidget {
   // final MenuItem item;
-  final SaleItemMenu saleItemMenu;
+  final OrderItem orderItem;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
 
-  const CardAddMenuOrderCustom({super.key, required this.saleItemMenu, required this.onIncrement, required this.onDecrement});
+  const CardAddMenuOrderCustom({super.key, required this.orderItem, required this.onIncrement, required this.onDecrement});
 
   @override
   Widget build(BuildContext context) {
     final bool mostrarImagen =
-        saleItemMenu.menuItem.imageUrl != null && File(saleItemMenu.menuItem.imageUrl!).existsSync();
+        orderItem.product.imageUrl != null && File(orderItem.product.imageUrl!).existsSync();
 
       return ListTile(
         onTap: () async {
-          String? description = await agregarDescripcionOrdenMenuItemDialog(context, saleItemMenu.specialIndications);
-          if (description != null) {
-            saleItemMenu.specialIndications = description;
-          }
+          String? description = await agregarDescripcionOrdenMenuItemDialog(context, orderItem.specialIndications ?? '');
+          orderItem.specialIndications = description;
         },
-      leading: mostrarImagen ? Image.file(File(saleItemMenu.menuItem.imageUrl!), width: 40, height: 40) : const SizedBox.shrink(),
-      title: Text(saleItemMenu.menuItem.name),
-      subtitle: Text('\$${saleItemMenu.menuItem.price}'),
+      leading: mostrarImagen ? Image.file(File(orderItem.product.imageUrl!), width: 40, height: 40) : const SizedBox.shrink(),
+      title: Text(orderItem.product.name),
+      subtitle: Text('\$${orderItem.product.price}'),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -35,7 +33,7 @@ class CardAddMenuOrderCustom extends StatelessWidget {
             icon: Icon(Icons.remove_circle_outline),
             onPressed: onDecrement,
           ),
-          Text('${saleItemMenu.quantity}'),
+          Text('${orderItem.quantity}'),
           IconButton(
             icon: Icon(Icons.add_circle_outline),
             onPressed: onIncrement,

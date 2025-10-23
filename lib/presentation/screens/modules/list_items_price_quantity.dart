@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ListItemsPriceQuantity extends StatefulWidget {
-  final Map<MenuItem,SaleItemMenu> saleItems;
+  final Map<Product,OrderItem> saleItems;
   const ListItemsPriceQuantity({Key? key, required this.saleItems}) : super(key: key);
 
   @override
@@ -12,18 +12,19 @@ class ListItemsPriceQuantity extends StatefulWidget {
 }
 
 class _ListItemsPriceQuantityState extends State<ListItemsPriceQuantity> {
-  final List<MenuItem> _listMenuItems = [];
-  final Map<MenuItem,SaleItemMenu> _saleItems = {};
+  final List<Product> _listProducts = [];
+  final Map<Product,OrderItem> _orderItems = {};
   
 
   @override
   void initState() {
     super.initState();
-    context.read<MenuItemProvider>().loadAll();
-    final menuItems = context.read<MenuItemProvider>().allItems;
-    _listMenuItems.addAll(menuItems);
+    context.read<ProductProvider>().loadAll();
+    final menuItems = context.read<ProductProvider>().allItems;
+    _listProducts.addAll(menuItems);
     for (var item in menuItems) {
-      _saleItems[item] = widget.saleItems[item] ?? SaleItemMenu(menuItem: item, quantity: 0, specialIndications: '');
+      _orderItems[item] = 
+        widget.saleItems[item] ?? OrderItem.fromProduct(item);
     }
   }
 
@@ -35,11 +36,11 @@ class _ListItemsPriceQuantityState extends State<ListItemsPriceQuantity> {
   @override
     void didChangeDependencies() {
       super.didChangeDependencies();
-      final menuItems = context.watch<MenuItemProvider>().allItems;
-      if (_listMenuItems.isEmpty && menuItems.isNotEmpty) {
-        _listMenuItems.addAll(menuItems);
-        for (var item in menuItems) {
-          widget.saleItems[item] = SaleItemMenu(menuItem: item, quantity: 0, specialIndications: '');
+      final products = context.watch<ProductProvider>().allItems;
+      if (_listProducts.isEmpty && products.isNotEmpty) {
+        _listProducts.addAll(products);
+        for (var item in products) {
+          widget.saleItems[item] = OrderItem.fromProduct(item);
         }
       }
     }
@@ -48,12 +49,12 @@ class _ListItemsPriceQuantityState extends State<ListItemsPriceQuantity> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-        itemCount: _listMenuItems.length,
+        itemCount: _listProducts.length,
         itemBuilder: (context, index) {
-          final menuItem = _listMenuItems[index];
+          final menuItem = _listProducts[index];
           final item = widget.saleItems[menuItem]!;
           return CardAddMenuOrderCustom(
-            saleItemMenu: item,
+            orderItem: item,
             onIncrement: () => setState(() {
               if (item.quantity < 100) item.quantity = item.quantity + 1;
             }),

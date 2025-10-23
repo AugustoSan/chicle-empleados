@@ -6,7 +6,7 @@ import '../../presentation.dart';
 
 class ResumeSaleScreen extends StatefulWidget {
   final String customer;
-  final List<SaleItemMenu> items;
+  final List<OrderItem> items;
   const ResumeSaleScreen({Key? key, required this.items, required this.customer}) : super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class ResumeSaleScreen extends StatefulWidget {
 
 class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
   // <-- FormKey local, único para esta instancia de pantalla
-  final List<SaleItemMenu> _items = [];
+  final List<OrderItem> _items = [];
   String nameCustomer = '';
 
   @override
@@ -43,7 +43,7 @@ class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
     );
   }
 
-  Widget _buildSaleItemRow(SaleItemMenu item) {
+  Widget _buildSaleItemRow(OrderItem item) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Column(
@@ -51,15 +51,15 @@ class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
         children: [
           Row(
             children: [
-              Expanded(flex: 4, child: Text(item.menuItem.name, style: const TextStyle(fontSize: 12))),
+              Expanded(flex: 4, child: Text(item.product.name, style: const TextStyle(fontSize: 12))),
               Expanded(flex: 1, child: Text('${item.quantity}', textAlign: TextAlign.right, style: const TextStyle(fontSize: 12))),
               Expanded(flex: 2, child: Text(PriceUtils.getStringPrice(item.total), textAlign: TextAlign.right, style: const TextStyle(fontSize: 12))),
             ],
           ),
-          if (item.specialIndications.isNotEmpty)
+          if (item.specialIndications != null)
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, top: 2.0),
-                child: Text(item.specialIndications, style: const TextStyle(fontSize: 12)),
+                child: Text(item.specialIndications!, style: const TextStyle(fontSize: 12)),
               ),
         ],
       ),
@@ -165,7 +165,7 @@ class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
                             height: 50,
                             child: ElevatedButton(
                               onPressed: () async {
-                                await context.read<AddSaleController>().saveSale(context, _items);
+                                await context.read<AddOrderController>().saveSale(context, _items);
                                  Navigator.pushNamed(context, '/home');
                               },
                               child: const Text('Confirmar'),

@@ -7,8 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:chicle_app_empleados/theme_data.dart';
-import '../data/local/app_database.dart';
-import 'domain/di/locator.dart';
+// import '../data/local/app_database.dart';
 import '../models/models.dart';
 import '../presentation/screens/shellapp.dart';
 import 'package:path/path.dart' as p;
@@ -29,61 +28,69 @@ Future<void> main() async {
   // 1) Inicializa Hiveuser: admin
   await Hive.initFlutter();
   Hive.registerAdapter(AuthModelAdapter());
-
-  // await Hive.deleteBoxFromDisk(Boxes.authBox);
-  // await Hive.deleteBoxFromDisk(Boxes.businessBox);
-  // await Hive.deleteBoxFromDisk(Boxes.customersBox);
-  // await Hive.deleteBoxFromDisk(Boxes.usersBox);
-  // 2) Inicializa Hive business
+  Hive.registerAdapter(UserModelAdapter());
   Hive.registerAdapter(BusinessModelAdapter());
-  Hive.registerAdapter(CustomerModelAdapter());
+  Hive.registerAdapter(ProductModelAdapter());
+  Hive.registerAdapter(OrderModelAdapter());
+  Hive.registerAdapter(OrderItemModelAdapter());
 
-  // await deleteOldDatabase();
+
+  await Hive.deleteBoxFromDisk(Boxes.authBox);
+  await Hive.deleteBoxFromDisk(Boxes.businessBox);
+  await Hive.deleteBoxFromDisk(Boxes.ordersBox);
+  await Hive.deleteBoxFromDisk(Boxes.ordersItemBox);
+  await Hive.deleteBoxFromDisk(Boxes.productsBox);
+  await Hive.deleteBoxFromDisk(Boxes.usersBox);
+  // 2) Inicializa Hive business
+  // Hive.registerAdapter(CustomerModelAdapter());
+
+  await deleteOldDatabase();
   // 2) Inicializa Drift
-  final database = AppDatabase();
+  // final database = AppDatabase();
 
-  await setupLocator(database);  
+  await setupLocator();  
+  // await setupLocator(database);  
 
   // Obtén la instancia y espera a que cargue
   final userProv = getIt<UserProvider>();
-  // await userProv.initialize();
+  await userProv.initialize();
   final businessProv = getIt<BusinessProvider>();
   await businessProv.initialize();
 
-  final customerProv = getIt<CustomerProvider>();
-  await customerProv.initialize();
+  // final customerProv = getIt<CustomerProvider>();
+  // await customerProv.initialize();
 
-  final authProv = getIt<AuthProvider>();
-  await authProv.initialize();
+  // final authProv = getIt<AuthProvider>();
+  // await authProv.initialize();
 
   runApp(
     MultiProvider(
       providers: [
         // Singletons
         ChangeNotifierProvider<BusinessProvider>.value(value: businessProv..loadBusinessData()),
-        ChangeNotifierProvider<CustomerProvider>.value(value: customerProv..loadCustomerData()),
+        // ChangeNotifierProvider<CustomerProvider>.value(value: customerProv..loadCustomerData()),
         ChangeNotifierProvider<UserProvider>.value(value: userProv..getCurrentUser()),
-        ChangeNotifierProvider<MenuItemProvider>.value(value: getIt<MenuItemProvider>()..loadAll()),
+        ChangeNotifierProvider<ProductProvider>.value(value: getIt<ProductProvider>()..loadAll()),
         // Providers
-        ChangeNotifierProvider<MenuItemProvider>(create: (_) => getIt<MenuItemProvider>()),
+        ChangeNotifierProvider<ProductProvider>(create: (_) => getIt<ProductProvider>()),
         ChangeNotifierProvider<AuthProvider>(create: (_) => getIt<AuthProvider>()),
         // ViewModels
         ChangeNotifierProvider<LoginController>(create: (ctx) => LoginController(ctx.read<AuthProvider>())),
         ChangeNotifierProvider<BusinessController>(create: (ctx) => BusinessController(ctx.read<BusinessProvider>())),
-        ChangeNotifierProvider<CustomerProvider>(create: (ctx) => getIt<CustomerProvider>()),
-        ChangeNotifierProvider<SaleProvider>(create: (ctx) => getIt<SaleProvider>()),
-        ChangeNotifierProvider<AddSaleController>(
-          create: (ctx) => AddSaleController(
-            getIt<SalesRepository>(),
+        // ChangeNotifierProvider<CustomerProvider>(create: (ctx) => getIt<CustomerProvider>()),
+        ChangeNotifierProvider<OrderProvider>(create: (ctx) => getIt<OrderProvider>()),
+        ChangeNotifierProvider<AddOrderController>(
+          create: (ctx) => AddOrderController(
+            getIt<OrderRepository>(),
             getIt<UserProvider>(),
-            getIt<CustomerProvider>()
+            // getIt<CustomerProvider>()
           )
         ),
         ChangeNotifierProxyProvider<AuthProvider, ProfileController>(
           create: (ctx) => ProfileController(ctx.read<UserProvider>(), ctx.read<AuthProvider>()),
           update: (ctx, authProv, ctrl) {
-            final u = authProv.username;
-            if (u.isNotEmpty) ctrl!.loadFromUser();
+            final u = authProv.user;
+            if (u != null) ctrl!.loadFromUser();
             return ctrl!;
           },
         ),

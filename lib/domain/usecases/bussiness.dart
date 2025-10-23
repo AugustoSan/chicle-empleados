@@ -1,20 +1,26 @@
 import '../entities/business.dart';
 import '../repositories/business_repository.dart';
 
-class GetBusinessConfig {
+class InitializeBusinessUseCase {
   final BusinessRepository repo;
-  GetBusinessConfig(this.repo);
+  InitializeBusinessUseCase(this.repo);
+  Future<void> call() => repo.initialize();
+}
+
+class LoadBusinessUseCase {
+  final BusinessRepository repo;
+  LoadBusinessUseCase(this.repo);
   Future<Business?> call() => repo.loadBusiness();
 }
 
-class SaveBusinessConfig {
+class SaveBusinessConfigUseCase {
   final BusinessRepository repo;
-  SaveBusinessConfig(this.repo);
+  SaveBusinessConfigUseCase(this.repo);
   Future<void> call(Business cfg) => repo.saveBusiness(cfg);
 }
 
-class SaveLogo {
+class SaveLogoUseCase {
   final BusinessRepository repo;
-  SaveLogo(this.repo);
+  SaveLogoUseCase(this.repo);
   Future<void> call(String logoPath) => repo.saveLogo(logoPath);
 }

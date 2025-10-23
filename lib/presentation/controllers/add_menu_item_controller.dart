@@ -8,7 +8,7 @@ class AddMenuItemController extends ChangeNotifier {
   final nameC = TextEditingController();
   final descriptionC = TextEditingController();
   final priceC = TextEditingController();
-  final ValueNotifier<EnumMenuItemCategory> type = ValueNotifier<EnumMenuItemCategory>(EnumMenuItemCategory.bebida);
+  final ValueNotifier<EnumProductCategory> type = ValueNotifier<EnumProductCategory>(EnumProductCategory.bebida);
   final ValueNotifier<String?> image = ValueNotifier<String?>(null);
 
   bool  _loading = false;
@@ -16,7 +16,7 @@ class AddMenuItemController extends ChangeNotifier {
   bool  get loading => _loading;
   String? get error => _error;
 
-  final MenuItemProvider _menuItemProvider;
+  final ProductProvider _menuItemProvider;
 
   AddMenuItemController(this._menuItemProvider);
 
@@ -31,8 +31,8 @@ class AddMenuItemController extends ChangeNotifier {
     _error   = null;
     notifyListeners();
 
-    final ok = await _menuItemProvider.saveMenuItem(
-      MenuItem.withoutId(
+    final ok = await _menuItemProvider.saveProduct(
+      Product.withoutId(
         name:         nameC.text,
         description:  descriptionC.text,
         price:        double.parse(priceC.text),

@@ -1,23 +1,22 @@
 import 'package:chicle_app_empleados/presentation/presentation.dart';
-import 'package:chicle_app_empleados/presentation/screens/modules/update_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../domain/entities/menuItem.dart';
+import '../../domain/entities/product.dart';
 
 class CardMenuCustomLandscape extends StatelessWidget {
-  final MenuItem item;
+  final Product item;
   const CardMenuCustomLandscape({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
     final navigatorKey = context.watch<ShellNavigatorController>();
     return InkWell(
-      onLongPress: () => mostrarMenuItemDialog(context, item),
+      onLongPress: () => mostrarProductDialog(context, item),
       onTap: () {
         navigatorKey.navigatorKey.currentState!.push(
           MaterialPageRoute(
             builder: (context) => ChangeNotifierProvider(
-              create: (ctx) => UpdateMenuItemController(ctx.read<MenuItemProvider>(), item),
+              create: (ctx) => UpdateProductController(ctx.read<ProductProvider>(), item),
               child: const UpdateMenuScreen()
             )
           )

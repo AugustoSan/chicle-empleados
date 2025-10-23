@@ -5,7 +5,8 @@ import '../utils/utils.dart';
 
 class ProfileController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
-  int id = -1;
+  String? _username;
+  // String? _id;
   // final nameC = TextEditingController();
   final usernameC = TextEditingController();
   final passwordC = TextEditingController();
@@ -27,12 +28,12 @@ class ProfileController extends ChangeNotifier {
   ProfileController(this._userProvider, this._authProvider);
 
   Future<void> loadFromUser() async {
-    final username = _authProvider.username;
-    final user = await _userProvider.getUser(username);
+    final user = _authProvider.user;
     if (user == null) return;
-    id = user.id;
-    // nameC.text     = user.name;
-    usernameC.text = username;
+    
+    _username = user.username;
+    // _id      = user.id;
+    usernameC.text = _username!;
     passwordC.text = '';
     passwordNewC.text = '';
     passwordConfirmC.text = '';
@@ -51,17 +52,12 @@ class ProfileController extends ChangeNotifier {
     _error   = null;
     notifyListeners();
 
-    if(_authProvider.username != usernameC.text) {
-      final ok = await _authProvider.changeUsername(newUsername: usernameC.text);
+    if(_username != usernameC.text) {
+      final ok = await _userProvider.changeUsername(newUsername: usernameC.text);
       if (!ok) _error = 'Ocurrio un error al guardar';
     }
 
     if(passwordC.text.isNotEmpty) {
-      final validPassword = await _authProvider.validatePassword(usernameC.text, passwordC.text);
-      if (!validPassword) {
-        _error = 'La contraseña actual no es correcta';
-        return _error!;
-      }
       if(passwordNewC.text.isNotEmpty) {
         if(passwordConfirmC.text.isEmpty) {
           _error = 'La confirmación de la contraseña es requerida';
@@ -71,7 +67,7 @@ class ProfileController extends ChangeNotifier {
           _error = 'Las contraseñas no coinciden';
           return _error!;
         }
-        final result = await _authProvider.changePassword(
+        final result = await _userProvider.changePassword(
           currentPassword: passwordC.text,
           newPassword: passwordNewC.text
         );

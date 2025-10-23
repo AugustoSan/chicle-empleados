@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UpdateOrder extends StatefulWidget {
-  final int idSale;
-  const UpdateOrder({Key? key, required this.idSale}) : super(key: key);
+  final String idOrder;
+  const UpdateOrder({Key? key, required this.idOrder}) : super(key: key);
 
   @override
   _UpdateOrderState createState() => _UpdateOrderState();
 }
 
 class _UpdateOrderState extends State<UpdateOrder> {
-  final Map<MenuItem,SaleItemMenu> _saleItems = {};
-  final List<MenuItem> _listMenuItems = [];
-  Sales? _sale;
+  final Map<Product,OrderItem> _saleItems = {};
+  final List<Product> _listProducts = [];
+  Order? _sale;
 
   @override
   void initState() {
@@ -25,16 +25,16 @@ class _UpdateOrderState extends State<UpdateOrder> {
   @override
   void dispose() {
     super.dispose();
-    _listMenuItems.clear();
+    _listProducts.clear();
     _saleItems.clear();
   }
 
   Future<void> _init() async {
-    final menuProv = context.read<MenuItemProvider>();
-    final saleProv = context.read<SaleProvider>();
+    final menuProv = context.read<ProductProvider>();
+    final saleProv = context.read<OrderProvider>();
     await menuProv.loadAll();
 
-    final sale = await saleProv.getSale(widget.idSale);
+    final sale = await saleProv.getOrder(widget.idOrder);
 
     if(!mounted || sale == null) return;
 
@@ -42,22 +42,18 @@ class _UpdateOrderState extends State<UpdateOrder> {
 
     final items = menuProv.allItems;
 
-    final Map<int, SaleItemMenu> map = {};
+    final Map<String, OrderItem> map = {};
     for (final item in items) {
       final existing = sale.items.firstWhere(
-        (e) => e.menuItem.id == item.id,
-        orElse: () => SaleItemMenu(
-          menuItem: item, 
-          quantity: 0, 
-          specialIndications: '',
-        ),
+        (e) => e.product.id == item.id,
+        orElse: () => OrderItem.fromProduct(item),
       );
-      map[item.id!] = existing;
+      map[item.id] = existing;
     }
 
     setState(() {
       _sale = sale;
-      _listMenuItems
+      _listProducts
         ..clear()
         ..addAll(items);
       _saleItems
@@ -72,11 +68,11 @@ class _UpdateOrderState extends State<UpdateOrder> {
     
   }
 
-  Future<void> _save(List<SaleItemMenu> items) async {
+  Future<void> _save(List<OrderItem> items) async {
     if(_sale == null) return;
     _sale!.items = items;
-    final saleProv = context.read<SaleProvider>();
-    await saleProv.updateSale(_sale!.id!, _sale!);
+    final saleProv = context.read<OrderProvider>();
+    await saleProv.updateOrder(_sale!.id, _sale!);
   }
 
   @override
@@ -132,13 +128,14 @@ class _UpdateOrderState extends State<UpdateOrder> {
                 print('Presionado');
                 final seleccionados = _saleItems.entries
                   .where((e) => e.value.quantity > 0)
-                  .map((e) => SaleItemMenu(
-                    menuItem: e.key,
+                  .map((e) => OrderItem.withoutIds(
+                    product: e.key,
                     quantity: e.value.quantity,
+                    priceAtOrder: e.key.price,
                     specialIndications: e.value.specialIndications,
                   )).toList();
                 for (var item in seleccionados) {
-                  print('item: ${item.menuItem.name}, quantity: ${item.quantity}');
+                  print('item: ${item.product.name}, quantity: ${item.quantity}');
                 }
   
                 _save(seleccionados);

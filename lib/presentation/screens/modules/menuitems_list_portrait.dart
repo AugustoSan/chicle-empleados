@@ -13,10 +13,10 @@ class MenuItemsListPortrait extends StatefulWidget {
 }
 
 class _MenuItemsListPortraitState extends State<MenuItemsListPortrait> {
-  List<MenuItem> menuList = [];
-  List<MenuItem> bebidasList = [];
-  List<MenuItem> alimentosList = [];
-  List<MenuItem> extraList = [];
+  List<Product> menuList = [];
+  List<Product> bebidasList = [];
+  List<Product> alimentosList = [];
+  List<Product> extraList = [];
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _MenuItemsListPortraitState extends State<MenuItemsListPortrait> {
   }
 
   Future<void> _init() async {
-    final provider = context.read<MenuItemProvider>();
+    final provider = context.read<ProductProvider>();
     await provider.loadAll();
 
     if (!mounted) return;
@@ -51,16 +51,16 @@ class _MenuItemsListPortraitState extends State<MenuItemsListPortrait> {
       bebidasList.clear();
       alimentosList.clear();
       extraList.clear();
-      menuList = items.where((item) => item.category == EnumMenuItemCategory.menu).toList();
-      bebidasList = items.where((item) => item.category == EnumMenuItemCategory.bebida).toList();
-      alimentosList = items.where((item) => item.category == EnumMenuItemCategory.alimento).toList();
-      extraList = items.where((item) => item.category == EnumMenuItemCategory.extra).toList();
+      menuList = items.where((item) => item.category == EnumProductCategory.menu).toList();
+      bebidasList = items.where((item) => item.category == EnumProductCategory.bebida).toList();
+      alimentosList = items.where((item) => item.category == EnumProductCategory.alimento).toList();
+      extraList = items.where((item) => item.category == EnumProductCategory.extra).toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    context.watch<MenuItemProvider>();
+    context.watch<ProductProvider>();
     return ListView(
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: [

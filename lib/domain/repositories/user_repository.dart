@@ -1,11 +1,23 @@
 import '../entities/user.dart';
 
 abstract class UserRepository {
-  Future<User?> getUserDB(String username);
-  Future<bool> changeUsernameDB(int id, String username);
-  Future<List<User>> getAllUsersDB();
-  Future<bool> addUserDB(String username);
-  Future<bool> deleteUserDB(String username);
-  Future<User?> findUserByIdDB(int id);
-  Future<User?> findUserByUsernameDB(String username);
+  Future<void> initialize();
+  Future<List<User>> getAllUsers();
+  Future<User?> findUserById(String id);
+  Future<User?> findUserByUsername(String username);
+  Future<bool> changeUsername({
+    required String id, 
+    required String newUsername,
+  });
+  Future<bool> addUser(User user);
+  Future<bool> updateUser({
+    required String id, 
+    required User user
+  });
+  Future<bool> deleteUser(String id);
+  Future<bool> changePassword({
+    required String id,
+    required String currentPassword,
+    required String newPassword,
+  });
 }

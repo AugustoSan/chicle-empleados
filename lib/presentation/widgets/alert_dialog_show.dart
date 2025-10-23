@@ -1,10 +1,10 @@
 import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import '../../domain/entities/menuItem.dart';
+import '../../domain/entities/product.dart';
 
 class AlertDialogShow extends StatelessWidget {
-  final MenuItem item;
+  final Product item;
   const AlertDialogShow({Key? key, required this.item}) : super(key: key);
 
   @override

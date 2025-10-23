@@ -17,7 +17,7 @@ class FloatingButtomCustom extends StatelessWidget {
           shell.navigatorKey.currentState!.push(
             MaterialPageRoute(
               builder: (context) => ChangeNotifierProvider(
-                create: (ctx) => AddMenuItemController(ctx.read<MenuItemProvider>()), 
+                create: (ctx) => AddMenuItemController(ctx.read<ProductProvider>()), 
                 child: const AddMenuScreen()
               )
             )

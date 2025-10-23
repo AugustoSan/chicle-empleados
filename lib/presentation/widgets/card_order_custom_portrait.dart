@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../domain/domain.dart';
 
 class CardOrderCustomPortrait extends StatelessWidget {
-  final Sales item;
+  final Order item;
   const CardOrderCustomPortrait({super.key, required this.item});
 
   @override
@@ -14,7 +14,7 @@ class CardOrderCustomPortrait extends StatelessWidget {
     print('CardOrderCustomPortrait: ${item.id}');
     return InkWell(
       onTap: () => {
-        if (item.status == EnumSalesStatus.completed || item.status == EnumSalesStatus.cancelled) {
+        if (item.status == EnumOrderStatus.completed || item.status == EnumOrderStatus.cancelled) {
           mostrarTicketDialog(context, item),
         } else {
           mostrarSaleDialog(context, item),
@@ -38,9 +38,9 @@ class CardOrderCustomPortrait extends StatelessWidget {
                   item.status.name.toUpperCase(),
                   style: TextStyle(
                     fontSize: 12,
-                    color: item.status == EnumSalesStatus.completed
+                    color: item.status == EnumOrderStatus.completed
                         ? Colors.green
-                        : item.status == EnumSalesStatus.pending
+                        : item.status == EnumOrderStatus.pending
                             ? Colors.red
                             : Colors.grey[150],
                   ),

@@ -8,7 +8,7 @@ class UpdateMenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.watch<UpdateMenuItemController>();
+    final vm = context.watch<UpdateProductController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Editar la carta'),
@@ -22,7 +22,7 @@ class UpdateMenuScreen extends StatelessWidget {
             onPressed: () async {
               final confirmar = await mostrarDeleteDialog(context);
               if (confirmar == true) {
-                await context.read<MenuItemProvider>().deleteMenuItem(vm.id);
+                await context.read<ProductProvider>().deleteProduct(vm.id);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Eliminado ✔️')),
                 );
@@ -75,10 +75,10 @@ class UpdateMenuScreen extends StatelessWidget {
                                     v != null && v.isNotEmpty ? null : 'Precio inválido',
                               ),
                               const SizedBox(height: 12),
-                              DropdownButtonFormField<EnumMenuItemCategory>(
+                              DropdownButtonFormField<EnumProductCategory>(
                                 value: vm.type.value,
                                 decoration: const InputDecoration(labelText: 'Categoría'),
-                                items: EnumMenuItemCategory.values.map((t) =>
+                                items: EnumProductCategory.values.map((t) =>
                                   DropdownMenuItem(value: t, child: Text(t.name))
                                 ).toList(),
                                 onChanged: (t) {

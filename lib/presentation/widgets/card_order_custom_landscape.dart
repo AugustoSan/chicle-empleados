@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../domain/domain.dart';
 
 class CardOrderCustomLandscape extends StatelessWidget {
-  final Sales item;
+  final Order item;
   const CardOrderCustomLandscape({super.key, required this.item});
 
   @override
@@ -36,9 +36,9 @@ class CardOrderCustomLandscape extends StatelessWidget {
                             item.status.name.toUpperCase(),
                             style: TextStyle(
                               fontSize: 12,
-                              color: item.status == EnumSalesStatus.completed
+                              color: item.status == EnumOrderStatus.completed
                                   ? Colors.green
-                                  : item.status == EnumSalesStatus.pending
+                                  : item.status == EnumOrderStatus.pending
                                       ? Colors.red
                                       : Colors.black,
                             ),

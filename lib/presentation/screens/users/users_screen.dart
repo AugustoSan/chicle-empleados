@@ -16,7 +16,7 @@ class UsersScreen extends StatefulWidget {
 }
 
 class _UsersScreenState extends State<UsersScreen> {
-  late Future<List<Auth>> _usersFuture;
+  late Future<List<User>> _usersFuture;
 
   @override
   void initState() {
@@ -24,20 +24,33 @@ class _UsersScreenState extends State<UsersScreen> {
     _usersFuture = _fetchUsers();
   }
 
-  Future<List<Auth>> _fetchUsers() {
-    return context.read<AuthProvider>().getAllUsers();
+  Future<List<User>> _fetchUsers() {
+    return context.read<UserProvider>().getAllUsers();
   }
 
-  // void _refreshUsers() {
-  //   setState(() {
-  //     _usersFuture = _fetchUsers();
-  //   });
-  // }
+  void _refreshUsers() {
+    setState(() {
+      _usersFuture = _fetchUsers();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _refreshUsers();
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    // final authProvider = context.read<AuthProvider>();
-    // final currentUser = authProvider.username;
+    final authProvider = context.read<AuthProvider>();
+    final currentUser = authProvider.user;
+    final isAdmin = authProvider.isAdmin;
     final shell = context.watch<ShellNavigatorController>();
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +60,7 @@ class _UsersScreenState extends State<UsersScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: FutureBuilder<List<Auth>>(
+      body: FutureBuilder<List<User>>(
         future: _usersFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -60,34 +73,33 @@ class _UsersScreenState extends State<UsersScreen> {
           if (users.isEmpty) {
             return const Center(child: Text('No hay usuarios registrados'));
           }
-          final authProvider = context.read<AuthProvider>();
-          final currentUser = authProvider.username;
           return ListView.builder(
             padding: const EdgeInsets.all(16),
             itemCount: users.length,
             itemBuilder: (context, i) {
-              final u = users[i];
+              
+              final userItem = users[i];
               return Card(
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 child: ListTile(
-                  leading: CircleAvatar(child: Text(u.username[0], style: const TextStyle(fontSize: 20))),
-                  title: Text(u.username),
-                  subtitle: Text('@${u.username}'),
-                  trailing: u.username == currentUser ? IconButton(
+                  leading: CircleAvatar(child: Text(userItem.username[0], style: const TextStyle(fontSize: 20))),
+                  title: Text(userItem.username),
+                  subtitle: Text('@${userItem.username}'),
+                  trailing: userItem.username == currentUser ? IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () {
-                      if(u.username == currentUser) {
+                      if(userItem.username == currentUser) {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
                       }
                     },
-                  ) : authProvider.role == 'administrador' ? IconButton(
+                  ) : isAdmin ? IconButton(
                     icon: const Icon(Icons.delete, color: Colors.red),
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
                           title: const Text('Confirmar eliminación'),
-                          content: Text('¿Estás seguro de que deseas eliminar al usuario "${u.username}"?'),
+                          content: Text('¿Estás seguro de que deseas eliminar al usuario "${userItem.username}"?'),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.pop(context),
@@ -95,16 +107,16 @@ class _UsersScreenState extends State<UsersScreen> {
                             ),
                             TextButton(
                               onPressed: () async {
-                                final success = await context.read<UserProvider>().deleteUserDB(u.username);
-                                final successAuth = await context.read<AuthProvider>().deleteUser(username: u.username);
+                                final success = await context.read<UserProvider>().deleteUser(user: userItem);
                                 Navigator.pop(context); // Cerrar el diálogo
-                                if (success && successAuth) {
+                                if (success) {
+                                  _refreshUsers();
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Usuario "${u.username}" eliminado correctamente')),
+                                    SnackBar(content: Text('Usuario "${userItem.username}" eliminado correctamente')),
                                   );
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Error al eliminar al usuario "${u.username}"')),
+                                    SnackBar(content: Text('Error al eliminar al usuario "${userItem.username}"')),
                                   );
                                 }
                               },
@@ -126,7 +138,7 @@ class _UsersScreenState extends State<UsersScreen> {
         onPressed: () => shell.navigatorKey.currentState!.push(
             MaterialPageRoute(
               builder: (context) => ChangeNotifierProvider(
-                create: (ctx) => AddUserController(ctx.read<AuthProvider>()), 
+                create: (ctx) => AddUserController(ctx.read<UserProvider>()), 
                 child: const AddUserScreen()
               )
             )

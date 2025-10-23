@@ -1,3 +1,5 @@
+import 'package:chicle_app_empleados/data/repository/order_item_repository_impl.dart';
+import 'package:chicle_app_empleados/data/repository/product_repository_impl.dart';
 import 'package:hive/hive.dart';
 import 'package:get_it/get_it.dart';
 import '../../../models/models.dart';
@@ -7,7 +9,14 @@ import '../../../presentation/presentation.dart';
 
 final getIt = GetIt.instance;
 
-Future<void> setupLocator(AppDatabase db) async {
+Future<void> setupLocator() async {
+  // --- Autenticación ---
+  getIt.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(),
+  );
+  getIt.registerFactory<AuthProvider>(
+    () => AuthProvider(getIt<AuthRepository>())..checkLogin(),
+  );
 
   // --- Negocio ---
   final businessBox = await Hive.openBox<BusinessModel>(Boxes.businessBox);
@@ -18,44 +27,35 @@ Future<void> setupLocator(AppDatabase db) async {
     () => BusinessProvider(getIt<BusinessRepository>()),
   );
 
-  // --- Clientes ---
-  final customerBox = await Hive.openBox<CustomerModel>(Boxes.customersBox);
-  getIt.registerLazySingleton<CustomerRepository>(
-    () => CustomerRepositoryImpl(customerBox),
-  );
-  getIt.registerFactory<CustomerProvider>(
-    () => CustomerProvider(getIt<CustomerRepository>()),
-  );
-
   // --- Usuarios ---
   getIt.registerLazySingleton<UserRepository>(
-    () => UserRepositoryImpl(db),
+    () => UserRepositoryImpl(),
   );
   getIt.registerFactory<UserProvider>(
-    () => UserProvider(getIt<UserRepository>(), getIt<AuthProvider>()),
+    () => UserProvider(getIt<UserRepository>(), getIt<AuthRepository>()),
   );
 
-  // --- Ventas ---
-  getIt.registerLazySingleton<SalesRepository>(
-    () => SalesRepositoryImpl(db),
+  // --- Productos ---
+  getIt.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImpl(),
   );
-  getIt.registerFactory<SaleProvider>(
-    () => SaleProvider(getIt<SalesRepository>()),
-  );
-
-  // --- Autenticación ---
-  getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(getIt<UserRepository>()),
-  );
-  getIt.registerFactory<AuthProvider>(
-    () => AuthProvider(getIt<AuthRepository>())..checkLogin(),
+  getIt.registerFactory<ProductProvider>(
+    () => ProductProvider(getIt<ProductRepository>()),
   );
 
-  // --- MenuItems ---
-  getIt.registerLazySingleton<MenuItemRepository>(
-    () => MenuItemRepositoryImpl(db),
+  // --- OrderItem ---
+  getIt.registerLazySingleton<OrderItemRepository>(
+    () => OrderItemRepositoryImp(),
   );
-  getIt.registerFactory<MenuItemProvider>(
-    () => MenuItemProvider(getIt<MenuItemRepository>()),
+  getIt.registerFactory<OrderItemProvider>(
+    () => OrderItemProvider(getIt<OrderItemRepository>()),
+  );  
+
+  // --- Ordenes ---
+  getIt.registerLazySingleton<OrderRepository>(
+    () => OrderRepositoryImpl(),
   );
+  getIt.registerFactory<OrderProvider>(
+    () => OrderProvider(getIt<OrderRepository>()),
+  );  
 }

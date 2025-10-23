@@ -1,12 +1,11 @@
 import 'dart:io';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
-import 'package:chicle_app_empleados/presentation/screens/modules/update_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../domain/entities/menuItem.dart';
+import '../../domain/entities/product.dart';
 
 class CardMenuCustom extends StatelessWidget {
-  final MenuItem item;
+  final Product item;
   const CardMenuCustom({super.key, required this.item});
 
   @override
@@ -14,12 +13,12 @@ class CardMenuCustom extends StatelessWidget {
     final navigatorKey = context.watch<ShellNavigatorController>();
     final bool mostrarImagen = item.imageUrl != null && File(item.imageUrl!).existsSync();
     return InkWell(
-      onLongPress: () => mostrarMenuItemDialog(context, item),
+      onLongPress: () => mostrarProductDialog(context, item),
       onTap: () {
         navigatorKey.navigatorKey.currentState!.push(
           MaterialPageRoute(
             builder: (context) => ChangeNotifierProvider(
-              create: (ctx) => UpdateMenuItemController(ctx.read<MenuItemProvider>(), item),
+              create: (ctx) => UpdateProductController(ctx.read<ProductProvider>(), item),
               child: const UpdateMenuScreen()
             )
           )
