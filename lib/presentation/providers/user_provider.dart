@@ -5,11 +5,19 @@ import '../../domain/domain.dart';
 class UserProvider with ChangeNotifier {
   final UserRepository _repo;
   final AuthRepository _auth;
+  List<User> _items = [];
 
   UserProvider(this._repo, this._auth);
 
+  List<User> get allUsers => _items;
+
   Future<void> initialize() async {
     await _repo.initialize();
+  }
+
+  Future<void> loadAllUsers() async {
+    _items = await _repo.getAllUsers();
+    notifyListeners();
   }
 
   Future<bool> changePassword({

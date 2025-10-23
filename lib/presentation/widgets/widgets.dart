@@ -11,6 +11,7 @@ export 'card_product_custom.dart';
 export 'card_product_custom_landscape.dart';
 export 'card_order_custom_landscape.dart';
 export 'card_order_custom_portrait.dart';
+export 'card_user_custom_portrait.dart';
 export 'listview_custom.dart';
 export 'search_bar_customer.dart';
 export 'card_add_order_custom.dart';

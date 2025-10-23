@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chicle_app_empleados/theme_data.dart';
-import 'package:chicle_app_empleados/presentation/screens/settings/profile_screen.dart';
 
 import '../../../domain/domain.dart';
 import '../../presentation.dart';
@@ -17,33 +16,39 @@ class UsersScreen extends StatefulWidget {
 }
 
 class _UsersScreenState extends State<UsersScreen> {
-  late Future<List<User>> _usersFuture;
+  final List<User> _users = [];
 
   @override
   void initState() {
     super.initState();
-    _usersFuture = _fetchUsers();
-  }
-
-  Future<List<User>> _fetchUsers() {
-    return context.read<UserProvider>().getAllUsers();
-  }
-
-  void _refreshUsers() {
-    setState(() {
-      _usersFuture = _fetchUsers();
-    });
+    _init();
   }
 
   @override
   void dispose() {
     super.dispose();
+    _users.clear();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _refreshUsers();
+    _init();
+  }
+
+  Future<void> _init() async {
+    final userProv = context.read<UserProvider>();
+    await userProv.loadAllUsers();
+
+    if(!mounted) return;
+
+    final items = userProv.allUsers;
+
+    setState(() {
+      _users
+        ..clear()
+        ..addAll(items);
+    });
   }
 
 
@@ -53,6 +58,8 @@ class _UsersScreenState extends State<UsersScreen> {
     final currentUserEntity = authProvider.user;
     final currentUser = currentUserEntity?.username;
     final isAdmin = authProvider.isAdmin;
+    print('users count: ${_users.length}');
+    print('currentUser: ${currentUser}');
     // final shell = context.watch<ShellNavigatorController>();
     return Scaffold(
       appBar: AppBar(
@@ -71,87 +78,35 @@ class _UsersScreenState extends State<UsersScreen> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: FutureBuilder<List<User>>(
-                  future: _usersFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    }
-                    final users = snapshot.data!;
-                    if (users.isEmpty) {
-                      return const Center(child: Text('No hay usuarios registrados'));
-                    }
-                    return ListView.builder(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: users.length,
-                      itemBuilder: (context, i) {
-                        
-                        final userItem = users[i];
-                        return Card(
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          child: ListTile(
-                            leading: CircleAvatar(child: Text(userItem.username[0], style: const TextStyle(fontSize: 20))),
-                            title: Text(userItem.username),
-                            subtitle: Text('@${userItem.username}'),
-                            trailing: userItem.username == currentUser ? IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                if(userItem.username == currentUser) {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
-                                }
-                              },
-                            ) : isAdmin ? IconButton(
-                              icon: const Icon(Icons.delete, color: Colors.red),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: const Text('Confirmar eliminación'),
-                                    content: Text('¿Estás seguro de que deseas eliminar al usuario "${userItem.username}"?'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: const Text('Cancelar'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () async {
-                                          final success = await context.read<UserProvider>().deleteUser(user: userItem);
-                                          Navigator.pop(context); // Cerrar el diálogo
-                                          if (success) {
-                                            _refreshUsers();
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(content: Text('Usuario "${userItem.username}" eliminado correctamente')),
-                                            );
-                                          } else {
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(content: Text('Error al eliminar al usuario "${userItem.username}"')),
-                                            );
-                                          }
-                                        },
-                                        child: const Text('Eliminar', style: TextStyle(color: Colors.red)),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ) : const SizedBox.shrink(),
-                          ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: ListView.separated(
+                      padding: const EdgeInsets.all(8),
+                      itemCount: _users.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final item = _users[index];
+                        final isCurrentUser = item.username == currentUser;
+                        return CardUserCustomPortrait(
+                          item: item,
+                          isCurrentUser: isCurrentUser,
+                          isAdmin: isAdmin,
                         );
                       },
-                    );
-                  },
-                ),
+                      separatorBuilder: (BuildContext context, int index) => const Divider(), 
+                    )
+                  );
+                }
               )
             )
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () => {
-          Navigator.push(context, RouteUtils().getRouteAddUser()).then((_) => _refreshUsers()),
+          Navigator.push(context, RouteUtils().getRouteAddUser()).then((_) => _init()),
         }
       ),
     );
