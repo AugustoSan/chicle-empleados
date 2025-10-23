@@ -68,6 +68,19 @@ class _UsersScreenState extends State<UsersScreen> {
           icon: const Icon(ChicleIcons.backPage),
           onPressed: () => Navigator.pop(context),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(ChicleIcons.refresh),
+            onPressed: () => _init(),
+          ),
+          IconButton(
+            icon: const Icon(ChicleIcons.home),
+            onPressed: () => {
+              Navigator.pop(context),
+              Navigator.pop(context),
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -104,7 +117,7 @@ class _UsersScreenState extends State<UsersScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+        child: const Icon(ChicleIcons.add),
         onPressed: () => {
           Navigator.push(context, RouteUtils().getRouteAddUser()).then((_) => _init()),
         }

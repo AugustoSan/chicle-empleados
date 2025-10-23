@@ -1,6 +1,7 @@
 
 import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:chicle_app_empleados/presentation/screens/settings/settings.dart';
+import 'package:chicle_app_empleados/theme_data.dart';
 // import 'package:chicle_app_empleados/presentation/screens/modules/update_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,14 +25,14 @@ class CardUserCustomPortrait extends StatelessWidget {
           title: Text(item.username),
           subtitle: Text('@${item.username}'),
           trailing: isCurrentUser ? IconButton(
-            icon: const Icon(Icons.edit),
+            icon: const Icon(ChicleIcons.edit),
             onPressed: () {
               if(isCurrentUser) {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
               }
             },
           ) : isAdmin ? IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
+            icon: const Icon(ChicleIcons.delete, color: Colors.red),
             onPressed: () {
               showDialog(
                 context: context,

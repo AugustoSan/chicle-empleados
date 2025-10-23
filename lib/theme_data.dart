@@ -108,4 +108,10 @@ class ChicleIcons {
   static const IconData shoppingCart = Icons.shopping_cart;
   static const IconData list = Icons.list;
   static const IconData backPage = Icons.arrow_back_ios;
+  static const IconData refresh = Icons.refresh;
+  static const IconData add = Icons.add;
+  static const IconData edit = Icons.edit;
+  static const IconData delete = Icons.delete;
+  static const IconData logout = Icons.logout;
+  
 }
