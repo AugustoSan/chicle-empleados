@@ -68,23 +68,6 @@ class CompanyScreen extends StatelessWidget {
                                     : 'Teléfono inválido',
                               ),
                               const SizedBox(height: 12),
-                              TextFieldCustom(
-                                controller: vm.currencyC,
-                                title: 'Moneda',
-                                validator: (v) =>
-                                    v != null && v.isNotEmpty ? null : 'Moneda inválida',
-                                    ),
-                              const SizedBox(height: 12),
-                              TextFieldCustom(
-                                controller: vm.taxC,
-                                title: 'Porcentaje de IVA',
-                                keyboardType: TextInputType.number,
-                                validator: (v) {
-                                  if (v == null || v.isEmpty) return 'IVA requerido';
-                                  if (double.tryParse(v) == null) return 'Debe ser un número';
-                                  return null;
-                                },
-                              ),
                               const SizedBox(height: 12),
                               const SizedBox(height: 24),
                             ],
