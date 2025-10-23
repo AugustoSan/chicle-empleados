@@ -38,7 +38,7 @@ class ProductRepositoryImpl extends ProductRepository {
     final exist = await getProduct(id);
     if(exist == null) throw Exception('La orden con id $id no existe');
 
-    return _save(Product.withAll(
+    return _update(id, Product.withAll(
       id: id,
       name: product.name,
       description: product.description,
@@ -72,6 +72,16 @@ class ProductRepositoryImpl extends ProductRepository {
     final box = await _openProductBox();
     final exists = await getProduct(product.id);
     if (exists != null) return false;
+
+    final model = product.parseToModel();
+    
+    await box.put(product.id, model);
+    return true;
+  }
+  Future<bool> _update(String id, Product product) async {
+    final box = await _openProductBox();
+    final exists = await getProduct(id);
+    if (exists == null) return false;
 
     final model = product.parseToModel();
     

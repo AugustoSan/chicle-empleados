@@ -46,6 +46,7 @@ class AddMenuScreen extends StatelessWidget {
                               TextFieldCustom(
                                 controller: vm.nameC,
                                 title: 'Nombre',
+                                keyboardType: TextInputType.text,
                                 validator: (v) => v != null && v.isNotEmpty
                                     ? null
                                     : 'Nombre inválido',

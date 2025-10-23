@@ -19,7 +19,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
     return TextFormField(
       enabled: widget.enabled ?? true,
       controller: widget.controller,
-      enableSuggestions: false,
+      enableSuggestions: true,
       autocorrect: false,
       keyboardType: widget.keyboardType ?? TextInputType.text,
       decoration: InputDecoration(
