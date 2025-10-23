@@ -19,31 +19,36 @@ class _ListItemsPriceQuantityState extends State<ListItemsPriceQuantity> {
   @override
   void initState() {
     super.initState();
-    context.read<ProductProvider>().loadAll();
-    final menuItems = context.read<ProductProvider>().allItems;
-    _listProducts.addAll(menuItems);
-    for (var item in menuItems) {
-      _orderItems[item] = 
-        widget.saleItems[item] ?? OrderItem.fromProduct(item);
-    }
+    _init();
   }
 
   @override
   void dispose() {
     super.dispose();
+    _listProducts.clear();
+    _orderItems.clear();
   }
 
   @override
-    void didChangeDependencies() {
-      super.didChangeDependencies();
-      final products = context.watch<ProductProvider>().allItems;
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _init();
+  }
+  
+  void _init(){
+    context.read<ProductProvider>().loadAll();
+    final products = context.read<ProductProvider>().allItems;
+    setState(() {
+      _listProducts.clear();
+      _listProducts.addAll(products);
       if (_listProducts.isEmpty && products.isNotEmpty) {
         _listProducts.addAll(products);
         for (var item in products) {
           widget.saleItems[item] = OrderItem.fromProduct(item);
         }
       }
-    }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +74,11 @@ class _ListItemsPriceQuantityState extends State<ListItemsPriceQuantity> {
                 });
               }
             }),
+            onAddDescription: (String? description) {
+              setState(() {
+                item.specialIndications = description;
+              });
+            },
           );
         },
       ),

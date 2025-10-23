@@ -44,7 +44,7 @@ class OrderRepositoryImpl extends OrderRepository {
     final exist = await getOrder(id);
     if(exist == null) throw Exception('La orden con id $id no existe');
 
-    return _save(Order.withAll(
+    return _updateOrder(id,Order.withAll(
       id: id,
       userId: order.userId,
       customer: order.customer,
@@ -83,6 +83,16 @@ class OrderRepositoryImpl extends OrderRepository {
   Future<bool> _save(Order order) async {
     final box = await _openOrderBox();
     final exists = await getOrder(order.id);
+    if (exists != null) return false;
+
+    final model = order.parseToModel();
+    
+    await box.put(order.id, model);
+    return true;
+  }
+  Future<bool> _updateOrder(String id, Order order) async {
+    final box = await _openOrderBox();
+    final exists = await getOrder(id);
     if (exists == null) return false;
 
     final model = order.parseToModel();

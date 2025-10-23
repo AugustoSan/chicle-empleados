@@ -32,7 +32,7 @@ class CardOrderCustomPortrait extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
-                  child: Text('Orden: # ${item.id.toString()}'),
+                  child: Text('Orden: # ${StringUtil.hideMiddle(item.id)}'),
                 ),
                 Text(
                   item.status.name.toUpperCase(),

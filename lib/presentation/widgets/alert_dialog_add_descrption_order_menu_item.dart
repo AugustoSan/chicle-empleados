@@ -17,6 +17,13 @@ class _AlertDialogAddDescrptionOrderMenuItemState extends State<AlertDialogAddDe
     super.initState();
     controller.text = widget.indications;
   }
+  
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {

@@ -88,7 +88,7 @@ class _UpdateOrderState extends State<UpdateOrder> {
         title: Row(
           children: [
             const Text('Orden'),
-            Text(' # ${_sale!.id}')
+            Text(' # ${StringUtil.hideMiddle(_sale!.id)}')
           ],
         ),
         leading: IconButton(

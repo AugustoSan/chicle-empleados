@@ -75,7 +75,7 @@ class Order {
     customer: customer,
     status: status.index,
     date: date,
-    items: items.map((item) => item.parseToModel()).toList(),
+    items: items.map((item) => item.parseToModel(id)).toList(),
   );
   double  get total => items.fold(0.0, (sum, item) => sum + (item.quantity * item.priceAtOrder));
 }
@@ -140,9 +140,9 @@ class OrderItem {
     priceAtOrder = model.priceAtOrder,
     specialIndications = model.specialIndications;
 
-  OrderItemModel parseToModel() => OrderItemModel(
+  OrderItemModel parseToModel(String ordenId) => OrderItemModel(
     id: id,
-    orderId: orderId,
+    orderId: ordenId,
     product: product.parseToModel(),
     quantity: quantity,
     priceAtOrder: priceAtOrder,
