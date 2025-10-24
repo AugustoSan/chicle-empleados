@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chicle Café & Snacks</title>
+    <style>
+        /* Estilos Generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px; /* Aumentar ancho para la cuadrícula */
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #379ede;
+            border-bottom: 3px solid #379ede;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #4a4a4a;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            grid-column: 1 / -1; /* Hace que el título de la sección ocupe todo el ancho */
+        }
+
+        /* Estilos de Cuadrícula (Grid) para el Contenido del Menú */
+        #menu-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 280px es el ancho mínimo de cada tarjeta */
+            gap: 20px; /* Espacio entre las tarjetas */
+        }
+        
+        /* Estilos de la Tarjeta (Card) */
+        .menu-card {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden; /* Oculta partes de la imagen que sobresalgan */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+            display: flex; /* Asegura que la tarjeta use todo su espacio vertical */
+            flex-direction: column;
+        }
+        .menu-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Imagen Principal */
+        .item-image {
+            width: 100%; /* La imagen ocupa todo el ancho de la tarjeta */
+            height: 200px; /* Altura fija para un aspecto uniforme */
+            object-fit: cover; /* Corta la imagen para cubrir el área sin distorsión */
+        }
+
+        /* Contenido de Texto Debajo de la Imagen */
+        .card-content {
+            padding: 15px;
+            flex-grow: 1; /* Permite que el contenido se expanda y empuje el precio hacia abajo */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-name {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .item-description {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 0;
+            margin-bottom: 10px;
+            flex-grow: 1; /* Empuja el precio al final del contenido */
+        }
+        .item-price {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #379ede;
+            text-align: right; /* Alinea el precio a la derecha */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chicle Café & Snacks</h1>
+        <div id="menu-content">
+            <p style="grid-column: 1 / -1;">Cargando el menú...</p>
+        </div>
+    </div>
+
+    <script>
+        // 2. Función para renderizar el menú
+        function renderMenu(data) {
+            const menuContentDiv = document.getElementById('menu-content');
+            menuContentDiv.innerHTML = ''; // Limpiar el mensaje de carga
+            
+            console.log(data);
+            
+            data.sections.forEach(section => {
+                // Crear el título de la sección
+                const sectionTitle = document.createElement('h2');
+                sectionTitle.textContent = section.name;
+                menuContentDiv.appendChild(sectionTitle); // El h2 debe ir antes de las cards
+
+                // Crear los elementos del menú dentro de la sección
+                section.items.forEach(item => {
+                    // --- TARJETA PRINCIPAL ---
+                    const itemCard = document.createElement('div');
+                    itemCard.className = 'menu-card';
+
+                    // 1. IMAGEN (Parte Superior de la Tarjeta)
+                    const itemImage = document.createElement('img');
+                    itemImage.className = 'item-image';
+                    itemImage.src = item.imageUrl;
+                    itemImage.alt = item.name;
+                    itemCard.appendChild(itemImage);
+
+                    // 2. CONTENIDO DE TEXTO (Parte Inferior de la Tarjeta)
+                    const cardContentDiv = document.createElement('div');
+                    cardContentDiv.className = 'card-content';
+
+                    // Nombre
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'item-name';
+                    nameSpan.textContent = item.name;
+                    
+                    // Descripción
+                    const descriptionP = document.createElement('p');
+                    descriptionP.className = 'item-description';
+                    descriptionP.textContent = item.description;
+
+                    // Precio
+                    const priceSpan = document.createElement('span');
+                    priceSpan.className = 'item-price';
+                    priceSpan.textContent = `$${item.price}`; // Añadir el símbolo de moneda
+
+                    // Ensamblar el Contenido
+                    cardContentDiv.appendChild(nameSpan);
+                    cardContentDiv.appendChild(descriptionP);
+                    cardContentDiv.appendChild(priceSpan);
+
+                    // Ensamblar la Tarjeta
+                    itemCard.appendChild(cardContentDiv);
+                    menuContentDiv.appendChild(itemCard);
+                });
+            });
+        }
+
+        // 3. Carga de datos
+        fetch('./assets/data/menu.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar el archivo JSON. Código: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => renderMenu(data))
+            .catch(error => {
+                document.getElementById('menu-content').innerHTML = `<p style="color:red;">Error al cargar el menú: ${error.message}</p>`;
+                console.error('Error cargando JSON:', error);
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+{
+    "restaurantName": "Chicle Café & Snacks",
+    "sections": [
+        {
+            "name": "Bebidas calientes",
+            "items": [
+                { 
+                    "id": "bdf7bfef-add7-48e7-ad3b-fcf02c144d6a",
+                    "name": "Café capuchino", 
+                    "price": "40.00",
+                    "category": "bebida",
+                    "description": "Café capuchino",
+                    "imageUrl": "./assets/images/cafe-capuchino.png"
+                },
+                {
+                    "id": "42c5f241-4511-4af5-bda8-294426628e85",
+                    "name": "Café americano", 
+                    "price": "40.00",
+                    "category": "bebida",
+                    "description": "Café americano",
+                    "imageUrl": "./assets/images/cafe-americano.png"
+                },
+                {
+                    "id": "d122c22d-525d-4c2c-882e-5152467b2b3b",
+                    "name": "Café latte", 
+                    "price": "40.00",
+                    "category": "bebida",
+                    "description": "Café latte",
+                    "imageUrl": "./assets/images/cafe-latte.png"
+                },
+                {
+                    "id": "f7382ec0-0c3e-4063-bc84-3de6ba868752",
+                    "name": "Café macchiato", 
+                    "price": "40.00",
+                    "category": "bebida",
+                    "description": "Café macchiato",
+                    "imageUrl": "./assets/images/cafe-macchiato.png"
+                }
+            ]
+        },
+        {
+            "name": "Bebidas frías",
+            "items": [
+                {
+                    "id": "d6ca09f1-83f2-4551-ae13-8883a459354b",
+                    "name": "Frappuccino", 
+                    "price": "40.00",
+                    "category": "bebida",
+                    "description": "Frappuccino",
+                    "imageUrl": "./assets/images/frappuccino.png"
+                },
+                {
+                    "id": "81e3a87a-ef58-4e09-8875-af1354e99ffe",
+                    "name": "Frapé de taro", 
+                    "price": "40.00",
+                    "category": "bebida",
+                    "description": "Frapé de taro",
+                    "imageUrl": "./assets/images/frappe-taro.png"
+                },
+                {
+                    "id": "e626165d-2b4c-4b4c-8b4c-2b4c2b4c2b4c",
+                    "name": "Frapé de yogurt", 
+                    "price": "40.00",
+                    "category": "bebida",
+                    "description": "Frapé de yogurt",
+                    "imageUrl": "./assets/images/frappe-yogurt.png"
+                },
+                {
+                    "id": "d6ca09f1-83f2-4551-ae13-8883a459354b",
+                    "name": "Frapé cookies & cream", 
+                    "price": "40.00",
+                    "category": "bebida",
+                    "description": "Frapé cookies & cream",
+                    "imageUrl": "./assets/images/frappe-cookies-and-cream.png"
+                },
+                {
+                    "id": "683f2f40-7e25-4115-ad83-f5e0e4400fbe",
+                    "name": "Frapé de mazapán", 
+                    "price": "40.00",
+                    "category": "bebida",
+                    "description": "Frapé de mazapán",
+                    "imageUrl": "./assets/images/frappe-mazapan.png"
+                }
+            ]
+        }
+    ]
+}
