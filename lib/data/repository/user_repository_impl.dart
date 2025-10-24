@@ -45,12 +45,11 @@ class UserRepositoryImpl implements UserRepository {
     // box.clear();
     if (box.isEmpty) {
       final username = 'admin';
-      final passwordHash = AuthService.hashPassword(username);
 
       await addUser(
         User(
           username: username,
-          password: passwordHash,
+          password: username,
           role: EnumRole.administrador,
         )
       );

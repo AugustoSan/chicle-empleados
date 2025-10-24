@@ -121,58 +121,60 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 12),
-                    const Text(
-                            'Nueva orden',
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                    // Row(
-                    //   children: [
-                    //     Expanded(
-                    //       child: const Text(
-                    //         'Nueva orden',
-                    //         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    //       ),
-                    //     ),
-                    //     // IconButton(
-                    //     //   icon: const Icon(ChicleIcons.refresh),
-                    //     //   onPressed: () => vm.initForm(),
-                    //     // ),
-                    //   ],
-                    // ),
-                    // const SizedBox(height: 12),
-                    // TextFieldCustom(
-                    //   controller: vm.nameC,
-                    //   title: 'Nombre del cliente',
-                    //   validator: (value) {
-                    //           if (value == null || value.isEmpty) {
-                    //             return 'Nombre inválido';
-                    //           }
-                    //           return null;
-                    //         },
-                    //       ),
-                    const SizedBox(height: 12),
-                    ListItemsPriceQuantity(saleItems: _orderItems, listProducts: _listProducts,),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          final seleccionados = _orderItems.entries
-                            .where((item) => item.value.quantity > 0)
-                            .map((item) => OrderItem.fromNewOrderItem(cantidad: item.value.quantity, producto: item.key, precio: item.value.priceAtOrder, indicaciones: item.value.specialIndications))
-                            .toList();
-                          //key)).toList();
-                          for (var item in seleccionados) {
-                            print('item: ${item.product.name}, quantity: ${item.quantity}');
-                          }
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ResumeSaleScreen(items: seleccionados, customer: 'Público en general', submit: saveOrder,)));
-                        },
-                        child: const Text('Siguiente'),
+                child: _listProducts.isEmpty 
+                  ? const Center(child: const Text("Sin productos registrados")) 
+                  : Column(
+                    children: [
+                      const SizedBox(height: 12),
+                      const Text(
+                              'Nueva orden',
+                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: const Text(
+                      //         'Nueva orden',
+                      //         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      //       ),
+                      //     ),
+                      //     // IconButton(
+                      //     //   icon: const Icon(ChicleIcons.refresh),
+                      //     //   onPressed: () => vm.initForm(),
+                      //     // ),
+                      //   ],
+                      // ),
+                      // const SizedBox(height: 12),
+                      // TextFieldCustom(
+                      //   controller: vm.nameC,
+                      //   title: 'Nombre del cliente',
+                      //   validator: (value) {
+                      //           if (value == null || value.isEmpty) {
+                      //             return 'Nombre inválido';
+                      //           }
+                      //           return null;
+                      //         },
+                      //       ),
+                      const SizedBox(height: 12),
+                      ListItemsPriceQuantity(saleItems: _orderItems, listProducts: _listProducts,),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            final seleccionados = _orderItems.entries
+                              .where((item) => item.value.quantity > 0)
+                              .map((item) => OrderItem.fromNewOrderItem(cantidad: item.value.quantity, producto: item.key, precio: item.value.priceAtOrder, indicaciones: item.value.specialIndications))
+                              .toList();
+                            //key)).toList();
+                            for (var item in seleccionados) {
+                              print('item: ${item.product.name}, quantity: ${item.quantity}');
+                            }
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => ResumeSaleScreen(items: seleccionados, customer: 'Público en general', submit: saveOrder,)));
+                          },
+                          child: const Text('Siguiente'),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
               ),
             ),
           ],
