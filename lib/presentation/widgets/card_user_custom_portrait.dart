@@ -12,7 +12,8 @@ class CardUserCustomPortrait extends StatelessWidget {
   final User item;
   final bool isCurrentUser;
   final bool isAdmin;
-  const CardUserCustomPortrait({super.key, required this.item, this.isCurrentUser = false, this.isAdmin = false});
+  final VoidCallback reload;
+  const CardUserCustomPortrait({super.key, required this.item, this.isCurrentUser = false, this.isAdmin = false, required this.reload});
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +58,7 @@ class CardUserCustomPortrait extends StatelessWidget {
                             SnackBar(content: Text('Error al eliminar al usuario "${item.username}"')),
                           );
                         }
+                        reload();
                       },
                       child: const Text('Eliminar', style: TextStyle(color: Colors.red)),
                     ),

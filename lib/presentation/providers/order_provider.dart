@@ -11,6 +11,7 @@ class OrderProvider with ChangeNotifier {
   // Llama esto en initState de tu pantalla o nada más instanciar el provider
   Future<void> loadAll() async {
     _items = await _repo.getAllOrders();
+    _items.sort((a, b) => b.date.compareTo(a.date));
     notifyListeners();
   }
 

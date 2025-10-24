@@ -73,13 +73,6 @@ class _UsersScreenState extends State<UsersScreen> {
             icon: const Icon(ChicleIcons.refresh),
             onPressed: () => _init(),
           ),
-          IconButton(
-            icon: const Icon(ChicleIcons.home),
-            onPressed: () => {
-              Navigator.pop(context),
-              Navigator.pop(context),
-            },
-          ),
         ],
       ),
       body: Column(
@@ -105,6 +98,7 @@ class _UsersScreenState extends State<UsersScreen> {
                           item: item,
                           isCurrentUser: isCurrentUser,
                           isAdmin: isAdmin,
+                          reload: () => _init(),
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) => const Divider(), 

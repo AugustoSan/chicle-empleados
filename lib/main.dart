@@ -82,7 +82,7 @@ Future<void> main() async {
           create: (ctx) => AddOrderController(
             getIt<OrderRepository>(),
             getIt<UserProvider>(),
-            // getIt<CustomerProvider>()
+            getIt<ProductProvider>()
           )
         ),
         ChangeNotifierProxyProvider<AuthProvider, ProfileController>(

@@ -105,9 +105,7 @@ class UserProvider with ChangeNotifier {
     final ok = await _repo.deleteUser(
       user.id,
     );
-    if (ok) {
-      notifyListeners();
-    }
+    notifyListeners();
     return ok;
   }
 

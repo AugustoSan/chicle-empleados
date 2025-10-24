@@ -13,12 +13,40 @@ class AddOrderController extends ChangeNotifier {
   bool  get loading => _loading;
   String? get error => _error;
 
+  List<Product> _listProducts = [];
+  Map<Product,OrderItem> _orderItems = {};
+  
+  set orderItems(Map<Product,OrderItem> value) {
+    _orderItems = value;
+    notifyListeners();
+  }
+
+  Map<Product,OrderItem> get orderItems => _orderItems;
+  List<Product> get listProducts => _listProducts;
+
 
   final OrderRepository _orderRepository;
   final UserProvider _userProvider;
-  // final CustomerProvider _customerProvider;
+  final ProductProvider _productProvider;
 
-  AddOrderController(this._orderRepository, this._userProvider);
+
+  AddOrderController(this._orderRepository, this._userProvider, this._productProvider){
+    initForm();
+  }
+
+  void initForm() async {
+    await _productProvider.loadAll();
+    final products = _productProvider.allItems;
+    final Map<Product, OrderItem> map = {};
+    for (var item in products) {
+      map[item] = OrderItem.fromProduct(item);
+    }
+    _listProducts.clear();
+    _listProducts.addAll(products);
+    _orderItems.clear();
+    _orderItems.addEntries(map.entries);
+    notifyListeners();
+  }
   
   Future<String> saveSale(BuildContext context, List<OrderItem> items) async {
     _loading = true;
@@ -45,25 +73,10 @@ class AddOrderController extends ChangeNotifier {
       return _error!;
     }
     _loading = false;
+    initForm();
     notifyListeners();
     return _error ?? '';
   }
-
-  Future<String> addItems(BuildContext context, int saleId, List<OrderItem> items) async {
-    
-    return '';
-  }
-
-  Future<void> saveOrder(List<OrderItem> items) async {
-    notifyListeners();
-  }
-
-  // Future<List<Customer>> searchCustomer(String filter) async {
-  //   final customers = await _customerProvider.searchCustomer(filter);
-  //   print('Customers: $customers');
-  //   notifyListeners();
-  //   return customers;
-  // }
 
   @override
   void dispose() {

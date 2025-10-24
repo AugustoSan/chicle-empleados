@@ -4,26 +4,10 @@ import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 import '../../presentation.dart';
 
-class ResumeSaleScreen extends StatefulWidget {
+class ResumeSaleScreen extends StatelessWidget {
   final String customer;
   final List<OrderItem> items;
-  const ResumeSaleScreen({Key? key, required this.items, required this.customer}) : super(key: key);
-
-  @override
-  _ResumeSaleScreenState createState() => _ResumeSaleScreenState();
-}
-
-class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
-  // <-- FormKey local, único para esta instancia de pantalla
-  final List<OrderItem> _items = [];
-  String nameCustomer = '';
-
-  @override
-  void initState() {
-    super.initState();
-    nameCustomer = widget.customer.isEmpty ? 'Publico en general' : widget.customer;
-    _items.addAll(widget.items);
-  }
+  ResumeSaleScreen({Key? key, required this.items, required this.customer}) : super(key: key);
 
   Widget _buildInfoRow(String label, String value, {bool alignRight = false, TextStyle? valueStyle}) {
     return Padding(
@@ -71,13 +55,10 @@ class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
     // final business     = context.watch<BusinessProvider>().business;
     final _formKey = GlobalKey<FormState>();
 
-    final subtotal = _items.fold<double>(
+    final subtotal = items.fold<double>(
       0,
       (sum, it) => sum + it.total,
     );
-    // final taxPercent = business?.taxPercent ?? 16;
-    // final tax = subtotal * taxPercent / 100;
-    // final total = subtotal + tax;
     final total = subtotal;
 
     return Scaffold(
@@ -114,7 +95,7 @@ class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               // Info de ticket
-                              _buildInfoRow('Cliente:', nameCustomer),
+                              _buildInfoRow('Cliente:', customer),
                               _buildInfoRow('Fecha:', DateUtil.formatDate(DateTime.now())),
                               const Divider(height: 24, thickness: 1),
 
@@ -129,7 +110,7 @@ class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
                               const SizedBox(height: 4),
 
                               // Filas de artículos
-                              ..._items.map((it) => _buildSaleItemRow(it)),
+                              ...items.map((it) => _buildSaleItemRow(it)),
 
                               const Divider(height: 24, thickness: 1),
 
@@ -167,7 +148,7 @@ class _ResumeSaleScreenState extends State<ResumeSaleScreen> {
                               height: 50,
                               child: ElevatedButton(
                                 onPressed: () async {
-                                  await context.read<AddOrderController>().saveSale(context, _items);
+                                  await context.read<AddOrderController>().saveSale(context, items);
                                   //  Navigator.pushNamed(context, '/home');
                                   Navigator.pop(context);
                                 },

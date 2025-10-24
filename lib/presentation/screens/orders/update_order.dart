@@ -121,7 +121,7 @@ class _UpdateOrderState extends State<UpdateOrder> {
             )
           ),
           const SizedBox(height: 12),
-          ListItemsPriceQuantity(saleItems: _saleItems),
+          ListItemsPriceQuantity(saleItems: _saleItems, listProducts: _listProducts,),
           const SizedBox(height: 12),
           Center(
             child: ElevatedButton(
