@@ -24,6 +24,7 @@ class ListItemsPriceQuantity extends StatelessWidget {
             return const SizedBox.shrink();
           }
           return CardAddOrderItemCustom(
+            key: ValueKey(item.id), // Añade esta línea
             item: item,
           );
         },

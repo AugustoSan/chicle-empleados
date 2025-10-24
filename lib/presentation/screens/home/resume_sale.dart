@@ -1,13 +1,14 @@
 import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 import '../../presentation.dart';
 
 class ResumeSaleScreen extends StatelessWidget {
   final String customer;
   final List<OrderItem> items;
-  ResumeSaleScreen({Key? key, required this.items, required this.customer}) : super(key: key);
+  final Function submit;
+  const ResumeSaleScreen({Key? key, required this.items, required this.customer, required this.submit}) : super(key: key);
 
   Widget _buildInfoRow(String label, String value, {bool alignRight = false, TextStyle? valueStyle}) {
     return Padding(
@@ -53,7 +54,7 @@ class ResumeSaleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final business     = context.watch<BusinessProvider>().business;
-    final _formKey = GlobalKey<FormState>();
+    // final _formKey = GlobalKey<FormState>();
 
     final subtotal = items.fold<double>(
       0,
@@ -64,9 +65,7 @@ class ResumeSaleScreen extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-        child: Form(
-          key: _formKey,  // ← usa la key local, no la de vm
-          child: Column(
+        child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
@@ -148,7 +147,8 @@ class ResumeSaleScreen extends StatelessWidget {
                               height: 50,
                               child: ElevatedButton(
                                 onPressed: () async {
-                                  await context.read<AddOrderController>().saveSale(context, items);
+                                  // await context.read<AddOrderController>().saveSale(context, items);
+                                  submit();
                                   //  Navigator.pushNamed(context, '/home');
                                   Navigator.pop(context);
                                 },
@@ -164,7 +164,6 @@ class ResumeSaleScreen extends StatelessWidget {
               ),
             ],
           ),
-        ),
       )
     );
   }
