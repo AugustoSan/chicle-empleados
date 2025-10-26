@@ -17,6 +17,8 @@ class _ProductsPortraitState extends State<ProductsPortrait> {
   List<Product> bebidasList = [];
   List<Product> alimentosList = [];
   List<Product> extraList = [];
+  List<Category> carta = [];
+
 
   @override
   void initState() {
@@ -31,6 +33,7 @@ class _ProductsPortraitState extends State<ProductsPortrait> {
     bebidasList.clear();
     alimentosList.clear();
     extraList.clear();
+    carta.clear();
   }
 
   @override
@@ -56,34 +59,40 @@ class _ProductsPortraitState extends State<ProductsPortrait> {
       bebidasList = items.where((item) => item.category == EnumProductCategory.bebida).toList();
       alimentosList = items.where((item) => item.category == EnumProductCategory.alimento).toList();
       extraList = items.where((item) => item.category == EnumProductCategory.extra).toList();
+      carta = provider.carta;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     context.watch<ProductProvider>();
+    if(carta.isEmpty) {
+      return const Center(child: Text('Sin datos'));
+    }
+    
     return ListView(
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MenuCarousel(
-          items: menuList,
-          title: 'Menús',
-        ),
+        // MenuCarousel(
+        //   items: menuList,
+        //   title: 'Menús',
+        // ),
 
-        MenuCarousel(
-          items: bebidasList,
-          title: 'Bebidas',
-        ),
+        // MenuCarousel(
+        //   items: bebidasList,
+        //   title: 'Bebidas',
+        // ),
 
-        MenuCarousel(
-          items: alimentosList,
-          title: 'Alimentos',
-        ),
+        // MenuCarousel(
+        //   items: alimentosList,
+        //   title: 'Alimentos',
+        // ),
 
-        MenuCarousel(
-          items: extraList,
-          title: 'Extras',
-        ),
+        // MenuCarousel(
+        //   items: extraList,
+        //   title: 'Extras',
+        // ),
+        ...carta.map((category) => MenuCarousel(items: category.items, title: category.name))
       ],
     );
   }

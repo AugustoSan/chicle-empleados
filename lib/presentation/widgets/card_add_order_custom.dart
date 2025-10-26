@@ -49,7 +49,11 @@ class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
   @override
   Widget build(BuildContext context) {
     final bool mostrarImagen =
-        orderItem.product.imageUrl != null && File(orderItem.product.imageUrl!).existsSync();
+        orderItem.product.imageUrl != null && (orderItem.product.imageUrl!.contains('http') ? true : File(orderItem.product.imageUrl!).existsSync());
+
+    final bool isImageNet =
+        orderItem.product.imageUrl != null && orderItem.product.imageUrl!.contains('http');
+
 
       return Container(
         child: Column(
@@ -60,7 +64,10 @@ class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
                   orderItem.specialIndications = description;
                   onAddDescription(description);
                 },
-              leading: mostrarImagen ? Image.file(File(orderItem.product.imageUrl!), width: 40, height: 40) : const SizedBox.shrink(),
+              leading: mostrarImagen 
+                ? isImageNet 
+                  ? Image.network(orderItem.product.imageUrl!, width: 40, height: 40)
+                  : Image.file(File(orderItem.product.imageUrl!), width: 40, height: 40) : const SizedBox.shrink(),
               title: Text(orderItem.product.name),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

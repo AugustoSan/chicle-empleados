@@ -57,6 +57,36 @@ class Product {
     imageUrl = model.imageUrl;
   }
 
+  // Factory constructor para crear una instancia de MenuItem desde un mapa JSON
+  factory Product.fromJson(Map<String, dynamic> json) {
+    final category = EnumProductCategory.values.firstWhere(
+      (element) => element.name == json['category'],
+      orElse: () => EnumProductCategory.extra,
+    );
+    final imageStrigUrl = json['imageUrl'];
+    final imageUrl = imageStrigUrl.toString().replaceAll('./', 'https://augustosan.github.io/chicle-empleados/');
+    return Product.withAll(
+      id: json['id'],
+      name: json['name'],
+      price: double.parse(json['price']),
+      category: category,
+      description: json['description'],
+      imageUrl: imageUrl,
+    );
+  }
+
+  // Opcional: Para convertir el objeto Dart de nuevo a un JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'price': price,
+      'category': category,
+      'description': description,
+      'imageUrl': imageUrl,
+    };
+  }
+
   ProductModel parseToModel() => ProductModel(
     id: id,
     name: name,

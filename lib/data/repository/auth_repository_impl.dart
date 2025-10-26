@@ -1,6 +1,7 @@
 import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:chicle_app_empleados/models/models.dart';
-import 'package:hive/hive.dart';
+import 'package:chicle_app_empleados/data/datasource/hive_data_source.dart';
+// import 'package:hive/hive.dart';
 import '../services/auth_service.dart';
 
 /// Contrato que define cómo obtener y guardar la configuración del negocio.
@@ -8,23 +9,13 @@ class AuthRepositoryImpl implements AuthRepository {
   static const _AUTH_BOX = Boxes.authBox;
   static const _AUTH_KEY    = Boxes.authKey;
   static const _USERS_BOX   = Boxes.usersBox;
+  final HiveDataSource _hiveDataSource;
 
-  AuthRepositoryImpl();
-  // AuthRepositoryImpl();
-
-  Future<Box<UserModel>> _openUsersBox() async {
-    if(Hive.isBoxOpen(_USERS_BOX)) return await Hive.openBox<UserModel>(_USERS_BOX);
-    return await Hive.openBox<UserModel>(_USERS_BOX);
-  }
-
-  Future<Box<String>> _openLoginBox() async {
-    if(Hive.isBoxOpen(_AUTH_BOX)) return await Hive.openBox<String>(_AUTH_BOX);
-    return await Hive.openBox<String>(_AUTH_BOX);
-  }
+  AuthRepositoryImpl(this._hiveDataSource);
 
   @override
   Future<User?> getUserLogin() async {
-    final meta = await _openLoginBox();
+    final meta = await _hiveDataSource.openBox<String>(_AUTH_BOX);
     final username = meta.get(_AUTH_KEY);
     if (username == null) return null;
 
@@ -38,7 +29,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final passwordHash = AuthService.checkPassword(password, user.password);
     final ok = passwordHash;
     if (ok) {
-      final authBox = await _openLoginBox();
+      final authBox = await _hiveDataSource.openBox<String>(_AUTH_BOX);
       await authBox.put(_AUTH_KEY, username);
     }
     return ok;
@@ -46,12 +37,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    final box = await _openLoginBox();
+    final box = await _hiveDataSource.openBox<String>(_AUTH_BOX);
     await box.delete(_AUTH_KEY);
   }
 
   Future<User?> findUserByUsername(String username) async {
-    final box = await _openUsersBox();
+    final box = await _hiveDataSource.openBox<UserModel>(_USERS_BOX);
 
     // Filtra los usuarios que coinciden
     final matchingUsers = box.values.where(

@@ -5,12 +5,16 @@ import '../../domain/domain.dart';
 class ProductProvider with ChangeNotifier {
   final ProductRepository _repo;
   List<Product> _allItems = [];
+  List<Category> _carta = [];
+
 
   ProductProvider(this._repo);
 
   // Llama esto en initState de tu pantalla o nada más instanciar el provider
   Future<void> loadAll() async {
     _allItems = await _repo.getAllProducts();
+    _carta = await _repo.getCarta();
+
     notifyListeners();
   }
 
@@ -28,6 +32,8 @@ class ProductProvider with ChangeNotifier {
     _allItems.where((i) => i.category == EnumProductCategory.extra).toList();
 
   List<Product> get allItems => _allItems;
+
+  List<Category> get carta => _carta;
 
   Future<Product?> getProduct(String id) async {
     final product = await _repo.getProduct(id);

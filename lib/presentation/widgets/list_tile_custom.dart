@@ -14,11 +14,19 @@ class ListTileCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool mostrarImagen =
-        imageUrl != null && File(imageUrl!).existsSync();
+        imageUrl != null && (imageUrl!.contains('http') ? true : File(imageUrl!).existsSync());
+
+    final bool isImageNet =
+        imageUrl != null && imageUrl!.contains('http');
+
 
     return ListTile(
       onTap: onTap,
-      leading: mostrarImagen ? Image.file(File(imageUrl!), width: 40, height: 40) : const SizedBox.shrink(),
+      leading: mostrarImagen 
+        ? isImageNet 
+          ? Image.network(imageUrl!, width: 40, height: 40)
+          : Image.file(File(imageUrl!), width: 40, height: 40) 
+            : const SizedBox.shrink(),
       title: Text(title),
       subtitle: subtitle,
       trailing: trailing,

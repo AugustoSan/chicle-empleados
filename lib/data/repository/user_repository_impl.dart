@@ -1,6 +1,6 @@
 import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:chicle_app_empleados/models/models.dart';
-import 'package:hive/hive.dart';
+import 'package:chicle_app_empleados/data/datasource/hive_data_source.dart';
 import 'package:uuid/uuid.dart';
 import '../services/auth_service.dart';
 
@@ -9,26 +9,16 @@ class UserRepositoryImpl implements UserRepository {
   static const _USERS_BOX   = Boxes.usersBox;
   static const _AUTH_BOX = Boxes.authBox;
   static const _AUTH_KEY    = Boxes.authKey;
+  final HiveDataSource _hiveDataSource;
 
-  UserRepositoryImpl();
-  // AuthRepositoryImpl();
-
-  Future<Box<UserModel>> _openUsersBox() async {
-    if(Hive.isBoxOpen(_USERS_BOX)) return await Hive.openBox<UserModel>(_USERS_BOX);
-    return await Hive.openBox<UserModel>(_USERS_BOX);
-  }
-
-  Future<Box<String>> _openLoginBox() async {
-    if(Hive.isBoxOpen(_AUTH_BOX)) return await Hive.openBox<String>(_AUTH_BOX);
-    return await Hive.openBox<String>(_AUTH_BOX);
-  }
+  UserRepositoryImpl(this._hiveDataSource);
 
   Future<User?> getUserLogin() async {
-    final meta = await _openLoginBox();
+    final meta = await _hiveDataSource.openBox<String>(_AUTH_BOX);
     final username = meta.get(_AUTH_KEY);
     if (username == null) return null;
 
-    final users = await _openUsersBox();
+    final users = await _hiveDataSource.openBox<UserModel>(_USERS_BOX);
     final user = users.get(username);
     if (user == null) return null;
     return User(
@@ -41,7 +31,7 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<void> initialize() async {
-    final box = await _openUsersBox();
+    final box = await _hiveDataSource.openBox<UserModel>(_USERS_BOX);
     // box.clear();
     if (box.isEmpty) {
       final username = 'admin';
@@ -58,13 +48,13 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<List<User>> getAllUsers() async {
-    final users = await _openUsersBox();
+    final users = await _hiveDataSource.openBox<UserModel>(_USERS_BOX);
     return users.values.map((user) => User.fromModel(user)).toList();
   }
 
   @override
   Future<User?> findUserById(String id) async {
-    final box = await _openUsersBox();
+    final box = await _hiveDataSource.openBox<UserModel>(_USERS_BOX);
 
   // Usa box.get() para obtener el UserModel por su clave (el ID)
   final userModel = box.get(id);
@@ -77,7 +67,7 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<User?> findUserByUsername(String username) async {
-    final box = await _openUsersBox();
+    final box = await _hiveDataSource.openBox<UserModel>(_USERS_BOX);
 
     // Filtra los usuarios que coinciden
     final matchingUsers = box.values.where(
@@ -117,7 +107,7 @@ class UserRepositoryImpl implements UserRepository {
     required String currentPassword,
     required String newPassword,
   }) async {
-    final users = await _openUsersBox();
+    final users = await _hiveDataSource.openBox<UserModel>(_USERS_BOX);
     final user = users.get(id);
     if (user == null) return false;
 
@@ -142,7 +132,7 @@ class UserRepositoryImpl implements UserRepository {
       role: newUser.role.index,
     );
 
-    final box = await _openUsersBox();
+    final box = await _hiveDataSource.openBox<UserModel>(_USERS_BOX);
 
     await box.put(id, model);
 
@@ -160,7 +150,7 @@ class UserRepositoryImpl implements UserRepository {
   /// Elimina un usuario.
   @override
   Future<bool> deleteUser(String id) async {
-    final users = await _openUsersBox();
+    final users = await _hiveDataSource.openBox<UserModel>(_USERS_BOX);
     final userLogin = await getUserLogin();
     if (userLogin != null && userLogin.id == id) return false;
     await users.delete(id);
@@ -168,7 +158,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   Future<bool> _saveUser(User user) async {
-    final users = await _openUsersBox();
+    final users = await _hiveDataSource.openBox<UserModel>(_USERS_BOX);
     final exists = await findUserById(user.id);
     if (exists == null) return false;
     

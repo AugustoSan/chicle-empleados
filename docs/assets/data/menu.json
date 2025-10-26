@@ -1,6 +1,5 @@
 {
-    "restaurantName": "Chicle Café & Snacks",
-    "sections": [
+    "categories": [
         {
             "name": "Bebidas calientes",
             "items": [

@@ -1,5 +1,6 @@
-import 'package:chicle_app_empleados/data/repository/order_item_repository_impl.dart';
-import 'package:chicle_app_empleados/data/repository/product_repository_impl.dart';
+// import 'package:chicle_app_empleados/data/repository/order_item_repository_impl.dart';
+// import 'package:chicle_app_empleados/data/repository/product_repository_impl.dart';
+import 'package:chicle_app_empleados/data/datasource/hive_data_source.dart';
 import 'package:hive/hive.dart';
 import 'package:get_it/get_it.dart';
 import '../../../models/models.dart';
@@ -12,7 +13,7 @@ final getIt = GetIt.instance;
 Future<void> setupLocator() async {
   // --- Autenticación ---
   getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(),
+    () => AuthRepositoryImpl(HiveDataSourceImpl()),
   );
   getIt.registerFactory<AuthProvider>(
     () => AuthProvider(getIt<AuthRepository>())..checkLogin(),
@@ -29,7 +30,7 @@ Future<void> setupLocator() async {
 
   // --- Usuarios ---
   getIt.registerLazySingleton<UserRepository>(
-    () => UserRepositoryImpl(),
+    () => UserRepositoryImpl(HiveDataSourceImpl()),
   );
   getIt.registerFactory<UserProvider>(
     () => UserProvider(getIt<UserRepository>(), getIt<AuthRepository>()),
@@ -37,7 +38,7 @@ Future<void> setupLocator() async {
 
   // --- Productos ---
   getIt.registerLazySingleton<ProductRepository>(
-    () => ProductRepositoryImpl(),
+    () => ProductRepositoryImpl(HiveDataSourceImpl()),
   );
   getIt.registerFactory<ProductProvider>(
     () => ProductProvider(getIt<ProductRepository>()),

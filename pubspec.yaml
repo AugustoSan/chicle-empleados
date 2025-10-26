@@ -46,6 +46,7 @@ dependencies:
   # Adaptador para Flutter
   drift_flutter: ^0.2.4
   uuid: ^4.1.0
+  http: ^1.5.0
 
   # Biblioteca nativa de SQLite para iOS/Android
   sqlite3_flutter_libs: ^0.5.10

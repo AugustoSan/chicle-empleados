@@ -10,7 +10,8 @@ class CardProductCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final navigatorKey = context.watch<ShellNavigatorController>();
-    final bool mostrarImagen = item.imageUrl != null && File(item.imageUrl!).existsSync();
+    final bool isImageNet = item.imageUrl != null && item.imageUrl!.contains('http');
+    final bool mostrarImagen = item.imageUrl != null && (item.imageUrl!.contains('http') ? true : File(item.imageUrl!).existsSync());
     return InkWell(
       onLongPress: () => mostrarProductDialog(context, item),
       onTap: () {
@@ -38,10 +39,16 @@ class CardProductCustom extends StatelessWidget {
               borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
               child: AspectRatio(
                 aspectRatio: 4 / 3,
-                child: mostrarImagen ? Image.file(
-                  File(item.imageUrl!),
-                  fit: BoxFit.cover,
-                ) : const SizedBox.shrink(),
+                child: mostrarImagen 
+                  ? isImageNet 
+                    ? Image.network(
+                      item.imageUrl!,
+                      fit: BoxFit.cover,
+                    )
+                    : Image.file(
+                      File(item.imageUrl!),
+                      fit: BoxFit.cover,
+                    ) : const SizedBox.shrink(),
               ),
             ),
             // Espacio interno
