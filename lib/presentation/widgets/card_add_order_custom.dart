@@ -29,12 +29,14 @@ class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
   }
 
   void onIncrement() {
+    if (orderItem.quantity >= 1000) return;
     setState(() {
       orderItem.quantity += 1;
     });
   }
 
   void onDecrement() {
+    if (orderItem.quantity <= 0) return;
     setState(() {
       orderItem.quantity -= 1;
     });

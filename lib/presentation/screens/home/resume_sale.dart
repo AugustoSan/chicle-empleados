@@ -148,7 +148,7 @@ class ResumeSaleScreen extends StatelessWidget {
                               child: ElevatedButton(
                                 onPressed: () async {
                                   // await context.read<AddOrderController>().saveSale(context, items);
-                                  submit();
+                                  submit(items);
                                   //  Navigator.pushNamed(context, '/home');
                                   Navigator.pop(context);
                                 },

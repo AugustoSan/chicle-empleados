@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _init();
   }
 
-  void saveOrder() async {
+  void saveOrder(List<OrderItem> items) async {
     if (!formKey.currentState!.validate()) return;
 
     final userProv = context.read<UserProvider>();
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
         customer: 'Público en general',
         status: EnumOrderStatus.pending, 
         date: DateTime.now(), 
-        items: _orderItems.values.toList()
+        items: items.toList()
       )
     );
 
@@ -130,31 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               'Nueva orden',
                               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                             ),
-                      // Row(
-                      //   children: [
-                      //     Expanded(
-                      //       child: const Text(
-                      //         'Nueva orden',
-                      //         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                      //       ),
-                      //     ),
-                      //     // IconButton(
-                      //     //   icon: const Icon(ChicleIcons.refresh),
-                      //     //   onPressed: () => vm.initForm(),
-                      //     // ),
-                      //   ],
-                      // ),
-                      // const SizedBox(height: 12),
-                      // TextFieldCustom(
-                      //   controller: vm.nameC,
-                      //   title: 'Nombre del cliente',
-                      //   validator: (value) {
-                      //           if (value == null || value.isEmpty) {
-                      //             return 'Nombre inválido';
-                      //           }
-                      //           return null;
-                      //         },
-                      //       ),
                       const SizedBox(height: 12),
                       ListItemsPriceQuantity(saleItems: _orderItems, listProducts: _listProducts,),
                       Center(
