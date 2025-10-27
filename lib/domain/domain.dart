@@ -4,3 +4,4 @@ export './enums/enums.dart';
 export './filters/filters.dart';
 export './repositories/repositories.dart';
 export './usecases/usecases.dart';
+export './urls/urls.dart';

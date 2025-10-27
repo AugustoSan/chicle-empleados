@@ -1,6 +1,7 @@
 {
     "categories": [
         {
+            "id" : "42c5f241-4511-4af6-bda8-294426628e85",
             "name": "Bebidas calientes",
             "items": [
                 { 
@@ -38,6 +39,7 @@
             ]
         },
         {
+            "id" : "42c5f241-4511-4af7-bda8-294426628e85",
             "name": "Bebidas frías",
             "items": [
                 {

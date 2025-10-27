@@ -1,3 +1,4 @@
+import 'package:chicle_app_empleados/presentation/providers/category_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../domain/domain.dart';
@@ -13,11 +14,11 @@ class ProductsPortrait extends StatefulWidget {
 }
 
 class _ProductsPortraitState extends State<ProductsPortrait> {
-  List<Product> menuList = [];
-  List<Product> bebidasList = [];
-  List<Product> alimentosList = [];
-  List<Product> extraList = [];
-  List<Category> carta = [];
+  // List<Product> menuList = [];
+  // List<Product> bebidasList = [];
+  // List<Product> alimentosList = [];
+  // List<Product> extraList = [];
+  List<Category> categories = [];
 
 
   @override
@@ -29,11 +30,11 @@ class _ProductsPortraitState extends State<ProductsPortrait> {
   @override
   void dispose() {
     super.dispose();
-    menuList.clear();
-    bebidasList.clear();
-    alimentosList.clear();
-    extraList.clear();
-    carta.clear();
+    // menuList.clear();
+    // bebidasList.clear();
+    // alimentosList.clear();
+    // extraList.clear();
+    categories.clear();
   }
 
   @override
@@ -43,7 +44,7 @@ class _ProductsPortraitState extends State<ProductsPortrait> {
   }
 
   Future<void> _init() async {
-    final provider = context.read<ProductProvider>();
+    final provider = context.read<CategoryProvider>();
     await provider.loadAll();
 
     if (!mounted) return;
@@ -51,22 +52,22 @@ class _ProductsPortraitState extends State<ProductsPortrait> {
     final items = provider.allItems;
 
     setState(() {
-      menuList.clear();
-      bebidasList.clear();
-      alimentosList.clear();
-      extraList.clear();
-      menuList = items.where((item) => item.category == EnumProductCategory.menu).toList();
-      bebidasList = items.where((item) => item.category == EnumProductCategory.bebida).toList();
-      alimentosList = items.where((item) => item.category == EnumProductCategory.alimento).toList();
-      extraList = items.where((item) => item.category == EnumProductCategory.extra).toList();
-      carta = provider.carta;
+      // menuList.clear();
+      // bebidasList.clear();
+      // alimentosList.clear();
+      // extraList.clear();
+      // menuList = items.where((item) => item.category == EnumProductCategory.menu).toList();
+      // bebidasList = items.where((item) => item.category == EnumProductCategory.bebida).toList();
+      // alimentosList = items.where((item) => item.category == EnumProductCategory.alimento).toList();
+      // extraList = items.where((item) => item.category == EnumProductCategory.extra).toList();
+      categories.clear();
+      categories = items;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    context.watch<ProductProvider>();
-    if(carta.isEmpty) {
+    if(categories.isEmpty) {
       return const Center(child: Text('Sin datos'));
     }
     
@@ -92,7 +93,7 @@ class _ProductsPortraitState extends State<ProductsPortrait> {
         //   items: extraList,
         //   title: 'Extras',
         // ),
-        ...carta.map((category) => MenuCarousel(items: category.items, title: category.name))
+        ...categories.map((category) => MenuCarousel(items: category.items, title: category.name))
       ],
     );
   }

@@ -11,6 +11,9 @@ import '../../../presentation/presentation.dart';
 final getIt = GetIt.instance;
 
 Future<void> setupLocator() async {
+  // --- Data Sources ---
+  getIt.registerLazySingleton<HiveDataSource>(() => HiveDataSourceImpl());
+
   // --- Autenticación ---
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(HiveDataSourceImpl()),
@@ -42,6 +45,14 @@ Future<void> setupLocator() async {
   );
   getIt.registerFactory<ProductProvider>(
     () => ProductProvider(getIt<ProductRepository>()),
+  );
+
+  // --- Categorías ---
+  getIt.registerLazySingleton<CategoryRepository>(
+    () => CategoryRepositoryImpl(getIt<HiveDataSource>()),
+  );
+  getIt.registerFactory<CategoryProvider>(
+    () => CategoryProvider(getIt<CategoryRepository>()),
   );
 
   // --- OrderItem ---

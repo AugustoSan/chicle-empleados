@@ -1,0 +1,1 @@
+final String apiUrl = 'https://augustosan.github.io/chicle-empleados/assets/data/menu.json';

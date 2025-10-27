@@ -45,12 +45,12 @@ class _ShellAppState extends State<ShellApp> with SingleTickerProviderStateMixin
   }
 
   // Función para determinar si el FAB debe ser visible
-  bool _shouldShowFab() {
-    // Por ejemplo, solo queremos mostrar el FAB en la primera pestaña (índice 0)
-    return _currentIndex == menuTabsItems.indexWhere((item) => item == DrawerProducts.products);
-    // O si quieres mostrarlo en la pestaña 0 y 1, pero no en la 2:
-    // return _currentIndex == 0 || _currentIndex == 1;
-  }
+  // bool _shouldShowFab() {
+  //   // Por ejemplo, solo queremos mostrar el FAB en la primera pestaña (índice 0)
+  //   return _currentIndex == menuTabsItems.indexWhere((item) => item == DrawerProducts.products);
+  //   // O si quieres mostrarlo en la pestaña 0 y 1, pero no en la 2:
+  //   // return _currentIndex == 0 || _currentIndex == 1;
+  // }
 
   @override  Widget build(BuildContext context) {
     return Scaffold(
@@ -65,9 +65,9 @@ class _ShellAppState extends State<ShellApp> with SingleTickerProviderStateMixin
               OrdersScreen(),
             ],
           ),
-          floatingActionButton: _shouldShowFab() 
-            ? FloatingButtomCustom(route: RouteUtils().getRouteAddProduct(),)
-            : null,
+          // floatingActionButton: _shouldShowFab() 
+          //   ? FloatingButtomCustom(route: RouteUtils().getRouteAddProduct(),)
+          //   : null,
       );
   }
 }

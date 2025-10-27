@@ -15,7 +15,7 @@ class CardProductCustom extends StatelessWidget {
     return InkWell(
       onLongPress: () => mostrarProductDialog(context, item),
       onTap: () {
-        Navigator.push(context, RouteUtils().getRouteUpdateProduct(item));
+        // Navigator.push(context, RouteUtils().getRouteUpdateProduct(item));
       },
       child: Container(
         width: 160, // Ancho fijo para cada card

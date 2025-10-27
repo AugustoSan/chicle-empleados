@@ -1,4 +1,4 @@
-import 'package:chicle_app_empleados/domain/domain.dart';
+// import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -139,14 +139,14 @@ class RouteUtils {
     return page;
   }
 
-  Route getRouteAddProduct() {
-    return MaterialPageRoute(
-      builder: (context) => ChangeNotifierProvider(
-        create: (ctx) => AddProductController(ctx.read<ProductProvider>()), 
-        child: const AddProductScreen()
-      )
-    );
-  }
+  // Route getRouteAddProduct() {
+  //   return MaterialPageRoute(
+  //     builder: (context) => ChangeNotifierProvider(
+  //       create: (ctx) => AddProductController(ctx.read<ProductProvider>()), 
+  //       child: const AddProductScreen()
+  //     )
+  //   );
+  // }
 
   Route getRouteAddUser() {
     return MaterialPageRoute(
@@ -157,14 +157,14 @@ class RouteUtils {
     );
   }
 
-  Route getRouteUpdateProduct(Product item) {
-    return MaterialPageRoute(
-      builder: (context) => ChangeNotifierProvider(
-        create: (ctx) => UpdateProductController(ctx.read<ProductProvider>(), item),
-        child: const UpdateProductScreen()
-      )
-    );
-  }
+  // Route getRouteUpdateProduct(Product item) {
+  //   return MaterialPageRoute(
+  //     builder: (context) => ChangeNotifierProvider(
+  //       create: (ctx) => UpdateProductController(ctx.read<ProductProvider>(), item),
+  //       child: const UpdateProductScreen()
+  //     )
+  //   );
+  // }
 
   Route getRouteSettings() {
     return MaterialPageRoute(

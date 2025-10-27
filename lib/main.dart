@@ -29,17 +29,19 @@ Future<void> main() async {
   Hive.registerAdapter(AuthModelAdapter());
   Hive.registerAdapter(UserModelAdapter());
   Hive.registerAdapter(BusinessModelAdapter());
+  Hive.registerAdapter(CategoryModelAdapter());
   Hive.registerAdapter(ProductModelAdapter());
   Hive.registerAdapter(OrderModelAdapter());
   Hive.registerAdapter(OrderItemModelAdapter());
 
 
-  await Hive.deleteBoxFromDisk(Boxes.authBox);
-  await Hive.deleteBoxFromDisk(Boxes.businessBox);
-  await Hive.deleteBoxFromDisk(Boxes.ordersBox);
-  await Hive.deleteBoxFromDisk(Boxes.ordersItemBox);
-  await Hive.deleteBoxFromDisk(Boxes.productsBox);
-  await Hive.deleteBoxFromDisk(Boxes.usersBox);
+  // await Hive.deleteBoxFromDisk(Boxes.authBox);
+  // await Hive.deleteBoxFromDisk(Boxes.businessBox);
+  // await Hive.deleteBoxFromDisk(Boxes.categoryBox);
+  // await Hive.deleteBoxFromDisk(Boxes.ordersBox);
+  // await Hive.deleteBoxFromDisk(Boxes.ordersItemBox);
+  // await Hive.deleteBoxFromDisk(Boxes.productsBox);
+  // await Hive.deleteBoxFromDisk(Boxes.usersBox);
   // 2) Inicializa Hive business
   // Hive.registerAdapter(CustomerModelAdapter());
 
@@ -62,6 +64,7 @@ Future<void> main() async {
   final authProv = getIt<AuthProvider>();
   await authProv.checkLogin();
 
+
   runApp(
     MultiProvider(
       providers: [
@@ -73,6 +76,8 @@ Future<void> main() async {
         // Providers
         ChangeNotifierProvider<ProductProvider>(create: (_) => getIt<ProductProvider>()),
         ChangeNotifierProvider<AuthProvider>(create: (_) => getIt<AuthProvider>()),
+        ChangeNotifierProvider<CategoryProvider>(create: (_) => getIt<CategoryProvider>()),
+        ChangeNotifierProvider<CategoryProvider>(create: (_) => getIt<CategoryProvider>()..loadAll()),
         // ViewModels
         ChangeNotifierProvider<LoginController>(create: (ctx) => LoginController(ctx.read<AuthProvider>())),
         ChangeNotifierProvider<BusinessController>(create: (ctx) => BusinessController(ctx.read<BusinessProvider>())),

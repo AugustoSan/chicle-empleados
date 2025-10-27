@@ -16,21 +16,17 @@ class ProductModel extends HiveObject {
   @HiveField(2)
   double price;
 
-  @HiveField(3)
-  int category;
-
   // Propiedades opcionales
-  @HiveField(4) // Asegúrate de usar un nuevo HiveField index
+  @HiveField(3) // Asegúrate de usar un nuevo HiveField index
   String? description;  // Opcional, puede ser null
 
-  @HiveField(5) // Asegúrate de usar un nuevo HiveField index
+  @HiveField(4) // Asegúrate de usar un nuevo HiveField index
   String? imageUrl;     // Opcional, puede ser null
 
   ProductModel({
     String? id,
     required this.name,
     required this.price,
-    required this.category,
     this.description, // Son opcionales en el constructor
     this.imageUrl,    // Son opcionales en el constructor
   }) : this.id = id ?? const Uuid().v4(); // Asigna el ID proporcionado o genera uno nuevo

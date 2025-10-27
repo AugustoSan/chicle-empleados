@@ -13,7 +13,7 @@ class CardProductCustomLandscape extends StatelessWidget {
     return InkWell(
       onLongPress: () => mostrarProductDialog(context, item),
       onTap: () {
-        Navigator.push(context, RouteUtils().getRouteUpdateProduct(item));
+        // Navigator.push(context, RouteUtils().getRouteUpdateProduct(item));
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 12, left: 12, right: 12),
