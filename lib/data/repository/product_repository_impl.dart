@@ -1,5 +1,3 @@
-import 'dart:convert'; // Para json.decode
-import 'package:http/http.dart' as http; // Para http requests
 import 'package:chicle_app_empleados/models/models.dart';
 import 'package:chicle_app_empleados/data/datasource/hive_data_source.dart';
 // import 'package:hive/hive.dart';
@@ -14,56 +12,13 @@ class ProductRepositoryImpl extends ProductRepository {
 
   ProductRepositoryImpl(this._hiveDataSource);
 
-  /// Fetches all products directly from the local Hive box.
-  Future<List<Product>> _getAllProductsFromHive() async {
+  @override
+  Future<List<Product>> getAllProducts() async {
     final box = await _hiveDataSource.openBox<ProductModel>(_PRODUCT_BOX);
     if (box.isEmpty) {
       return [];
     }
     return box.values.map((model) => Product.fromModel(model)).toList();
-  }
-
-  /// Fetches the menu from the network, parses it, and caches any new products into Hive.
-  Future<RestaurantMenu> _fetchAndCacheMenu() async {
-    final response = await http.get(Uri.parse(apiUrl));
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> jsonResponse = json.decode(response.body);
-      final restaurant = RestaurantMenu.fromJson(jsonResponse);
-
-      // Check each product and save it to Hive if it doesn't exist.
-      for (var section in restaurant.categories) {
-        for (var item in section.items) {
-          final exists = await getProduct(item.id);
-          if (exists == null) {
-            // Product is not in the local DB, so we save it.
-            await _save(item);
-          }
-        }
-      }
-      return restaurant;
-    } else {
-      throw Exception('Failed to load menu. Status Code: ${response.statusCode}');
-    }
-  }
-
-  @override
-  Future<List<Product>> getAllProducts() async {
-    // 1. Try to load from Hive first.
-    List<Product> localProducts = await _getAllProductsFromHive();
-
-    // 2. If Hive is empty, fetch from network and cache.
-    if (localProducts.isEmpty) {
-      final restaurant = await _fetchAndCacheMenu();
-      List<Product> allProducts = [];
-      for (var category in restaurant.categories) {
-        allProducts.addAll(category.items);
-      }
-      return allProducts;
-    }
-
-    // 3. Return local data.
-    return localProducts;
   }
 
   // @override
@@ -142,16 +97,16 @@ class ProductRepositoryImpl extends ProductRepository {
     await orderBox.clear();
   }
 
-  Future<bool> _save(Product product) async {
-    final box = await _hiveDataSource.openBox<ProductModel>(_PRODUCT_BOX);
-    final exists = await getProduct(product.id);
-    if (exists != null) return false;
+  // Future<bool> _save(Product product) async {
+  //   final box = await _hiveDataSource.openBox<ProductModel>(_PRODUCT_BOX);
+  //   final exists = await getProduct(product.id);
+  //   if (exists != null) return false;
 
-    final model = product.parseToModel();
+  //   final model = product.parseToModel();
     
-    await box.put(product.id, model);
-    return true;
-  }
+  //   await box.put(product.id, model);
+  //   return true;
+  // }
   // Future<bool> _update(String id, Product product) async {
   //   final box = await _hiveDataSource.openBox<ProductModel>(_PRODUCT_BOX);
   //   final exists = await getProduct(id);

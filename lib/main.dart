@@ -71,13 +71,11 @@ Future<void> main() async {
         // Singletons
         ChangeNotifierProvider<BusinessProvider>.value(value: businessProv..loadBusinessData()),
         // ChangeNotifierProvider<CustomerProvider>.value(value: customerProv..loadCustomerData()),
-        ChangeNotifierProvider<UserProvider>.value(value: userProv..getCurrentUser()),
-        ChangeNotifierProvider<ProductProvider>.value(value: getIt<ProductProvider>()..loadAll()),
-        // Providers
-        ChangeNotifierProvider<ProductProvider>(create: (_) => getIt<ProductProvider>()),
+        ChangeNotifierProvider<UserProvider>.value(value: userProv..loadAllUsers()),
+        // Providers (creados y cargados al ser necesitados por primera vez)
         ChangeNotifierProvider<AuthProvider>(create: (_) => getIt<AuthProvider>()),
-        ChangeNotifierProvider<CategoryProvider>(create: (_) => getIt<CategoryProvider>()),
         ChangeNotifierProvider<CategoryProvider>(create: (_) => getIt<CategoryProvider>()..loadAll()),
+        ChangeNotifierProvider<ProductProvider>(create: (_) => getIt<ProductProvider>()),
         // ViewModels
         ChangeNotifierProvider<LoginController>(create: (ctx) => LoginController(ctx.read<AuthProvider>())),
         ChangeNotifierProvider<BusinessController>(create: (ctx) => BusinessController(ctx.read<BusinessProvider>())),
@@ -122,4 +120,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

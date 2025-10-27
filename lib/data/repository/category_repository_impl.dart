@@ -34,13 +34,6 @@ class CategoryRepositoryImpl extends CategoryRepository {
       // Check each product and save it to Hive if it doesn't exist.
       for (var category in restaurant.categories) {
         await _save(category);
-        // for (var item in category.items) {
-        //   final exists = await getCategory(item.id);
-        //   if (exists == null) {
-        //     // Category is not in the local DB, so we save it.
-        //     await _save(item);
-        //   }
-        // }
       }
       return restaurant;
     } else {
@@ -49,17 +42,18 @@ class CategoryRepositoryImpl extends CategoryRepository {
   }
 
   @override
-  Future<List<Category>> loadCategories() async {
+  Future<void> loadCategories() async {
     List<Category> localCategorys = await _getAllCategorysFromHive();
 
     if (localCategorys.isEmpty) {
-      final restaurant = await _fetchAndCacheMenu();
+      await _fetchAndCacheMenu();
+      // final restaurant = await _fetchAndCacheMenu();
       
-      return restaurant.categories;
+      // return restaurant.categories;
     }
 
     // 3. Return local data.
-    return localCategorys;
+    // return localCategorys;
   }
 
   @override
@@ -81,100 +75,42 @@ class CategoryRepositoryImpl extends CategoryRepository {
     return localCategorys;
   }
 
-  // @override
-  // Future<List<Category>> get() async {
-  //   // 1. Try to load products from Hive.
-  //   final products = await _getAllCategorysFromHive();
-
-  //   // 2. If Hive is empty, fetch from network.
-  //   if (products.isEmpty) {
-  //     final restaurant = await _fetchAndCacheMenu();
-  //     return restaurant.categories;
-  //   }
-
-  //   // 3. If we have local products, group them by category.
-  //   final Map<String, List<Category>> grouped = {};
-  //   for (var product in products) {
-      
-  //   }
-  //   for (var product in products) {
-  //     final categoryName = product.category.name; // Assuming EnumCategoryCategory has a name property
-  //     (grouped[categoryName] ??= []).add(product);
-  //   }
-
-  //   // 4. Convert the grouped map into a List<Category>.
-  //   return grouped.entries.map((entry) {
-  //     return Category(name: entry.key, items: entry.value);
-  //   }).toList();
-  // }
-
   @override
   Future<Category?> getCategory(String id) async {
     final box = await _hiveDataSource.openBox<CategoryModel>(_CATEGORY_BOX);
-    final productModel = box.get(id);
-    if (productModel == null) return null;
-    return Category.fromModel(productModel);
+    final categoryModel = box.get(id);
+    if (categoryModel == null) return null;
+    return Category.fromModel(categoryModel);
   }
 
-  // @override
-  // Future<bool> saveCategory(Category product) async {
-  //   return await _save(product);
-  // }
-
-  // @override
-  // Future<bool> updateCategory(String id, Category product) async {
-  //   final exist = await getCategory(id);
-  //   if(exist == null) throw Exception('La orden con id $id no existe');
-
-  //   return _update(id, Category.withAll(
-  //     id: id,
-  //     name: product.name,
-  //     description: product.description,
-  //     price: product.price,
-  //     category: product.category,
-  //     imageUrl: product.imageUrl,
-  //   ));
-  // }
-
-  // @override
-  // Future<bool> deleteCategory(String id) async {
-  //   final box =  await _hiveDataSource.openBox<CategoryModel>(_CATEGORY_BOX);
-  //   final exist = await getCategory(id);
-  //   if(exist == null) throw Exception('La orden con id $id no existe');
-
-  //   await box.delete(id);
-  //   return true;
-  // }
   Future<void> close() async {
-    // if (Hive.isBoxOpen(_CATEGORY_BOX)) {
-    //   final box = Hive.box<OrderModel>(_CATEGORY_BOX);
-    //   await box.close();
-    // }
     await _hiveDataSource.close<CategoryModel>(_CATEGORY_BOX);
   }
+  
   Future<void> clearAllData() async {
     final orderBox = await _hiveDataSource.openBox<CategoryModel>(_CATEGORY_BOX);
     await orderBox.clear();
   }
 
-  Future<bool> _save(Category product) async {
+  Future<bool> _save(Category category) async {
     final box = await _hiveDataSource.openBox<CategoryModel>(_CATEGORY_BOX);
-    final exists = await getCategory(product.id);
+    final exists = await getCategory(category.id);
     if (exists != null) return false;
 
-    final model = product.parseToModel();
+    final model = category.parseToModel();
     
-    await box.put(product.id, model);
+    await box.put(category.id, model);
     return true;
   }
-  // Future<bool> _update(String id, Category product) async {
+
+  // Future<bool> _update(String id, Category category) async {
   //   final box = await _hiveDataSource.openBox<CategoryModel>(_CATEGORY_BOX);
   //   final exists = await getCategory(id);
   //   if (exists == null) return false;
 
-  //   final model = product.parseToModel();
+  //   final model = category.parseToModel();
     
-  //   await box.put(product.id, model);
+  //   await box.put(category.id, model);
   //   return true;
   // }
 }
