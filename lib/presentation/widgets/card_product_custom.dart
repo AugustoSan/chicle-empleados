@@ -12,6 +12,7 @@ class CardProductCustom extends StatelessWidget {
     // final navigatorKey = context.watch<ShellNavigatorController>();
     final bool isImageNet = item.imageUrl != null && item.imageUrl!.contains('http');
     final bool mostrarImagen = item.imageUrl != null && (item.imageUrl!.contains('http') ? true : File(item.imageUrl!).existsSync());
+    print('item: ${item.toJson()}');
     return InkWell(
       onLongPress: () => mostrarProductDialog(context, item),
       onTap: () {

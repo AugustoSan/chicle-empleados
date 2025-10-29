@@ -35,13 +35,13 @@ Future<void> main() async {
   Hive.registerAdapter(OrderItemModelAdapter());
 
 
-  // await Hive.deleteBoxFromDisk(Boxes.authBox);
-  // await Hive.deleteBoxFromDisk(Boxes.businessBox);
-  // await Hive.deleteBoxFromDisk(Boxes.categoryBox);
-  // await Hive.deleteBoxFromDisk(Boxes.ordersBox);
-  // await Hive.deleteBoxFromDisk(Boxes.ordersItemBox);
-  // await Hive.deleteBoxFromDisk(Boxes.productsBox);
-  // await Hive.deleteBoxFromDisk(Boxes.usersBox);
+  await Hive.deleteBoxFromDisk(Boxes.authBox);
+  await Hive.deleteBoxFromDisk(Boxes.businessBox);
+  await Hive.deleteBoxFromDisk(Boxes.categoryBox);
+  await Hive.deleteBoxFromDisk(Boxes.ordersBox);
+  await Hive.deleteBoxFromDisk(Boxes.ordersItemBox);
+  await Hive.deleteBoxFromDisk(Boxes.productsBox);
+  await Hive.deleteBoxFromDisk(Boxes.usersBox);
   // 2) Inicializa Hive business
   // Hive.registerAdapter(CustomerModelAdapter());
 

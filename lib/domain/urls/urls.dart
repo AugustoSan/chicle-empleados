@@ -1,1 +1,1 @@
-final String apiUrl = 'https://augustosan.github.io/chicle-empleados/assets/data/menu.json';
+final String apiUrl = 'https://augustosan.github.io/chicle-empleados/';

@@ -1,4 +1,5 @@
 import 'dart:convert'; // Para json.decode
+import 'package:chicle_app_empleados/data/services/image_service.dart';
 import 'package:http/http.dart' as http; // Para http requests
 import 'package:chicle_app_empleados/models/models.dart';
 import 'package:chicle_app_empleados/data/datasource/hive_data_source.dart';
@@ -25,7 +26,7 @@ class CategoryRepositoryImpl extends CategoryRepository {
 
   /// Fetches the menu from the network, parses it, and caches any new products into Hive.
   Future<RestaurantMenu> _fetchAndCacheMenu() async {
-    final response = await http.get(Uri.parse(apiUrl));
+    final response = await http.get(Uri.parse(apiUrl + 'assets/data/menu.json'));
 
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
@@ -96,6 +97,15 @@ class CategoryRepositoryImpl extends CategoryRepository {
     final box = await _hiveDataSource.openBox<CategoryModel>(_CATEGORY_BOX);
     final exists = await getCategory(category.id);
     if (exists != null) return false;
+
+    for (var product in category.items) {
+      if (product.imageUrl != null && product.imageUrl!.isNotEmpty) {
+        String fileName = product.imageUrl!.split('/').last;
+        final imageService = ImageService();
+        final imagePath = await imageService.saveImageFromURL(apiUrl + product.imageUrl!, fileName);
+        product.imageUrl = imagePath;
+      }
+    }
 
     final model = category.parseToModel();
     

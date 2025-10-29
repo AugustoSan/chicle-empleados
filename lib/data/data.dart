@@ -3,4 +3,6 @@ export './local/app_database.dart';
 export './local/tables.dart';
 export './repository/repository.dart';
 export './services/auth_service.dart';
+export './services/image_service.dart';
+
 

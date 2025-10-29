@@ -1,3 +1,4 @@
+import 'package:chicle_app_empleados/domain/urls/urls.dart';
 import 'package:chicle_app_empleados/models/models.dart';
 import 'package:uuid/uuid.dart';
 
@@ -51,8 +52,8 @@ class Product {
 
   // Factory constructor para crear una instancia de MenuItem desde un mapa JSON
   factory Product.fromJson(Map<String, dynamic> json) {
-    final imageStrigUrl = json['imageUrl'];
-    final imageUrl = imageStrigUrl.toString().replaceAll('./', 'https://augustosan.github.io/chicle-empleados/');
+    final imageStrigUrl = json['image'];
+    final imageUrl = imageStrigUrl.toString().replaceAll('./', apiUrl);
     return Product.withAll(
       id: json['id'],
       name: json['name'],
@@ -69,7 +70,7 @@ class Product {
       'name': name,
       'price': price,
       'description': description,
-      'imageUrl': imageUrl,
+      'image': imageUrl,
     };
   }
 
