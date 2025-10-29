@@ -63,3 +63,11 @@ Future<bool?> mostrarDeleteDialog(BuildContext context) async {
     },
   );
 }
+
+Future<void> mostrarQrImageDialog(BuildContext context, String message) {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: true,
+    builder: (_) => AlertQrDialog(message: message),
+  );
+}

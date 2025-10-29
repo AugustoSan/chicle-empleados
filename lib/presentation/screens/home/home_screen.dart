@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final formKey = GlobalKey<FormState>();
+  final List<Category> _listCategories = [];
   final List<Product> _listProducts = [];
   final Map<Product,OrderItem> _orderItems = {};
 
@@ -26,28 +27,27 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _init() async {
-    final prov = context.read<ProductProvider>();
-    await prov.loadAll();
+    final categoryProv = context.read<CategoryProvider>();
+    await categoryProv.loadAll();
 
     if(!mounted) return;
 
-    final products = prov.allItems;
-    final Map<Product, OrderItem> map = {};
-    for (var item in products) {
-      map[item] = OrderItem.fromProduct(item);
-    }
+    final categories = categoryProv.allItems;
+    final newOrderItems = _getOrderItems(categories);
     setState(() {
+      _listCategories.clear();
+      _listCategories.addAll(categories);
       _listProducts.clear();
-      _listProducts.addAll(products);
+      _listProducts.addAll(categories.expand((c) => c.items));
       _orderItems.clear();
-      _orderItems.addEntries(map.entries);
+      _orderItems.addAll(newOrderItems);
     });
   }
 
   @override
   void dispose() {
     super.dispose();
-    _listProducts.clear();
+    _listCategories.clear();
     _orderItems.clear();
   }
 
@@ -62,10 +62,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final userProv = context.read<UserProvider>();
     final orderProv = context.read<OrderProvider>();
-    final prov = context.read<ProductProvider>();
+    final categoryProv = context.read<CategoryProvider>();
 
     final user = await userProv.getCurrentUser();
-    await prov.loadAll();
+    await categoryProv.loadAll();
     if(!mounted) return;
     if (user == null) return;
 
@@ -89,18 +89,27 @@ class _HomeScreenState extends State<HomeScreen> {
       error = null;
     });
 
-    final products = prov.allItems;
-    final Map<Product, OrderItem> newOrderItems = {};
-    for (var item in products) {
-      newOrderItems[item] = OrderItem.fromProduct(item);
-    }
+    final categories = categoryProv.allItems;
+    final newOrderItems = _getOrderItems(categories);
     setState(() {
+      _listCategories.clear();
+      _listCategories.addAll(categories);
       _listProducts.clear();
-      _listProducts.addAll(products);
+      _listProducts.addAll(categories.expand((c) => c.items));
       _orderItems.clear();
       _orderItems.addAll(newOrderItems);
     });
     return;
+  }
+
+  Map<Product, OrderItem> _getOrderItems(List<Category> categories) {
+    final Map<Product, OrderItem> map = {};
+    for (var item in categories) {
+      for (var product in item.items) {
+        map[product] = OrderItem.fromProduct(product);
+      }
+    }
+    return map;
   }
 
 

@@ -22,4 +22,5 @@ export 'order_ticket.dart';
 export 'alert_dialog_add_descrption_order_menu_item.dart';
 export 'password_field.dart';
 export 'text_field.dart';
+export 'alert_qr_dialog.dart';
 
