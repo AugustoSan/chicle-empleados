@@ -13,7 +13,7 @@ class RestaurantMenu {
   // Factory constructor para crear una instancia de RestaurantMenu desde un mapa JSON
   factory RestaurantMenu.fromJson(Map<String, dynamic> json) {
     // Mapeamos la lista de JSON de 'categories' a una lista de objetos Section
-    var categoriesList = json['categories'] as List;
+    var categoriesList = json['items'] as List;
     List<Category> parsedSections = categoriesList
         .map((sectionJson) => Category.fromJson(sectionJson))
         .toList();

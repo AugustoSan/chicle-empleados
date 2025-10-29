@@ -56,7 +56,7 @@ class Product {
     return Product.withAll(
       id: json['id'],
       name: json['name'],
-      price: double.parse(json['price']),
+      price: double.parse(json['price'].toString()),
       description: json['description'],
       imageUrl: imageUrl,
     );

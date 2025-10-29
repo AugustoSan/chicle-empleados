@@ -16,8 +16,8 @@ class Category {
 
   // Factory constructor para crear una instancia de Category desde un mapa JSON
   factory Category.fromJson(Map<String, dynamic> json) {
-    // Mapeamos la lista de JSON de 'items' a una lista de objetos Product
-    var itemsList = json['items'] as List;
+    // Extract the list of items from the JSON
+    var itemsList = json['products'] as List;
     List<Product> parsedItems = itemsList
         .map((itemJson) => Product.fromJson(itemJson))
         .toList();
