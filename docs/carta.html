@@ -111,14 +111,14 @@
             
             console.log(data);
             
-            data.categories.forEach(section => {
+            data.items.forEach(section => {
                 // Crear el título de la sección
                 const sectionTitle = document.createElement('h2');
                 sectionTitle.textContent = section.name;
                 menuContentDiv.appendChild(sectionTitle); // El h2 debe ir antes de las cards
 
                 // Crear los elementos del menú dentro de la sección
-                section.items.forEach(item => {
+                section.products.forEach(item => {
                     // --- TARJETA PRINCIPAL ---
                     const itemCard = document.createElement('div');
                     itemCard.className = 'menu-card';
@@ -126,7 +126,7 @@
                     // 1. IMAGEN (Parte Superior de la Tarjeta)
                     const itemImage = document.createElement('img');
                     itemImage.className = 'item-image';
-                    itemImage.src = item.imageUrl;
+                    itemImage.src = item.image;
                     itemImage.alt = item.name;
                     itemCard.appendChild(itemImage);
 
