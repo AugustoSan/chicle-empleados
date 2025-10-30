@@ -18,9 +18,18 @@ class AlertQrDialog extends StatelessWidget {
       ),
     );
 
+    var orientation = MediaQuery.of(context).orientation;
+
+    final double qrSize = orientation == Orientation.portrait
+        ? MediaQuery.of(context).size.width * 0.6
+        : MediaQuery.of(context).size.height * 0.3;
+    final double qrHeight = MediaQuery.of(context).size.height * 0.3;
+
+    var image = Image.asset('assets/icon/logo.jpg',);
+
     return AlertDialog(
       title: const Text(
-        'Consulta la carta escaneando el siguiente código QR',
+        'Escaneame',
         style: TextStyle(fontSize: 16),
       ),
       content: SingleChildScrollView(
@@ -30,37 +39,36 @@ class AlertQrDialog extends StatelessWidget {
           children: [
             // ✅ Caja fija para evitar conflictos de LayoutBuilder
             SizedBox(
-              width: 250,
-              height: 250,
+              width: qrSize,
+              height: qrHeight,
               child: QrImageView(
                 data: message,
                 version: QrVersions.auto,
+                // size: qrSize,
                 backgroundColor: Colors.white,
+                embeddedImage: image.image,
+                embeddedImageStyle: const QrEmbeddedImageStyle(
+                  size: Size(40, 40),
+                ),
                 eyeStyle: const QrEyeStyle(
-                  eyeShape: QrEyeShape.square,
-                  color: Color(0xff128760),
+                  eyeShape: QrEyeShape.circle,
+                  color: Colors.black,
                 ),
                 dataModuleStyle: const QrDataModuleStyle(
-                  dataModuleShape: QrDataModuleShape.square,
-                  color: Color(0xff1a5441),
+                  dataModuleShape: QrDataModuleShape.circle,
+                  color: Colors.black,
                 ),
               ),
             ),
             const SizedBox(height: 16),
             Text(
-              message,
+              'Consulta la carta escaneando el código QR',
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 14),
             ),
           ],
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cerrar'),
-        ),
-      ],
     );
   }
 }

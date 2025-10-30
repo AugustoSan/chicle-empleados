@@ -32,6 +32,9 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget{
               case '/settings':
                 Navigator.push(ctx, RouteUtils().getRouteSettings());
                 break;
+              case '/generate-qr':
+                Navigator.push(ctx, RouteUtils().getQrSettings());
+                break;
               case '/logout':
               default:
                 ctx.read<AuthProvider>().logout();

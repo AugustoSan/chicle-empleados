@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 
 class CardAddOrderItemCustom extends StatefulWidget {
   final OrderItem item;
+  final VoidCallback onQuantityChanged;
 
-  const CardAddOrderItemCustom({super.key, required this.item});
+  const CardAddOrderItemCustom({super.key, required this.item, required this.onQuantityChanged});
 
   @override
   State<CardAddOrderItemCustom> createState() => _CardAddOrderItemCustomState();
@@ -33,6 +34,7 @@ class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
     setState(() {
       orderItem.quantity += 1;
     });
+    widget.onQuantityChanged.call();
   }
 
   void onDecrement() {
@@ -40,6 +42,7 @@ class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
     setState(() {
       orderItem.quantity -= 1;
     });
+    widget.onQuantityChanged.call();
   }
 
   void onAddDescription(String? description) {

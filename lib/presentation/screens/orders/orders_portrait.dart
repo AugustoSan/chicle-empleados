@@ -1,56 +1,60 @@
 // import 'package:chicle_app_empleados/domain/domain.dart';
-import 'package:chicle_app_empleados/domain/domain.dart';
+// import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
-class OrdersPortrait extends StatefulWidget {
+class OrdersPortrait extends StatelessWidget {
   const OrdersPortrait({Key? key}) : super(key: key);
 
-  @override
-  State<OrdersPortrait> createState() => _OrdersPortraitState();
-}
+//   @override
+//   State<OrdersPortrait> createState() => _OrdersPortraitState();
+// }
 
-class _OrdersPortraitState extends State<OrdersPortrait> {
-  final List<Order> _orders = [];
-  @override
-  void initState() {
-    super.initState();
-    _init();
-  }
+// class _OrdersPortraitState extends State<OrdersPortrait> {
+//   final List<Order> _orders = [];
+//   @override
+//   void initState() {
+//     super.initState();
+//     _init();
+//   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _orders.clear();
-  }
+//   @override
+//   void dispose() {
+//     super.dispose();
+//     _orders.clear();
+//   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
+//   @override
+//   void didChangeDependencies() {
+//     super.didChangeDependencies();
+//   }
 
-  Future<void> _init() async {
-    final orderProv = context.read<OrderProvider>();
-    await orderProv.loadAll();
+//   Future<void> _init() async {
+//     final orderProv = context.read<OrderProvider>();
+//     await orderProv.loadAll();
 
-    if(!mounted) return;
+//     if(!mounted) return;
 
-    final items = orderProv.allOrders;
+//     final items = orderProv.allOrders;
 
-    setState(() {
-      _orders.clear();
-      _orders.addAll(items);
-    });
-  }
+//     setState(() {
+//       _orders.clear();
+//       _orders.addAll(items);
+//     });
+//   }
 
   @override
   Widget build(BuildContext context) {
-    context.watch<OrderProvider>();
+    final orderProv = context.watch<OrderProvider>();
+    final orders = orderProv.allOrders;
+
     return Column(
       children: [
         Expanded(
-          child: Container(
+          child: orders.length == 0
+            ? const Center(child: Text('No hay ordenes'))
+            : Container(
             margin: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -62,9 +66,9 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
                   padding: const EdgeInsets.all(12),
                   child: ListView.separated(
                     padding: const EdgeInsets.all(8),
-                    itemCount: _orders.length,
+                    itemCount: orders.length,
                     itemBuilder: (BuildContext context, int index) {
-                      final item = _orders[index];
+                      final item = orders[index];
                       return CardOrderCustomPortrait(item: item);
                     },
                     separatorBuilder: (BuildContext context, int index) => const Divider(),

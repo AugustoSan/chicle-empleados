@@ -1,4 +1,4 @@
-import 'package:chicle_app_empleados/domain/urls/urls.dart';
+// import 'package:chicle_app_empleados/domain/urls/urls.dart';
 import 'package:chicle_app_empleados/presentation/screens/home/home.dart';
 import 'package:chicle_app_empleados/presentation/screens/orders/orders.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +67,8 @@ class _ShellAppState extends State<ShellApp> with SingleTickerProviderStateMixin
             ],
           ),
           floatingActionButton: _shouldShowFab() 
-            ? FloatingActionButton(onPressed: () => mostrarQrImageDialog(context, apiUrl + "carta.html"), child: const Icon(Icons.qr_code))
+            // ? FloatingActionButton(onPressed: () => mostrarQrImageDialog(context, apiUrl + "carta.html"), child: const Icon(Icons.qr_code))
+            ? FloatingButtomCustom(route: RouteUtils().getQrSettings(),)
             : null,
       );
   }

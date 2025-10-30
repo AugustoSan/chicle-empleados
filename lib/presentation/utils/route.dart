@@ -1,5 +1,6 @@
 // import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
+import 'package:chicle_app_empleados/presentation/screens/settings/qr_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -62,6 +63,11 @@ class DrawerProducts {
     title: 'Acerca de',
     route: '/acercaDe',
   );
+  static const DrawerItem consultarQr = DrawerItem(
+    icon: Icons.info,
+    title: 'Consultar QR',
+    route: '/generate-qr',
+  );
   static const DrawerItem politicaPriv = DrawerItem(
     icon: Icons.privacy_tip,
     title: 'Política de privacidad',
@@ -94,6 +100,7 @@ const List<DrawerItem> navMenuItems = [
 /// Lista de todos los elementos del drawer
 const List<DrawerItem> popupMenuItems = [
   DrawerProducts.settings,
+  DrawerProducts.consultarQr,
   DrawerProducts.logout,
 ];
 
@@ -171,6 +178,13 @@ class RouteUtils {
       builder: (context) => const SettingsScreen()
     );
   }
+
+  Route getQrSettings() {
+    return MaterialPageRoute(
+      builder: (context) => const QrScreen()
+    );
+  }
+
 
   Route getRouteSettingsUsers() {
     return MaterialPageRoute(

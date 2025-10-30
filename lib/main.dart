@@ -80,7 +80,7 @@ Future<void> main() async {
         ChangeNotifierProvider<LoginController>(create: (ctx) => LoginController(ctx.read<AuthProvider>())),
         ChangeNotifierProvider<BusinessController>(create: (ctx) => BusinessController(ctx.read<BusinessProvider>())),
         // ChangeNotifierProvider<CustomerProvider>(create: (ctx) => getIt<CustomerProvider>()),
-        ChangeNotifierProvider<OrderProvider>(create: (ctx) => getIt<OrderProvider>()),
+        ChangeNotifierProvider<OrderProvider>(create: (ctx) => getIt<OrderProvider>()..loadAll()),
         ChangeNotifierProvider<AddOrderController>(
           create: (ctx) => AddOrderController(
             getIt<OrderRepository>(),

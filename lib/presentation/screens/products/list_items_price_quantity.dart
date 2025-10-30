@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 class ListItemsPriceQuantity extends StatelessWidget {
   final Map<Product,OrderItem> saleItems;
   final List<Product> listProducts;
+  final VoidCallback onQuantityChanged;
 
   const ListItemsPriceQuantity({
     Key? key,
     required this.saleItems,
     required this.listProducts,
+    required this.onQuantityChanged,
   }) : super(key: key);
 
   @override
@@ -24,8 +26,9 @@ class ListItemsPriceQuantity extends StatelessWidget {
             return const SizedBox.shrink();
           }
           return CardAddOrderItemCustom(
-            key: ValueKey(item.id), // Añade esta línea
+            key: ValueKey(item.id),
             item: item,
+            onQuantityChanged: onQuantityChanged,
           );
         },
       ),

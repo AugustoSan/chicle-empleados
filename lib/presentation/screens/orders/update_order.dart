@@ -15,6 +15,7 @@ class UpdateOrder extends StatefulWidget {
 class _UpdateOrderState extends State<UpdateOrder> {
   final Map<Product,OrderItem> _saleItems = {};
   final List<Product> _listProducts = [];
+  double total = 0;
   Order? _sale;
 
   @override
@@ -33,6 +34,8 @@ class _UpdateOrderState extends State<UpdateOrder> {
   Future<void> _init() async {
     final menuProv = context.read<ProductProvider>();
     final saleProv = context.read<OrderProvider>();
+    final categoryProv = context.read<CategoryProvider>();
+    await categoryProv.loadAll();
     await menuProv.loadAll();
 
     final sale = await saleProv.getOrder(widget.idOrder);
@@ -41,7 +44,9 @@ class _UpdateOrderState extends State<UpdateOrder> {
 
     print('customer: ${sale.customer}');
 
-    final items = menuProv.allItems;
+    final categories = categoryProv.allItems;
+
+    final items = categories.expand((c) => c.items);
 
     final Map<String, OrderItem> map = {};
     for (final item in items) {
@@ -66,7 +71,7 @@ class _UpdateOrderState extends State<UpdateOrder> {
           )),
         );
     });
-    
+    _updateTotal();
   }
 
   Future<void> _save(List<OrderItem> items) async {
@@ -77,18 +82,32 @@ class _UpdateOrderState extends State<UpdateOrder> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    if (_sale == null) {
-      return const Center(
-        child: Text('No se encontro la orden'),
-      );
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _updateTotal();
+  }
+
+
+  void _updateTotal() {
+    double temp = 0;
+    for (final e in _saleItems.entries) {
+      if (e.value.quantity > 0) {
+        temp += e.value.quantity * e.key.price;
+      }
     }
+
+    setState(() {
+      total = temp;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
-            const Text('Orden'),
-            Text(' # ${StringUtil.hideMiddle(_sale!.id)}')
+            const Text('Editar la orden'),
           ],
         ),
         leading: IconButton(
@@ -105,7 +124,9 @@ class _UpdateOrderState extends State<UpdateOrder> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Column(
+        child: _sale == null 
+          ? const Center(child: const Text("No se encontro la orden")) 
+          : Column(
         children: [
           const SizedBox(height: 12),
           Container(
@@ -114,14 +135,20 @@ class _UpdateOrderState extends State<UpdateOrder> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                TextTitleWithContent(title: 'Folio: ', content: _sale!.id),
+                const SizedBox(height: 12),
                 TextTitleWithContent(title: 'Cliente: ', content: _sale!.customer),
+                const SizedBox(height: 12),
+                TextTitleWithContent(title: 'Fecha: ', content: _sale!.date.toString()),
+                const SizedBox(height: 12),
+                TextTitleWithContent(title: 'Total: ', content: PriceUtils.getStringPrice(total)),
                 const SizedBox(height: 12),
                 TextTitleWithContent(title: 'Fecha: ', content: _sale!.date.toString()),
               ],
             )
           ),
           const SizedBox(height: 12),
-          ListItemsPriceQuantity(saleItems: _saleItems, listProducts: _listProducts,),
+          ListItemsPriceQuantity(saleItems: _saleItems, listProducts: _listProducts, onQuantityChanged: _updateTotal,),
           const SizedBox(height: 12),
           Center(
             child: ElevatedButton(

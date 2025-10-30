@@ -30,3 +30,13 @@ enum EnumRole {
   administrador,
   usuario
 }
+
+enum QrTypeEye{
+  square,
+  circle,
+}
+
+enum QrTypeData{
+  square,
+  circle,
+}

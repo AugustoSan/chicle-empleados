@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Category> _listCategories = [];
   final List<Product> _listProducts = [];
   final Map<Product,OrderItem> _orderItems = {};
+  double total = 0;
 
   String? error;
 
@@ -98,6 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _listProducts.addAll(categories.expand((c) => c.items));
       _orderItems.clear();
       _orderItems.addAll(newOrderItems);
+      total = 0;
     });
     return;
   }
@@ -110,6 +112,19 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
     return map;
+  }
+
+  void _updateTotal() {
+    double temp = 0;
+    for (final e in _orderItems.entries) {
+      if (e.value.quantity > 0) {
+        temp += e.value.quantity * e.key.price;
+      }
+    }
+
+    setState(() {
+      total = temp;
+    });
   }
 
 
@@ -140,7 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                       const SizedBox(height: 12),
-                      ListItemsPriceQuantity(saleItems: _orderItems, listProducts: _listProducts,),
+                      TextTitleWithContent(title: 'Total: ', content: PriceUtils.getStringPrice(total)),
+                      const SizedBox(height: 12),
+                      ListItemsPriceQuantity(saleItems: _orderItems, listProducts: _listProducts, onQuantityChanged: _updateTotal,),
                       Center(
                         child: ElevatedButton(
                           onPressed: () {
