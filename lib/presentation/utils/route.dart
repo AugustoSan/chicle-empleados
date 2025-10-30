@@ -100,7 +100,7 @@ const List<DrawerItem> navMenuItems = [
 /// Lista de todos los elementos del drawer
 const List<DrawerItem> popupMenuItems = [
   DrawerProducts.settings,
-  DrawerProducts.consultarQr,
+  // DrawerProducts.consultarQr,
   DrawerProducts.logout,
 ];
 
