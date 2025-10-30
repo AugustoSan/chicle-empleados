@@ -31,6 +31,11 @@ class LoginController extends ChangeNotifier {
     _loading = false;
     if (!ok) _error = 'Credenciales incorrectas';
     // shell.initialize();
+    if(ok)
+    {
+      usernameController.text = '';
+      passwordController.text = '';
+    }
     notifyListeners();
   }
 

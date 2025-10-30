@@ -60,7 +60,7 @@ class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
 
   @override
   Widget build(BuildContext context) {
-
+    final product = widget.item.product;
       return Container(
         child: Column(
           children: [
@@ -89,20 +89,22 @@ class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
                     : const SizedBox.shrink(),
                 ],
               ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.remove_circle_outline),
-                    onPressed: onDecrement,
-                  ),
-                  Text('${orderItem.quantity}'),
-                  IconButton(
-                    icon: Icon(Icons.add_circle_outline),
-                    onPressed: onIncrement,
-                  ),
-                ],
-              ),
+              trailing: !product.available 
+                ? const SizedBox.shrink()
+                : Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.remove_circle_outline),
+                        onPressed: onDecrement,
+                      ),
+                      Text('${orderItem.quantity}'),
+                      IconButton(
+                        icon: Icon(Icons.add_circle_outline),
+                        onPressed: onIncrement,
+                      ),
+                    ],
+                  )
             ),
           ],
         ),

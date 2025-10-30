@@ -46,7 +46,7 @@ class _UpdateOrderState extends State<UpdateOrder> {
 
     final categories = categoryProv.allItems;
 
-    final items = categories.expand((c) => c.items);
+    final items = ProductUtil().getProductItems(categories);
 
     final Map<String, OrderItem> map = {};
     for (final item in items) {

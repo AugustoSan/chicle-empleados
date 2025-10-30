@@ -21,7 +21,7 @@ class CardProductCustom extends StatelessWidget {
       child: Container(
         width: 160, // Ancho fijo para cada card
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: item.available ? Colors.white : Colors.grey.shade300,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             // Sombra suave

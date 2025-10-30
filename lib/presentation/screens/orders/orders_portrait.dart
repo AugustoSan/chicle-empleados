@@ -7,43 +7,6 @@ import 'package:provider/provider.dart';
 class OrdersPortrait extends StatelessWidget {
   const OrdersPortrait({Key? key}) : super(key: key);
 
-//   @override
-//   State<OrdersPortrait> createState() => _OrdersPortraitState();
-// }
-
-// class _OrdersPortraitState extends State<OrdersPortrait> {
-//   final List<Order> _orders = [];
-//   @override
-//   void initState() {
-//     super.initState();
-//     _init();
-//   }
-
-//   @override
-//   void dispose() {
-//     super.dispose();
-//     _orders.clear();
-//   }
-
-//   @override
-//   void didChangeDependencies() {
-//     super.didChangeDependencies();
-//   }
-
-//   Future<void> _init() async {
-//     final orderProv = context.read<OrderProvider>();
-//     await orderProv.loadAll();
-
-//     if(!mounted) return;
-
-//     final items = orderProv.allOrders;
-
-//     setState(() {
-//       _orders.clear();
-//       _orders.addAll(items);
-//     });
-//   }
-
   @override
   Widget build(BuildContext context) {
     final orderProv = context.watch<OrderProvider>();

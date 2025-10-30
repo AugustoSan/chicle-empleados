@@ -35,12 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
     if(!mounted) return;
 
     final categories = categoryProv.allItems;
-    final newOrderItems = _getOrderItems(categories);
+    final newItemsProducts = ProductUtil().getProductItems(categories);
+    final newOrderItems = OrderUtil().getOrderItems(newItemsProducts);
     setState(() {
       _listCategories.clear();
       _listCategories.addAll(categories);
       _listProducts.clear();
-      _listProducts.addAll(categories.expand((c) => c.items));
+      _listProducts.addAll(newItemsProducts);
       _orderItems.clear();
       _orderItems.addAll(newOrderItems);
     });
@@ -86,12 +87,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     final categories = categoryProv.allItems;
-    final newOrderItems = _getOrderItems(categories);
+    final newItemsProducts = ProductUtil().getProductItems(categories);
+    final newOrderItems = OrderUtil().getOrderItems(newItemsProducts);
     setState(() {
       _listCategories.clear();
       _listCategories.addAll(categories);
       _listProducts.clear();
-      _listProducts.addAll(categories.expand((c) => c.items));
+      _listProducts.addAll(newItemsProducts);
       _orderItems.clear();
       _orderItems.addAll(newOrderItems);
       total = 0;
@@ -99,15 +101,23 @@ class _HomeScreenState extends State<HomeScreen> {
     return;
   }
 
-  Map<Product, OrderItem> _getOrderItems(List<Category> categories) {
-    final Map<Product, OrderItem> map = {};
-    for (var item in categories) {
-      for (var product in item.items) {
-        map[product] = OrderItem.fromProduct(product);
-      }
-    }
-    return map;
-  }
+  // Map<Product, OrderItem> _getOrderItems(List<Product> products) {
+  //   final Map<Product, OrderItem> map = {};
+  //   for (var product in products) {
+  //     map[product] = OrderItem.fromProduct(product);
+  //   }
+  //   return map;
+  // }
+
+  // List<Product> _getProductItems(List<Category> categories) {
+  //   final List<Product> map = [];
+  //   for (var item in categories) {
+  //     for (var product in item.items) {
+  //       if(product.available) map.add(product);
+  //     }
+  //   }
+  //   return map;
+  // }
 
   void _updateTotal() {
     double temp = 0;
@@ -130,12 +140,13 @@ class _HomeScreenState extends State<HomeScreen> {
     await menuProv.loadAndUpdateCategories();
 
     final categories = menuProv.allItems;
-    final newItems = _getOrderItems(categories);
+    final newItemsProducts = ProductUtil().getProductItems(categories);
+    final newItems = OrderUtil().getOrderItems(newItemsProducts);
 
     setState(() {
       _loading = false;
       _listProducts.clear();
-      _listProducts.addAll(categories.expand((c) => c.items));
+      _listProducts.addAll(newItemsProducts);
       _orderItems.clear();
       _orderItems.addAll(newItems);
       _listCategories.clear();
