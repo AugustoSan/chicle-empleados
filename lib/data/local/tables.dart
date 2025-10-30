@@ -11,7 +11,7 @@ class MenuItemModel extends Table {
   RealColumn get price => real()();
   IntColumn get category => integer()();
   TextColumn get description => text()();
-  TextColumn get imageUrl => text()();
+  TextColumn get image => text()();
 }
 
 class SalesModel extends Table {

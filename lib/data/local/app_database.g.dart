@@ -220,15 +220,14 @@ class $MenuItemModelTable extends MenuItemModel
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
       'description', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _imageUrlMeta =
-      const VerificationMeta('imageUrl');
+  static const VerificationMeta _imageMeta = const VerificationMeta('image');
   @override
-  late final GeneratedColumn<String> imageUrl = GeneratedColumn<String>(
-      'image_url', aliasedName, false,
+  late final GeneratedColumn<String> image = GeneratedColumn<String>(
+      'image', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, name, price, category, description, imageUrl];
+      [id, name, price, category, description, image];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -268,11 +267,11 @@ class $MenuItemModelTable extends MenuItemModel
     } else if (isInserting) {
       context.missing(_descriptionMeta);
     }
-    if (data.containsKey('image_url')) {
-      context.handle(_imageUrlMeta,
-          imageUrl.isAcceptableOrUnknown(data['image_url']!, _imageUrlMeta));
+    if (data.containsKey('image')) {
+      context.handle(
+          _imageMeta, image.isAcceptableOrUnknown(data['image']!, _imageMeta));
     } else if (isInserting) {
-      context.missing(_imageUrlMeta);
+      context.missing(_imageMeta);
     }
     return context;
   }
@@ -293,8 +292,8 @@ class $MenuItemModelTable extends MenuItemModel
           .read(DriftSqlType.int, data['${effectivePrefix}category'])!,
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
-      imageUrl: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}image_url'])!,
+      image: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}image'])!,
     );
   }
 
@@ -311,14 +310,14 @@ class MenuItemModelData extends DataClass
   final double price;
   final int category;
   final String description;
-  final String imageUrl;
+  final String image;
   const MenuItemModelData(
       {required this.id,
       required this.name,
       required this.price,
       required this.category,
       required this.description,
-      required this.imageUrl});
+      required this.image});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -327,7 +326,7 @@ class MenuItemModelData extends DataClass
     map['price'] = Variable<double>(price);
     map['category'] = Variable<int>(category);
     map['description'] = Variable<String>(description);
-    map['image_url'] = Variable<String>(imageUrl);
+    map['image'] = Variable<String>(image);
     return map;
   }
 
@@ -338,7 +337,7 @@ class MenuItemModelData extends DataClass
       price: Value(price),
       category: Value(category),
       description: Value(description),
-      imageUrl: Value(imageUrl),
+      image: Value(image),
     );
   }
 
@@ -351,7 +350,7 @@ class MenuItemModelData extends DataClass
       price: serializer.fromJson<double>(json['price']),
       category: serializer.fromJson<int>(json['category']),
       description: serializer.fromJson<String>(json['description']),
-      imageUrl: serializer.fromJson<String>(json['imageUrl']),
+      image: serializer.fromJson<String>(json['image']),
     );
   }
   @override
@@ -363,7 +362,7 @@ class MenuItemModelData extends DataClass
       'price': serializer.toJson<double>(price),
       'category': serializer.toJson<int>(category),
       'description': serializer.toJson<String>(description),
-      'imageUrl': serializer.toJson<String>(imageUrl),
+      'image': serializer.toJson<String>(image),
     };
   }
 
@@ -373,14 +372,14 @@ class MenuItemModelData extends DataClass
           double? price,
           int? category,
           String? description,
-          String? imageUrl}) =>
+          String? image}) =>
       MenuItemModelData(
         id: id ?? this.id,
         name: name ?? this.name,
         price: price ?? this.price,
         category: category ?? this.category,
         description: description ?? this.description,
-        imageUrl: imageUrl ?? this.imageUrl,
+        image: image ?? this.image,
       );
   MenuItemModelData copyWithCompanion(MenuItemModelCompanion data) {
     return MenuItemModelData(
@@ -390,7 +389,7 @@ class MenuItemModelData extends DataClass
       category: data.category.present ? data.category.value : this.category,
       description:
           data.description.present ? data.description.value : this.description,
-      imageUrl: data.imageUrl.present ? data.imageUrl.value : this.imageUrl,
+      image: data.image.present ? data.image.value : this.image,
     );
   }
 
@@ -402,14 +401,14 @@ class MenuItemModelData extends DataClass
           ..write('price: $price, ')
           ..write('category: $category, ')
           ..write('description: $description, ')
-          ..write('imageUrl: $imageUrl')
+          ..write('image: $image')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode =>
-      Object.hash(id, name, price, category, description, imageUrl);
+      Object.hash(id, name, price, category, description, image);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -419,7 +418,7 @@ class MenuItemModelData extends DataClass
           other.price == this.price &&
           other.category == this.category &&
           other.description == this.description &&
-          other.imageUrl == this.imageUrl);
+          other.image == this.image);
 }
 
 class MenuItemModelCompanion extends UpdateCompanion<MenuItemModelData> {
@@ -428,14 +427,14 @@ class MenuItemModelCompanion extends UpdateCompanion<MenuItemModelData> {
   final Value<double> price;
   final Value<int> category;
   final Value<String> description;
-  final Value<String> imageUrl;
+  final Value<String> image;
   const MenuItemModelCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.price = const Value.absent(),
     this.category = const Value.absent(),
     this.description = const Value.absent(),
-    this.imageUrl = const Value.absent(),
+    this.image = const Value.absent(),
   });
   MenuItemModelCompanion.insert({
     this.id = const Value.absent(),
@@ -443,19 +442,19 @@ class MenuItemModelCompanion extends UpdateCompanion<MenuItemModelData> {
     required double price,
     required int category,
     required String description,
-    required String imageUrl,
+    required String image,
   })  : name = Value(name),
         price = Value(price),
         category = Value(category),
         description = Value(description),
-        imageUrl = Value(imageUrl);
+        image = Value(image);
   static Insertable<MenuItemModelData> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<double>? price,
     Expression<int>? category,
     Expression<String>? description,
-    Expression<String>? imageUrl,
+    Expression<String>? image,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -463,7 +462,7 @@ class MenuItemModelCompanion extends UpdateCompanion<MenuItemModelData> {
       if (price != null) 'price': price,
       if (category != null) 'category': category,
       if (description != null) 'description': description,
-      if (imageUrl != null) 'image_url': imageUrl,
+      if (image != null) 'image': image,
     });
   }
 
@@ -473,14 +472,14 @@ class MenuItemModelCompanion extends UpdateCompanion<MenuItemModelData> {
       Value<double>? price,
       Value<int>? category,
       Value<String>? description,
-      Value<String>? imageUrl}) {
+      Value<String>? image}) {
     return MenuItemModelCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       price: price ?? this.price,
       category: category ?? this.category,
       description: description ?? this.description,
-      imageUrl: imageUrl ?? this.imageUrl,
+      image: image ?? this.image,
     );
   }
 
@@ -502,8 +501,8 @@ class MenuItemModelCompanion extends UpdateCompanion<MenuItemModelData> {
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
-    if (imageUrl.present) {
-      map['image_url'] = Variable<String>(imageUrl.value);
+    if (image.present) {
+      map['image'] = Variable<String>(image.value);
     }
     return map;
   }
@@ -516,7 +515,7 @@ class MenuItemModelCompanion extends UpdateCompanion<MenuItemModelData> {
           ..write('price: $price, ')
           ..write('category: $category, ')
           ..write('description: $description, ')
-          ..write('imageUrl: $imageUrl')
+          ..write('image: $image')
           ..write(')'))
         .toString();
   }
@@ -1432,7 +1431,7 @@ typedef $$MenuItemModelTableCreateCompanionBuilder = MenuItemModelCompanion
   required double price,
   required int category,
   required String description,
-  required String imageUrl,
+  required String image,
 });
 typedef $$MenuItemModelTableUpdateCompanionBuilder = MenuItemModelCompanion
     Function({
@@ -1441,7 +1440,7 @@ typedef $$MenuItemModelTableUpdateCompanionBuilder = MenuItemModelCompanion
   Value<double> price,
   Value<int> category,
   Value<String> description,
-  Value<String> imageUrl,
+  Value<String> image,
 });
 
 final class $$MenuItemModelTableReferences extends BaseReferences<_$AppDatabase,
@@ -1489,8 +1488,8 @@ class $$MenuItemModelTableFilterComposer
   ColumnFilters<String> get description => $composableBuilder(
       column: $table.description, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get imageUrl => $composableBuilder(
-      column: $table.imageUrl, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get image => $composableBuilder(
+      column: $table.image, builder: (column) => ColumnFilters(column));
 
   Expression<bool> saleItemsModelRefs(
       Expression<bool> Function($$SaleItemsModelTableFilterComposer f) f) {
@@ -1538,8 +1537,8 @@ class $$MenuItemModelTableOrderingComposer
   ColumnOrderings<String> get description => $composableBuilder(
       column: $table.description, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get imageUrl => $composableBuilder(
-      column: $table.imageUrl, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get image => $composableBuilder(
+      column: $table.image, builder: (column) => ColumnOrderings(column));
 }
 
 class $$MenuItemModelTableAnnotationComposer
@@ -1566,8 +1565,8 @@ class $$MenuItemModelTableAnnotationComposer
   GeneratedColumn<String> get description => $composableBuilder(
       column: $table.description, builder: (column) => column);
 
-  GeneratedColumn<String> get imageUrl =>
-      $composableBuilder(column: $table.imageUrl, builder: (column) => column);
+  GeneratedColumn<String> get image =>
+      $composableBuilder(column: $table.image, builder: (column) => column);
 
   Expression<T> saleItemsModelRefs<T extends Object>(
       Expression<T> Function($$SaleItemsModelTableAnnotationComposer a) f) {
@@ -1619,7 +1618,7 @@ class $$MenuItemModelTableTableManager extends RootTableManager<
             Value<double> price = const Value.absent(),
             Value<int> category = const Value.absent(),
             Value<String> description = const Value.absent(),
-            Value<String> imageUrl = const Value.absent(),
+            Value<String> image = const Value.absent(),
           }) =>
               MenuItemModelCompanion(
             id: id,
@@ -1627,7 +1626,7 @@ class $$MenuItemModelTableTableManager extends RootTableManager<
             price: price,
             category: category,
             description: description,
-            imageUrl: imageUrl,
+            image: image,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
@@ -1635,7 +1634,7 @@ class $$MenuItemModelTableTableManager extends RootTableManager<
             required double price,
             required int category,
             required String description,
-            required String imageUrl,
+            required String image,
           }) =>
               MenuItemModelCompanion.insert(
             id: id,
@@ -1643,7 +1642,7 @@ class $$MenuItemModelTableTableManager extends RootTableManager<
             price: price,
             category: category,
             description: description,
-            imageUrl: imageUrl,
+            image: image,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (

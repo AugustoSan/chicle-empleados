@@ -1,3 +1,4 @@
+// import 'package:chicle_app_empleados/presentation/screens/info/update_products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chicle_app_empleados/theme_data.dart';
@@ -57,6 +58,7 @@ class SettingsScreen extends StatelessWidget {
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () => Navigator.push(context, RouteUtils().getRouteSettingsCompany()),
                   ),
+                  // UpdateProductsTile(),
                   ListTile(
                     title: Text(acercaDe.title),
                     leading: Icon(acercaDe.icon),

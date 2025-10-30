@@ -23,6 +23,8 @@ class Category {
         .toList();
 
     return Category(
+      // Usamos el nombre como ID para que sea consistente.
+      id: json['id'], 
       name: json['name'],
       items: parsedItems,
     );
@@ -31,6 +33,7 @@ class Category {
   // Opcional: Para convertir el objeto Dart de nuevo a un JSON
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
       'items': items.map((item) => item.toJson()).toList(),
     };

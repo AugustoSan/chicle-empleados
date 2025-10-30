@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _init() async {
     final categoryProv = context.read<CategoryProvider>();
-    await categoryProv.loadAll();
+    await categoryProv.getAllCategories();
 
     if(!mounted) return;
 
@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final categoryProv = context.read<CategoryProvider>();
 
     final user = await userProv.getCurrentUser();
-    await categoryProv.loadAll();
+    await categoryProv.getAllCategories();
     if(!mounted) return;
     if (user == null) return;
 
@@ -121,10 +121,16 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Future<void> _loadCategories() async {
+    final menuProv = context.read<CategoryProvider>();
+    await menuProv.loadAndUpdateCategories();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     // final vm = context.watch<AddOrderController>();
+    final isloading = context.watch<CategoryProvider>().loading;
     return SafeArea(
       child: Form(
         key: formKey,  // ← usa la key local, no la de vm
@@ -139,8 +145,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: _listProducts.isEmpty 
-                  ? const Center(child: const Text("Sin productos registrados")) 
+                child: isloading 
+                  ? const Center(child: CircularProgressIndicator()) 
+                  :_listProducts.isEmpty 
+                  ? Center(
+                      child: TextButton.icon(
+                        label: Text('Cargar productos'), 
+                        onPressed: _loadCategories, 
+                        icon: Icon(Icons.replay_10_outlined),)) 
                   : Column(
                     children: [
                       const SizedBox(height: 12),

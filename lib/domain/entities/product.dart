@@ -6,14 +6,17 @@ class Product {
   late String   id;
   late String   name;
   late double   price;
-  late String?  description;  // Opcional
-  late String?  imageUrl;     // Si quieres mostrar foto
+  late bool     available;
+  // Propiedades opcionales
+  late String?  description;  
+  late String?  imageUrl;    
 
   Product(
     this.id,
     this.name,
     this.description,
     this.price,
+    this.available,
     this.imageUrl,
   );
 
@@ -21,6 +24,7 @@ class Product {
     required this.name,
     this.description,
     required this.price,
+    required this.available,
     this.imageUrl,
   }){
     this.id = const Uuid().v4();
@@ -31,6 +35,7 @@ class Product {
     required this.name,
     this.description,
     required this.price,
+    required this.available,
     this.imageUrl,
   });
 
@@ -38,6 +43,7 @@ class Product {
     id = const Uuid().v4();
     name = 'sin nombre';
     description = null;
+    available = false;
     price = 0.0;
     imageUrl = null;
   }
@@ -46,8 +52,9 @@ class Product {
     id = model.id;
     name = model.name;
     price = model.price;
+    available = model.available;
     description = model.description;
-    imageUrl = model.imageUrl;
+    imageUrl = model.image;
   }
 
   // Factory constructor para crear una instancia de MenuItem desde un mapa JSON
@@ -58,6 +65,7 @@ class Product {
       id: json['id'],
       name: json['name'],
       price: double.parse(json['price'].toString()),
+      available: json['available'],
       description: json['description'],
       imageUrl: imageUrl,
     );
@@ -69,6 +77,7 @@ class Product {
       'id': id,
       'name': name,
       'price': price,
+      'available': available,
       'description': description,
       'image': imageUrl,
     };
@@ -78,7 +87,8 @@ class Product {
     id: id,
     name: name,
     price: price,
+    available: available,
     description: description,
-    imageUrl: imageUrl,
+    image: imageUrl,
   );
 }

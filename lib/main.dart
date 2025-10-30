@@ -74,7 +74,7 @@ Future<void> main() async {
         ChangeNotifierProvider<UserProvider>.value(value: userProv..loadAllUsers()),
         // Providers (creados y cargados al ser necesitados por primera vez)
         ChangeNotifierProvider<AuthProvider>(create: (_) => getIt<AuthProvider>()),
-        ChangeNotifierProvider<CategoryProvider>(create: (_) => getIt<CategoryProvider>()..loadAll()),
+        ChangeNotifierProvider<CategoryProvider>(create: (_) => getIt<CategoryProvider>()..getAllCategories()),
         ChangeNotifierProvider<ProductProvider>(create: (_) => getIt<ProductProvider>()),
         // ViewModels
         ChangeNotifierProvider<LoginController>(create: (ctx) => LoginController(ctx.read<AuthProvider>())),
@@ -112,6 +112,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Punto de Venta',
       theme: chicleTheme,
+      debugShowCheckedModeBanner: false,
 
       home: Consumer<AuthProvider>(
         builder: (ctx, auth, _) =>

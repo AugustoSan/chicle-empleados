@@ -35,7 +35,7 @@ class _UpdateOrderState extends State<UpdateOrder> {
     final menuProv = context.read<ProductProvider>();
     final saleProv = context.read<OrderProvider>();
     final categoryProv = context.read<CategoryProvider>();
-    await categoryProv.loadAll();
+    await categoryProv.getAllCategories();
     await menuProv.loadAll();
 
     final sale = await saleProv.getOrder(widget.idOrder);

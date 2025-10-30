@@ -5,14 +5,25 @@ import '../../domain/domain.dart';
 class CategoryProvider with ChangeNotifier {
   final CategoryRepository _repo;
   List<Category> _allItems = [];
+  bool _loading = false;
 
+  bool get loading => _loading;
 
   CategoryProvider(this._repo);
 
   // Llama esto en initState de tu pantalla o nada más instanciar el provider
-  Future<void> loadAll() async {
+  Future<void> loadAndUpdateCategories() async {
+    await _repo.loadCategories();
+    _loading = true;
+    notifyListeners();
+    // Después de cargar desde la red y guardar, actualizamos la lista interna.
+    await getAllCategories(); 
+    _loading = false;
+    notifyListeners();
+  }
+
+  Future<void> getAllCategories() async {
     _allItems = await _repo.getAllCategories();
-    // _carta = await _repo.getCarta();
 
     notifyListeners();
   }

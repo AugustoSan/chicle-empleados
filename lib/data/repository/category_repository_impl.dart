@@ -25,7 +25,7 @@ class CategoryRepositoryImpl extends CategoryRepository {
   }
 
   /// Fetches the menu from the network, parses it, and caches any new products into Hive.
-  Future<RestaurantMenu> _fetchAndCacheMenu() async {
+  Future<RestaurantMenu?> _fetchAndCacheMenu() async {
     final response = await http.get(Uri.parse(apiUrl + 'assets/data/menu.json'));
 
     if (response.statusCode == 200) {
@@ -33,46 +33,33 @@ class CategoryRepositoryImpl extends CategoryRepository {
       final restaurant = RestaurantMenu.fromJson(jsonResponse);
 
       // Check each product and save it to Hive if it doesn't exist.
-      for (var category in restaurant.categories) {
-        await _save(category);
-      }
+      // for (var category in restaurant.categories) {
+      //   await _save(category);
+      // }
       return restaurant;
     } else {
-      throw Exception('Failed to load menu. Status Code: ${response.statusCode}');
+      print('Failed to load menu. Status Code: ${response.statusCode}');
+      return null;
     }
   }
 
   @override
   Future<void> loadCategories() async {
-    List<Category> localCategorys = await _getAllCategorysFromHive();
+    final restaurant = await _fetchAndCacheMenu();
 
-    if (localCategorys.isEmpty) {
-      await _fetchAndCacheMenu();
-      // final restaurant = await _fetchAndCacheMenu();
-      
-      // return restaurant.categories;
+    if(restaurant == null) return;
+
+    // 
+    for (var category in restaurant.categories) {
+      await _saveOrUpdate(category);
     }
 
-    // 3. Return local data.
-    // return localCategorys;
   }
 
   @override
   Future<List<Category>> getAllCategories() async {
-    // 1. Try to load from Hive first.
     List<Category> localCategorys = await _getAllCategorysFromHive();
 
-    // 2. If Hive is empty, fetch from network and cache.
-    if (localCategorys.isEmpty) {
-      final restaurant = await _fetchAndCacheMenu();
-      // List<Category> allCategorys = restaurant.categories;
-      // for (var category in restaurant.categories) {
-      //   allCategorys.addAll(category);
-      // }
-      return restaurant.categories;
-    }
-
-    // 3. Return local data.
     return localCategorys;
   }
 
@@ -93,16 +80,14 @@ class CategoryRepositoryImpl extends CategoryRepository {
     await orderBox.clear();
   }
 
-  Future<bool> _save(Category category) async {
+  Future<bool> _saveOrUpdate(Category category) async {
     final box = await _hiveDataSource.openBox<CategoryModel>(_CATEGORY_BOX);
-    final exists = await getCategory(category.id);
-    if (exists != null) return false;
 
     for (var product in category.items) {
       if (product.imageUrl != null && product.imageUrl!.isNotEmpty) {
         String fileName = product.imageUrl!.split('/').last;
         final imageService = ImageService();
-        final imagePath = await imageService.saveImageFromURL(apiUrl + product.imageUrl!, fileName);
+        final imagePath = await imageService.saveImageFromURL(product.imageUrl!, fileName);
         product.imageUrl = imagePath;
       }
     }
@@ -113,14 +98,4 @@ class CategoryRepositoryImpl extends CategoryRepository {
     return true;
   }
 
-  // Future<bool> _update(String id, Category category) async {
-  //   final box = await _hiveDataSource.openBox<CategoryModel>(_CATEGORY_BOX);
-  //   final exists = await getCategory(id);
-  //   if (exists == null) return false;
-
-  //   final model = category.parseToModel();
-    
-  //   await box.put(category.id, model);
-  //   return true;
-  // }
 }
