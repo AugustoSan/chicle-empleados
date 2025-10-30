@@ -18,6 +18,8 @@ class ListItemsPriceQuantity extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
+        // Proporcionar un tamaño estimado mejora el rendimiento del scroll.
+        itemExtent: 80.0,
         itemCount: saleItems.length,
         itemBuilder: (context, index) {
           final menuItem = listProducts[index];

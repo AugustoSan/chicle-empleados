@@ -52,12 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _orderItems.clear();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _init();
-  }
-
   void saveOrder(List<OrderItem> items) async {
     if (!formKey.currentState!.validate()) return;
 

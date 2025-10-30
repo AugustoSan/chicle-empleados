@@ -18,6 +18,8 @@ class CardAddOrderItemCustom extends StatefulWidget {
 class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
 
   late OrderItem orderItem;
+  bool _mostrarImagen = false;
+  bool _isImageNet = false;
   // final MenuItem item;
   // final VoidCallback onIncrement;
   // final VoidCallback onDecrement;
@@ -27,6 +29,11 @@ class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
   void initState() {
     super.initState();
     orderItem = widget.item;
+    // Realiza la comprobación de I/O una sola vez.
+    final imageUrl = orderItem.product.imageUrl;
+    _isImageNet = imageUrl != null && imageUrl.contains('http');
+    _mostrarImagen = imageUrl != null &&
+        (_isImageNet ? true : File(imageUrl).existsSync());
   }
 
   void onIncrement() {
@@ -53,12 +60,6 @@ class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
 
   @override
   Widget build(BuildContext context) {
-    final bool mostrarImagen =
-        orderItem.product.imageUrl != null && (orderItem.product.imageUrl!.contains('http') ? true : File(orderItem.product.imageUrl!).existsSync());
-
-    final bool isImageNet =
-        orderItem.product.imageUrl != null && orderItem.product.imageUrl!.contains('http');
-
 
       return Container(
         child: Column(
@@ -69,8 +70,8 @@ class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
                   orderItem.specialIndications = description;
                   onAddDescription(description);
                 },
-              leading: mostrarImagen 
-                ? isImageNet 
+              leading: _mostrarImagen 
+                ? _isImageNet 
                   ? Image.network(orderItem.product.imageUrl!, width: 40, height: 40)
                   : Image.file(File(orderItem.product.imageUrl!), width: 40, height: 40) : const SizedBox.shrink(),
               title: Text(orderItem.product.name),
