@@ -3,7 +3,7 @@ import 'package:chicle_app_empleados/domain/domain.dart';
 class LoadCategoryUseCase {
   final CategoryRepository repo;
   LoadCategoryUseCase(this.repo);
-  Future<void> call() => repo.loadCategories();
+  Future<List<Category>> call() => repo.loadCategories();
 }
 
 class GetCategoryUseCase {

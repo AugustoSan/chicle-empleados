@@ -13,12 +13,7 @@ class CategoryProvider with ChangeNotifier {
 
   // Llama esto en initState de tu pantalla o nada más instanciar el provider
   Future<void> loadAndUpdateCategories() async {
-    await _repo.loadCategories();
-    _loading = true;
-    notifyListeners();
-    // Después de cargar desde la red y guardar, actualizamos la lista interna.
-    await getAllCategories(); 
-    _loading = false;
+    _allItems = await _repo.loadCategories();
     notifyListeners();
   }
 

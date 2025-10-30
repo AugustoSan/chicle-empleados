@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Category> _listCategories = [];
   final List<Product> _listProducts = [];
   final Map<Product,OrderItem> _orderItems = {};
+  bool _loading = false;
   double total = 0;
 
   String? error;
@@ -122,15 +123,32 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadCategories() async {
+    setState(() {
+      _loading = true;
+    });
     final menuProv = context.read<CategoryProvider>();
     await menuProv.loadAndUpdateCategories();
+
+    final categories = menuProv.allItems;
+    final newItems = _getOrderItems(categories);
+
+    setState(() {
+      _loading = false;
+      _listProducts.clear();
+      _listProducts.addAll(categories.expand((c) => c.items));
+      _orderItems.clear();
+      _orderItems.addAll(newItems);
+      _listCategories.clear();
+      _listCategories.addAll(categories);
+      total = 0;
+    });
   }
 
 
   @override
   Widget build(BuildContext context) {
     // final vm = context.watch<AddOrderController>();
-    final isloading = context.watch<CategoryProvider>().loading;
+    // final isloading = context.watch<CategoryProvider>().loading;
     return SafeArea(
       child: Form(
         key: formKey,  // ← usa la key local, no la de vm
@@ -145,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: isloading 
+                child: _loading 
                   ? const Center(child: CircularProgressIndicator()) 
                   :_listProducts.isEmpty 
                   ? Center(

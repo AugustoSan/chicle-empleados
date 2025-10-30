@@ -44,15 +44,17 @@ class CategoryRepositoryImpl extends CategoryRepository {
   }
 
   @override
-  Future<void> loadCategories() async {
+  Future<List<Category>> loadCategories() async {
     final restaurant = await _fetchAndCacheMenu();
 
-    if(restaurant == null) return;
+    if(restaurant == null) return [];
 
     // 
     for (var category in restaurant.categories) {
       await _saveOrUpdate(category);
     }
+
+    return restaurant.categories;
 
   }
 

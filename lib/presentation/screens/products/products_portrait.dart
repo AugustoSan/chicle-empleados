@@ -13,13 +13,7 @@ class ProductsPortrait extends StatelessWidget {
         final categories = categoryProvider.allItems;
         if (categories.isEmpty) {
           return Center(
-            child: TextButton.icon(
-              label: Text('Cargar productos'), 
-              onPressed: () async {
-                await categoryProvider.loadAndUpdateCategories();
-              }, 
-              icon: Icon(Icons.replay_outlined)
-              ),
+            child: ButtonLoadProducts(),
           );
         }
         return RefreshIndicator(
@@ -41,6 +35,42 @@ class ProductsPortrait extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+
+class ButtonLoadProducts extends StatefulWidget{
+  const ButtonLoadProducts({super.key,});
+
+  @override
+  State<ButtonLoadProducts> createState() => _ButtonLoadProductsState();
+}
+
+class _ButtonLoadProductsState extends State<ButtonLoadProducts> {
+  bool _loading = false;
+
+  Future<void> _loadCategories() async {
+    setState(() {
+      _loading = true;
+    });
+    final menuProv = context.read<CategoryProvider>();
+    await menuProv.loadAndUpdateCategories();
+
+    setState(() {
+      _loading = false;
+    });
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return _loading 
+      ? const Center(child: CircularProgressIndicator()) 
+      : TextButton.icon(
+      onPressed: _loadCategories,
+      label: const Text('Cargar productos'),
+      icon: const Icon(Icons.replay_outlined),
     );
   }
 }
