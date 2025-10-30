@@ -119,6 +119,7 @@
 
                 // Crear los elementos del menú dentro de la sección
                 section.products.forEach(item => {
+                    if (item.available == false) return;
                     // --- TARJETA PRINCIPAL ---
                     const itemCard = document.createElement('div');
                     itemCard.className = 'menu-card';

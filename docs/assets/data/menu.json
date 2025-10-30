@@ -8,6 +8,7 @@
           "id": "6d40c1b1-da76-4a74-b18d-d255eaa696cd",
           "name": "Café capuchino",
           "price": 40,
+          "available": true,
           "description": "Café capuchino",
           "image": "./assets/images/cafe-capuchino.png"
         },
@@ -15,6 +16,7 @@
           "id": "b21838bc-5b06-4606-ac6e-6b1f47d3274d",
           "name": "Café americano",
           "price": 40,
+          "available": true,
           "description": "Café americano",
           "image": "./assets/images/cafe-americano.png"
         },
@@ -22,6 +24,7 @@
           "id": "7eadf844-0da3-4db5-b637-5da69b5e7487",
           "name": "Café latte",
           "price": 40,
+          "available": true,
           "description": "Café latte",
           "image": "./assets/images/cafe-latte.png"
         },
@@ -29,6 +32,7 @@
           "id": "74b50f9a-7329-4fc5-928d-41e0235c572a",
           "name": "Café macchiato",
           "price": 40,
+          "available": true,
           "description": "Café macchiato",
           "image": "./assets/images/cafe-macchiato.png"
         }
@@ -42,35 +46,40 @@
           "id": "f4b4ef0f-57d5-41f1-b1b0-dbc96516f7f9",
           "name": "Frappuccino",
           "price": 40,
+          "available": true,
           "description": "Frappuccino",
           "image": "./assets/images/frappuccino.png"
         },
         {
           "id": "bb8e5eca-947c-4c7a-b643-6f62dacb0794",
-          "name": "Frapé de taro",
+          "name": "Frappe de taro",
           "price": 40,
-          "description": "Frapé de taro",
+          "available": true,
+          "description": "Frappe de taro",
           "image": "./assets/images/frappe-taro.png"
         },
         {
           "id": "b61039ef-4592-485d-ae5c-b45e8dbebdca",
-          "name": "Frapé de yogurt",
+          "name": "Frappe de yogurt",
           "price": 40,
-          "description": "Frapé de yogurt",
+          "available": false,
+          "description": "Frappe de yogurt",
           "image": "./assets/images/frappe-yogurt.png"
         },
         {
           "id": "5257f456-ac39-4df0-8fa2-89528baab114",
-          "name": "Frapé cookies & cream",
+          "name": "Frappe cookies & cream",
           "price": 40,
-          "description": "Frapé cookies & cream",
+          "available": true,
+          "description": "Frappe cookies & cream",
           "image": "./assets/images/frappe-cookies-and-cream.png"
         },
         {
           "id": "193db789-edf4-4b5c-8d2a-bba6732b2926",
-          "name": "Frapé de mazapán",
+          "name": "Frappe de mazapán",
           "price": 40,
-          "description": "Frapé de mazapán",
+          "available": true,
+          "description": "Frappe de mazapán",
           "image": "./assets/images/frappe-mazapan.png"
         }
       ]
