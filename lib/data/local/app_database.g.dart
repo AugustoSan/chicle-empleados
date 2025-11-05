@@ -1243,7 +1243,7 @@ final class $$UsersModelTableReferences
 
   $$SalesModelTableProcessedTableManager get salesModelRefs {
     final manager = $$SalesModelTableTableManager($_db, $_db.salesModel)
-        .filter((f) => f.userId.id.sqlEquals($_itemColumn<int>('id')!));
+        .filter((f) => f.userId.id($_item.id));
 
     final cache = $_typedResult.readTableOrNull(_salesModelRefsTable($_db));
     return ProcessedTableManager(
@@ -1393,8 +1393,7 @@ class $$UsersModelTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (salesModelRefs)
-                    await $_getPrefetchedData<UsersModelData, $UsersModelTable,
-                            SalesModelData>(
+                    await $_getPrefetchedData(
                         currentTable: table,
                         referencedTable: $$UsersModelTableReferences
                             ._salesModelRefsTable(db),
@@ -1456,7 +1455,7 @@ final class $$MenuItemModelTableReferences extends BaseReferences<_$AppDatabase,
 
   $$SaleItemsModelTableProcessedTableManager get saleItemsModelRefs {
     final manager = $$SaleItemsModelTableTableManager($_db, $_db.saleItemsModel)
-        .filter((f) => f.menuItemId.id.sqlEquals($_itemColumn<int>('id')!));
+        .filter((f) => f.menuItemId.id($_item.id));
 
     final cache = $_typedResult.readTableOrNull(_saleItemsModelRefsTable($_db));
     return ProcessedTableManager(
@@ -1660,8 +1659,7 @@ class $$MenuItemModelTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (saleItemsModelRefs)
-                    await $_getPrefetchedData<MenuItemModelData,
-                            $MenuItemModelTable, SaleItemsModelData>(
+                    await $_getPrefetchedData(
                         currentTable: table,
                         referencedTable: $$MenuItemModelTableReferences
                             ._saleItemsModelRefsTable(db),
@@ -1716,11 +1714,10 @@ final class $$SalesModelTableReferences
       db.usersModel.createAlias(
           $_aliasNameGenerator(db.salesModel.userId, db.usersModel.id));
 
-  $$UsersModelTableProcessedTableManager get userId {
-    final $_column = $_itemColumn<int>('user_id')!;
-
+  $$UsersModelTableProcessedTableManager? get userId {
+    if ($_item.userId == null) return null;
     final manager = $$UsersModelTableTableManager($_db, $_db.usersModel)
-        .filter((f) => f.id.sqlEquals($_column));
+        .filter((f) => f.id($_item.userId!));
     final item = $_typedResult.readTableOrNull(_userIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -1735,7 +1732,7 @@ final class $$SalesModelTableReferences
 
   $$SaleItemsModelTableProcessedTableManager get saleItemsModelRefs {
     final manager = $$SaleItemsModelTableTableManager($_db, $_db.saleItemsModel)
-        .filter((f) => f.saleId.id.sqlEquals($_itemColumn<int>('id')!));
+        .filter((f) => f.saleId.id($_item.id));
 
     final cache = $_typedResult.readTableOrNull(_saleItemsModelRefsTable($_db));
     return ProcessedTableManager(
@@ -2016,8 +2013,7 @@ class $$SalesModelTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (saleItemsModelRefs)
-                    await $_getPrefetchedData<SalesModelData, $SalesModelTable,
-                            SaleItemsModelData>(
+                    await $_getPrefetchedData(
                         currentTable: table,
                         referencedTable: $$SalesModelTableReferences
                             ._saleItemsModelRefsTable(db),
@@ -2075,11 +2071,10 @@ final class $$SaleItemsModelTableReferences extends BaseReferences<
       db.salesModel.createAlias(
           $_aliasNameGenerator(db.saleItemsModel.saleId, db.salesModel.id));
 
-  $$SalesModelTableProcessedTableManager get saleId {
-    final $_column = $_itemColumn<int>('sale_id')!;
-
+  $$SalesModelTableProcessedTableManager? get saleId {
+    if ($_item.saleId == null) return null;
     final manager = $$SalesModelTableTableManager($_db, $_db.salesModel)
-        .filter((f) => f.id.sqlEquals($_column));
+        .filter((f) => f.id($_item.saleId!));
     final item = $_typedResult.readTableOrNull(_saleIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -2090,11 +2085,10 @@ final class $$SaleItemsModelTableReferences extends BaseReferences<
       db.menuItemModel.createAlias($_aliasNameGenerator(
           db.saleItemsModel.menuItemId, db.menuItemModel.id));
 
-  $$MenuItemModelTableProcessedTableManager get menuItemId {
-    final $_column = $_itemColumn<int>('menu_item_id')!;
-
+  $$MenuItemModelTableProcessedTableManager? get menuItemId {
+    if ($_item.menuItemId == null) return null;
     final manager = $$MenuItemModelTableTableManager($_db, $_db.menuItemModel)
-        .filter((f) => f.id.sqlEquals($_column));
+        .filter((f) => f.id($_item.menuItemId!));
     final item = $_typedResult.readTableOrNull(_menuItemIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(

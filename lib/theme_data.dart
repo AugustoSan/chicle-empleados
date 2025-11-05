@@ -81,7 +81,7 @@ final ThemeData chicleTheme = ThemeData(
   useMaterial3: false,
 
   // CardTheme
-  cardTheme: CardTheme(
+  cardTheme: CardThemeData(
     elevation: 4,
     color: Colors.white,
     shape: RoundedRectangleBorder(
