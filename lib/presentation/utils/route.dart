@@ -1,6 +1,6 @@
 // import 'package:chicle_app_empleados/domain/domain.dart';
+import 'package:chicle_app_empleados/presentation/controllers/add_cash_cut_controller.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
-import 'package:chicle_app_empleados/presentation/screens/settings/qr_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,6 +42,11 @@ class DrawerProducts {
     icon: Icons.settings,
     title: 'Configuración',
     route: '/settings',
+  );
+  static const DrawerItem cashCut = DrawerItem(
+    icon: Icons.settings,
+    title: 'Corte de caja',
+    route: '/cash-cut',
   );
   static const DrawerItem profile = DrawerItem(
     icon: Icons.person,
@@ -101,6 +106,12 @@ const List<DrawerItem> navMenuItems = [
 const List<DrawerItem> popupMenuItems = [
   DrawerProducts.settings,
   // DrawerProducts.consultarQr,
+  DrawerProducts.logout,
+];
+
+const List<DrawerItem> popupMenuItemsAdmin = [
+  DrawerProducts.settings,
+  DrawerProducts.cashCut,
   DrawerProducts.logout,
 ];
 
@@ -164,6 +175,19 @@ class RouteUtils {
     );
   }
 
+  Route getRouteAddCashCut() {
+    return MaterialPageRoute(
+      builder: (context) => ChangeNotifierProvider(
+        create: (ctx) => AddCashCutController(
+          ctx.read<CashCutProvider>(),
+          ctx.read<OrderProvider>(),
+          ctx.read<AuthProvider>(),
+        )..initialize(), 
+        child: const AddCashCutScreen()
+      )
+    );
+  }
+
   // Route getRouteUpdateProduct(Product item) {
   //   return MaterialPageRoute(
   //     builder: (context) => ChangeNotifierProvider(
@@ -179,9 +203,9 @@ class RouteUtils {
     );
   }
 
-  Route getQrSettings() {
+  Route getCashCut() {
     return MaterialPageRoute(
-      builder: (context) => const QrScreen()
+      builder: (context) => const CashCut()
     );
   }
 

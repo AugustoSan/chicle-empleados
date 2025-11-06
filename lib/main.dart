@@ -71,6 +71,7 @@ Future<void> main() async {
       providers: [
         // Singletons
         ChangeNotifierProvider<BusinessProvider>.value(value: businessProv..loadBusinessData()),
+        ChangeNotifierProvider<CashCutProvider>(create: (_) => getIt<CashCutProvider>()),
         // ChangeNotifierProvider<CustomerProvider>.value(value: customerProv..loadCustomerData()),
         ChangeNotifierProvider<UserProvider>.value(value: userProv..loadAllUsers()),
         // Providers (creados y cargados al ser necesitados por primera vez)

@@ -15,15 +15,15 @@ class OrdersPortrait extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          child: orders.length == 0
-            ? const Center(child: Text('No hay ordenes'))
-            : Container(
+          child: Container(
             margin: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: LayoutBuilder(
+            child: orders.length == 0
+            ? const Center(child: Text('No hay ordenes'))
+            : LayoutBuilder(
               builder: (context, constraints) {
                 return Padding(
                   padding: const EdgeInsets.all(12),

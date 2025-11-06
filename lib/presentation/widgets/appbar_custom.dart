@@ -15,6 +15,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext ctx) {
     final business = ctx.watch<BusinessProvider>().business;
+    final isAdmin = ctx.watch<AuthProvider>().isAdmin;
     String title = business?.name ?? 'Chicle';
     return AppBar(
       title: Text(title, style: const TextStyle(fontSize: 24)),
@@ -32,8 +33,8 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget{
               case '/settings':
                 Navigator.push(ctx, RouteUtils().getRouteSettings());
                 break;
-              case '/generate-qr':
-                Navigator.push(ctx, RouteUtils().getQrSettings());
+              case '/cash-cut':
+                Navigator.push(ctx, RouteUtils().getCashCut());
                 break;
               case '/logout':
               default:
@@ -41,7 +42,9 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget{
                 break;
             }
           },
-          itemBuilder: (ctx) => popupMenuItems.map((item) => PopupMenuItem(value: item.route, child: Text(item.title))).toList(),
+          itemBuilder: (ctx) => isAdmin
+                        ? popupMenuItemsAdmin.map((item) => PopupMenuItem(value: item.route, child: Text(item.title))).toList()
+                        : popupMenuItems.map((item) => PopupMenuItem(value: item.route, child: Text(item.title))).toList(),
         ),
       ],
       bottom: TabBar(
