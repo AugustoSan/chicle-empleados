@@ -69,5 +69,13 @@ Future<void> setupLocator() async {
   );
   getIt.registerFactory<OrderProvider>(
     () => OrderProvider(getIt<OrderRepository>()),
-  );  
+  ); 
+
+  // --- CashCut ---
+  getIt.registerLazySingleton<CashCutRepository>(
+    () => CashCutRepositoryImpl(getIt<HiveDataSource>()),
+  );
+  getIt.registerFactory<CashCutProvider>(
+    () => CashCutProvider(getIt<CashCutRepository>()),
+  ); 
 }
