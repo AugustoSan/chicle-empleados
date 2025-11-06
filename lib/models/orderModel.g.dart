@@ -20,17 +20,18 @@ class OrderModelAdapter extends TypeAdapter<OrderModel> {
       id: fields[0] as String?,
       date: fields[2] as DateTime?,
       total: fields[4] as double?,
+      statusCashCut: fields[6] as bool?,
       userId: fields[1] as String,
       customer: fields[3] as String,
       status: fields[5] as int,
-      items: (fields[6] as List).cast<OrderItemModel>(),
+      items: (fields[7] as List).cast<OrderItemModel>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, OrderModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,6 +45,8 @@ class OrderModelAdapter extends TypeAdapter<OrderModel> {
       ..writeByte(5)
       ..write(obj.status)
       ..writeByte(6)
+      ..write(obj.statusCashCut)
+      ..writeByte(7)
       ..write(obj.items);
   }
 

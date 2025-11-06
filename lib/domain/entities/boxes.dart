@@ -3,6 +3,7 @@ class Boxes {
   static const authKey = 'loggedInUser';
   static const businessBox = 'business';
   static const categoryBox = 'category';
+  static const cashCutBox = 'cashCut';
   static const ordersBox = 'orders';
   static const ordersItemBox = 'ordersItems';
   static const productsBox = 'products';

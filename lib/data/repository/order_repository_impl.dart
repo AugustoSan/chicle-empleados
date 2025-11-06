@@ -50,6 +50,7 @@ class OrderRepositoryImpl extends OrderRepository {
       customer: order.customer,
       status: order.status,
       date: order.date,
+      statusCashCut: order.statusCashCut,
       items: order.items,
     ));
   }

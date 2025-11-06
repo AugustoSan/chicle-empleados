@@ -9,6 +9,7 @@ class Order {
   late DateTime  date;  // Opcional
   final String  userId;     // Usuario que realizo la venta
   final String  customer;
+  late bool statusCashCut;
   late List<OrderItem> items;
 
   Order({
@@ -20,6 +21,7 @@ class Order {
   {
     date = DateTime.now();
     status = EnumOrderStatus.pending;
+    statusCashCut = false;
   }
   Order.withDate({
     String? id,
@@ -30,6 +32,7 @@ class Order {
   }) : this.id = id ?? const Uuid().v4()
   {
     status = EnumOrderStatus.pending;
+    statusCashCut = false;
   }
 
   Order.withoutItems({
@@ -41,6 +44,7 @@ class Order {
   }) : this.id = id ?? const Uuid().v4()
   {
     items = [];
+    statusCashCut = false;
   }
 
   Order.withoutId({
@@ -49,7 +53,8 @@ class Order {
     required this.status,
     required this.date,
     required this.items,
-  }) : this.id = const Uuid().v4();
+  }) :  this.id = const Uuid().v4(),
+        this.statusCashCut = false;
 
   Order.withAll({
     required this.id,
@@ -58,6 +63,7 @@ class Order {
     required this.items,
     required this.userId,
     required this.customer,
+    required this.statusCashCut,
   });
 
   Order.fromModel(OrderModel model) :
@@ -65,6 +71,7 @@ class Order {
     userId = model.userId,
     customer = model.customer,
     status = EnumOrderStatus.values[model.status],
+    statusCashCut = false,
     date = model.date,
     items = model.items.map((itemModel) => OrderItem.fromModel(itemModel)).toList();
 
@@ -74,6 +81,7 @@ class Order {
     userId: userId,
     customer: customer,
     status: status.index,
+    statusCashCut: statusCashCut,
     date: date,
     items: items.map((item) => item.parseToModel(id)).toList(),
   );

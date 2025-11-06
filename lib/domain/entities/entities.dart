@@ -1,6 +1,7 @@
 export 'auth.dart';
 export 'boxes.dart';
 export 'business.dart';
+export 'cash_cut.dart';
 export 'category.dart';
 export 'order.dart';
 export 'product.dart';

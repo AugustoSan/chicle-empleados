@@ -1,9 +1,8 @@
-import 'dart:io';
-
+// import 'dart:io';
 import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:chicle_app_empleados/presentation/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
@@ -11,15 +10,15 @@ import 'package:chicle_app_empleados/theme_data.dart';
 // import '../data/local/app_database.dart';
 import '../models/models.dart';
 import '../presentation/screens/shellapp.dart';
-import 'package:path/path.dart' as p;
+// import 'package:path/path.dart' as p;
 
-Future<void> deleteOldDatabase() async {
-  final dir = await getApplicationDocumentsDirectory();
-  final dbFile = File(p.join(dir.path, 'db.sqlite'));
-  if (await dbFile.exists()) {
-    await dbFile.delete();
-  }
-}
+// Future<void> deleteOldDatabase() async {
+//   final dir = await getApplicationDocumentsDirectory();
+//   final dbFile = File(p.join(dir.path, 'db.sqlite'));
+//   if (await dbFile.exists()) {
+//     await dbFile.delete();
+//   }
+// }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +32,7 @@ Future<void> main() async {
   Hive.registerAdapter(ProductModelAdapter());
   Hive.registerAdapter(OrderModelAdapter());
   Hive.registerAdapter(OrderItemModelAdapter());
+  Hive.registerAdapter(CashCutModelAdapter()); // Register the new adapter
 
 
   // await Hive.deleteBoxFromDisk(Boxes.authBox);
@@ -41,11 +41,12 @@ Future<void> main() async {
   // await Hive.deleteBoxFromDisk(Boxes.ordersBox);
   // await Hive.deleteBoxFromDisk(Boxes.ordersItemBox);
   // await Hive.deleteBoxFromDisk(Boxes.productsBox);
+  // await Hive.deleteBoxFromDisk(Boxes.cashCutBox);
   // await Hive.deleteBoxFromDisk(Boxes.usersBox);
   // 2) Inicializa Hive business
   // Hive.registerAdapter(CustomerModelAdapter());
 
-  await deleteOldDatabase();
+  // await deleteOldDatabase();
   // 2) Inicializa Drift
   // final database = AppDatabase();
 
