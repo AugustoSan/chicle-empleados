@@ -65,6 +65,8 @@ Future<void> main() async {
   final authProv = getIt<AuthProvider>();
   await authProv.checkLogin();
 
+  final cashCut = getIt<CashCutProvider>();
+  await cashCut.getAllCashCuts();
 
   runApp(
     MultiProvider(

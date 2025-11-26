@@ -83,6 +83,68 @@
           "image": "./assets/images/frappe-mazapan.png"
         }
       ]
+    },
+    {
+      "id": "4b8cff84-03b4-4103-8bde-4fdbb63d6e90",
+      "name": "Snacks",
+      "products": [
+        {
+          "id": "f4b4ef0f-57d5-41f1-b1b0-dbc96516f7f0",
+          "name": "Baguette",
+          "price": 40,
+          "available": true,
+          "description": "Baguette con jamon, queso amarillo, lechiga y mayonesa, acompañado de papas fritas",
+          "image": "./assets/images/baguette.jpg"
+        },
+        {
+          "id": "bb8e5eca-947c-4c7a-b643-6f62dacb0795",
+          "name": "Cuernito",
+          "price": 40,
+          "available": true,
+          "description": "Cuernito con jamon, queso amarillo, lechiga y mayonesa, acompañado de papas fritas",
+          "image": "./assets/images/cuernito.jpg"
+        },
+        {
+          "id": "b61039ef-4592-485d-ae5c-b45e8dbebdcb",
+          "name": "Crepas",
+          "price": 40,
+          "available": false,
+          "description": "Crepas",
+          "image": "./assets/images/crepas.jpg"
+        },
+        {
+          "id": "5257f456-ac39-4df0-8fa2-89528baab115",
+          "name": "Galletas con chispas de chocolate",
+          "price": 40,
+          "available": true,
+          "description": "Galletas con chispas de chocolate",
+          "image": "./assets/images/galletas.jpg"
+        },
+        {
+          "id": "193db789-edf4-4b5c-8d2a-bba6732b2927",
+          "name": "Hot cakes",
+          "price": 40,
+          "available": true,
+          "description": "Hot cakes",
+          "image": "./assets/images/hot-cakes.jpg"
+        },
+        {
+          "id": "193db789-edf4-4b5c-8d2a-bba6732b2928",
+          "name": "Muffin",
+          "price": 40,
+          "available": true,
+          "description": "Muffin",
+          "image": "./assets/images/muffin.jpg"
+        },
+        {
+          "id": "193db789-edf4-4b5c-8d2a-bba6732b2929",
+          "name": "Pastel",
+          "price": 40,
+          "available": true,
+          "description": "Pastel",
+          "image": "./assets/images/pastel.jpg"
+        }
+      ]
     }
   ]
 }

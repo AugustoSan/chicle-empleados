@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:chicle_app_empleados/data/services/api_service.dart';
 import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:chicle_app_empleados/models/models.dart';
 import 'package:chicle_app_empleados/data/datasource/hive_data_source.dart';
@@ -25,6 +28,8 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<bool> login(String username, String password) async {
     final user = await findUserByUsername(username);
+    final test = await _fetchLogin(username, password);
+    print('test: $test');
     if (user == null) return false;
     final passwordHash = AuthService.checkPassword(password, user.password);
     final ok = passwordHash;
@@ -39,6 +44,22 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> logout() async {
     final box = await _hiveDataSource.openBox<String>(_AUTH_BOX);
     await box.delete(_AUTH_KEY);
+  }
+
+  Future<AuthApi?> _fetchLogin(String username, String password) async {
+    final response = await ApiService.post('Auth', body: {
+      'username': username,
+      'password': password,
+    });
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      return AuthApi.fromJson(jsonResponse);
+    } else {
+      print('Failed to load menu. Status Code: ${response.statusCode}');
+      return null;
+    }
+    
   }
 
   Future<User?> findUserByUsername(String username) async {

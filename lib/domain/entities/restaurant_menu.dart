@@ -30,3 +30,29 @@ class RestaurantMenu {
     };
   }
 }
+
+class AuthApi {
+  final String token;
+  final String refreshToken;
+
+  AuthApi({
+    required this.token,
+    required this.refreshToken
+  });
+
+  // Factory constructor para crear una instancia de AuthApi desde un mapa JSON
+  factory AuthApi.fromJson(Map<String, dynamic> json) {
+    // Mapeamos la lista de JSON de 'categories' a una lista de objetos Section
+    return AuthApi(
+      token: json['token'],
+      refreshToken: json['refreshToken'],
+    );
+  }
+
+  // // Opcional: Para convertir el objeto Dart de nuevo a un JSON (útil para POST/PUT)
+  // Map<String, dynamic> toJson() {
+  //   return {
+  //     'categories': categories.map((section) => section.toJson()).toList(),
+  //   };
+  // }
+}

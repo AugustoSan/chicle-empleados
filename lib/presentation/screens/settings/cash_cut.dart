@@ -1,5 +1,6 @@
 import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CashCut extends StatefulWidget {
   const CashCut({Key? key}) : super(key: key);
@@ -11,6 +12,9 @@ class _CashCutState extends State<CashCut> {
   
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<CashCutProvider>();
+    final listCashCut = provider.allItems;
+    print('list: ${listCashCut}');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Corte de caja'),
@@ -24,7 +28,38 @@ class _CashCutState extends State<CashCut> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Center(child: Text('No hay corte de caja')),
+              child: listCashCut.length > 0 
+              ? LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: ListView.separated(
+                        padding: const EdgeInsets.all(8),
+                        itemCount: listCashCut.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final item = listCashCut[index];
+                          return ListTile(
+                            title: Text(item.id),
+                            subtitle: Column(
+                              children: [
+                                  Text(item.userId),
+                                  Text(item.date.toString()),
+                                  Text(item.countedCash.toString()),
+                                  Text(item.cashSales.toString()),
+                                  Text(item.cardSales.toString()),
+                                  Text(item.otherPaymentSales.toString()),
+                                  Text(item.expenses.toString()),
+                                  Text(item.notes != null ? item.notes! : ''),
+                              ],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) => const Divider(),
+                      ),
+                    );
+                  }
+                )
+              : Center(child: Text('No hay corte de caja')),
 
             ),  
           ),
