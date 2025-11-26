@@ -13,6 +13,7 @@ class CategoryProvider with ChangeNotifier {
 
   // Llama esto en initState de tu pantalla o nada más instanciar el provider
   Future<void> loadAndUpdateCategories() async {
+    _allItems.clear();
     _allItems = await _repo.loadCategories();
     notifyListeners();
   }

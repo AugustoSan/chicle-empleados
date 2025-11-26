@@ -68,7 +68,7 @@ class _ShellAppState extends State<ShellApp> with SingleTickerProviderStateMixin
             ],
           ),
           floatingActionButton: _shouldShowFab() 
-            ? FloatingActionButton(onPressed: () => mostrarQrImageDialog(context, apiUrl + "carta.html"), child: const Icon(Icons.qr_code))
+            ? FloatingActionButton(onPressed: () => mostrarQrImageDialog(context, apiUrl), child: const Icon(Icons.qr_code))
             // ? FloatingButtomCustom(route: RouteUtils().getQrSettings(),)
             : null,
       );
