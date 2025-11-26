@@ -31,9 +31,8 @@ class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
     orderItem = widget.item;
     // Realiza la comprobación de I/O una sola vez.
     final imageUrl = orderItem.product.imageUrl;
-    _isImageNet = imageUrl != null && imageUrl.contains('http');
     _mostrarImagen = imageUrl != null &&
-        (_isImageNet ? true : File(imageUrl).existsSync());
+        (imageUrl.contains('http') ? true : File(imageUrl).existsSync());
   }
 
   void onIncrement() {
@@ -65,6 +64,7 @@ class _CardAddOrderItemCustomState extends State<CardAddOrderItemCustom> {
         child: Column(
           children: [
             ListTile(
+              isThreeLine: true,
                 onTap: () async {
                   String? description = await agregarDescripcionOrdenMenuItemDialog(context, orderItem.specialIndications ?? '');
                   orderItem.specialIndications = description;
