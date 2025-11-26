@@ -1,9 +1,10 @@
+import 'package:chicle_app_empleados/domain/urls/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PrivacyTile extends StatelessWidget {
   final Uri privacyUri = Uri.parse(
-    'https://augustosan.github.io/chicle-empleados/'
+    apiUrl + 'privacy.html'
   );
 
   @override

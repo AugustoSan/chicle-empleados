@@ -7,8 +7,6 @@ import 'package:chicle_app_empleados/data/datasource/hive_data_source.dart';
 
 import '../../domain/domain.dart';
 
-// final String apiUrl = 'https://augustosan.github.io/chicle-empleados/assets/data/menu.json';
-
 class CategoryRepositoryImpl extends CategoryRepository {
   static const _CATEGORY_BOX = Boxes.categoryBox;
   final HiveDataSource _hiveDataSource;

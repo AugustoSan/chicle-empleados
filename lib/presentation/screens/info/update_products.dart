@@ -9,7 +9,6 @@
 
 // class _UpdateProductsTileState extends State<UpdateProductsTile> {
 //   final Uri privacyUri = Uri.parse(
-//     'https://augustosan.github.io/chicle-empleados/'
 //   );
 
 //   @override
