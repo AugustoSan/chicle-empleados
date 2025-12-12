@@ -25,6 +25,12 @@ enum EnumOrderStatus {
   cancelled
 }
 
+enum EnumTypePayment {
+  efectivo,
+  tarjeta,
+  transferencia
+}
+
 
 enum EnumRole {
   administrador,

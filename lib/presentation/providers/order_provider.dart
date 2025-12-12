@@ -34,6 +34,10 @@ class OrderProvider with ChangeNotifier {
     return sale;
   }
 
+  Future<List<Order>> getAllOrdersByUser(String userId) async {
+    return await _repo.getOrdersByUser(userId);
+  }
+
   Future<bool> saveOrder(Order order) async {
     final res = await _repo.saveOrder(order);
     loadAll();
@@ -53,8 +57,9 @@ class OrderProvider with ChangeNotifier {
     return res;
   }
 
-  Future<bool> completeOrder(Order order) async {
+  Future<bool> completeOrder(Order order, EnumTypePayment typePayment) async {
     order.status = EnumOrderStatus.completed;
+    order.typePayment = typePayment;
     final res = await _repo.updateOrder(order.id, order);
     loadAll();
     return res;

@@ -1,6 +1,6 @@
 // import 'package:chicle_app_empleados/domain/domain.dart';
-import 'package:chicle_app_empleados/presentation/controllers/add_cash_cut_controller.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
+import 'package:chicle_app_empleados/presentation/screens/cashcut/cash_cut.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -205,7 +205,7 @@ class RouteUtils {
 
   Route getCashCut() {
     return MaterialPageRoute(
-      builder: (context) => const CashCut()
+      builder: (context) => const CashCutScreen()
     );
   }
 

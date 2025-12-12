@@ -1,10 +1,14 @@
 import 'package:chicle_app_empleados/presentation/presentation.dart';
-import 'package:chicle_app_empleados/presentation/utils/price.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddCashCutScreen extends StatelessWidget {
+class AddCashCutScreen extends StatefulWidget {
   const AddCashCutScreen({Key? key}) : super(key: key);
+
+  @override
+  State<AddCashCutScreen> createState() => _AddCashCutScreenState();
+}
+class _AddCashCutScreenState extends State<AddCashCutScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<AddCashCutController>();
@@ -32,7 +36,7 @@ class AddCashCutScreen extends StatelessWidget {
                           const SectionTitle('Resumen de Ventas'),
                           _buildInfoRow('(+) Fondo de Caja Inicial:', controller.initialCash),
                           _buildInfoRow('(+) Ventas en Efectivo:', controller.cashSales),
-                          _buildInfoRow('(+) Ventas con Tarjeta:', controller.cardSales),
+                          // _buildInfoRow('(+) Ventas con Tarjeta:', controller.cardSales),
                           _buildInfoRow('(+) Otras Formas de Pago:', controller.otherPaymentSales),
                           const Divider(height: 24),
                           
@@ -53,10 +57,25 @@ class AddCashCutScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 16),
                           TextFieldCustom(
+                            controller: controller.countedCashC,
+                            title: 'Transferencias y cobro con Tarjeta',
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Este campo es requerido';
+                              }
+                              if (double.tryParse(value) == null) {
+                                return 'Ingresa un número válido';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          TextFieldCustom(
                             controller: controller.expensesC,
                             title: '(-) Gastos y Egresos',
                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                             validator: (value) {
+                            validator: (value) {
                               if (value != null && value.isNotEmpty && double.tryParse(value) == null) {
                                 return 'Ingresa un número válido';
                               }

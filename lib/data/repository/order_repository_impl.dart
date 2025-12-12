@@ -27,6 +27,14 @@ class OrderRepositoryImpl extends OrderRepository {
   }
 
   @override
+  Future<List<Order>> getOrdersByUser( String userId) async {
+    final box = await _openOrderBox();
+    List<Order> orders = box.values.map((orderModel) => Order.fromModel(orderModel)).toList();
+    orders = orders.where((order) => order.userId == userId).toList();
+    return orders;
+  }
+
+  @override
   Future<Order?> getOrder(String id) async {
     final box = await _openOrderBox();
     final orderModel = box.get(id);

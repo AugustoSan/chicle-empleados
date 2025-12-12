@@ -30,6 +30,9 @@ class OrderModel extends HiveObject {
   bool statusCashCut;
 
   @HiveField(7)
+  int? typePayment;
+
+  @HiveField(8)
   List<OrderItemModel> items;
 
   OrderModel({
@@ -37,6 +40,7 @@ class OrderModel extends HiveObject {
     DateTime? date,
     double? total,
     bool? statusCashCut,
+    int? typePayment,
     required this.userId,
     required this.customer,
     required this.status,
@@ -44,6 +48,7 @@ class OrderModel extends HiveObject {
   }) : this.id = id ?? const Uuid().v4(),
        this.date = date ?? DateTime.now(),
        this.statusCashCut = statusCashCut ?? false,
+       this.typePayment = typePayment,
        this.total = total ?? _calculateTotal(items);  // Asigna el ID proporcionado o genera uno nuevo
 
   static double _calculateTotal(List<OrderItemModel> items) {

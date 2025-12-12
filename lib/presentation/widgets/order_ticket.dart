@@ -77,6 +77,7 @@ class ReceiptWidget extends StatelessWidget {
           _buildInfoRow('Cliente:', 'Publico en general'),
           _buildInfoRow('Ticket #:', data.id.toString()),
           _buildInfoRow('Fecha:', DateUtil.formatDateTime(data.date)),
+          _buildInfoRow('Tipo de pago:', data.typePayment != null ? data.typePayment!.name.toUpperCase() : 'No especificado'),
           const Divider(height: 24, thickness: 1),
 
           // Encabezados de la tabla

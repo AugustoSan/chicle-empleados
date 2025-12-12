@@ -10,6 +10,7 @@ class Order {
   final String  userId;     // Usuario que realizo la venta
   final String  customer;
   late bool statusCashCut;
+  EnumTypePayment? typePayment;
   late List<OrderItem> items;
 
   Order({
@@ -73,6 +74,9 @@ class Order {
     status = EnumOrderStatus.values[model.status],
     statusCashCut = false,
     date = model.date,
+    typePayment = model.typePayment != null 
+      ? EnumTypePayment.values[model.typePayment!] 
+      : null,
     items = model.items.map((itemModel) => OrderItem.fromModel(itemModel)).toList();
 
 
@@ -83,6 +87,7 @@ class Order {
     status: status.index,
     statusCashCut: statusCashCut,
     date: date,
+    typePayment: typePayment?.index,
     items: items.map((item) => item.parseToModel(id)).toList(),
   );
   double  get total => items.fold(0.0, (sum, item) => sum + (item.quantity * item.priceAtOrder));

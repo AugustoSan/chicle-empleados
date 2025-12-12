@@ -11,6 +11,16 @@ class GetAllOrdersUseCase{
   }
 }
 
+class GetAllOrdersByUserUseCase{
+  final OrderRepositoryImpl repository;
+
+  GetAllOrdersByUserUseCase(this.repository);
+
+  Future<List<Order>> call(String userId) {
+    return repository.getOrdersByUser(userId);
+  }
+}
+
 class GetOrderByIdUseCase {
   final OrderRepositoryImpl repository;
 

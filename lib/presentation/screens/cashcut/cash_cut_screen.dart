@@ -2,14 +2,9 @@ import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CashCut extends StatefulWidget {
-  const CashCut({Key? key}) : super(key: key);
-  @override
-  State<CashCut> createState() => _CashCutState();
-}
 
-class _CashCutState extends State<CashCut> {
-  
+class CashCutScreen extends StatelessWidget {
+  const CashCutScreen({super.key});
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<CashCutProvider>();
