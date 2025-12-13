@@ -12,6 +12,8 @@ class CardOrderCustomPortrait extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('CardOrderCustomPortrait: ${item.id}');
+    print('status: ${item.status}');
+    print('statusCashCut: ${item.statusCashCut}');
     return InkWell(
       onTap: () => {
         if (item.status == EnumOrderStatus.completed || item.status == EnumOrderStatus.cancelled) {

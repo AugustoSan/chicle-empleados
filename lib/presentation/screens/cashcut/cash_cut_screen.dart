@@ -3,11 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 
-class CashCutScreen extends StatelessWidget {
-  const CashCutScreen({super.key});
+class CashCutScreen extends StatefulWidget {
+  const CashCutScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CashCutScreen> createState() => _CashCutScreenState();
+}
+class _CashCutScreenState extends State<CashCutScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CashCutProvider>().getAllCashCuts();
+    });
+  }
+
+  Future<void> _loadCashCuts() async {
+    final provider = context.read<CashCutProvider>();
+    await provider.getAllCashCuts();
+  }
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<CashCutProvider>();
+    provider.getAllCashCuts();
     final listCashCut = provider.allItems;
     print('list: ${listCashCut}');
     return Scaffold(

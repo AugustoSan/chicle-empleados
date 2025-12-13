@@ -112,6 +112,12 @@ Future<void> main() async {
             cashCutProvider: getIt<CashCutProvider>(),
           ),
         ),
+        ChangeNotifierProvider(
+          create: (ctx) => OrdersViewModel(
+            orderRepository: getIt<OrderRepository>(),
+            authRepository: getIt<AuthRepository>(),
+          ),
+        ),
       ],
       child: MyApp(),
     ),
