@@ -65,6 +65,7 @@ class Order {
     required this.userId,
     required this.customer,
     required this.statusCashCut,
+    required this.typePayment,
   });
 
   Order.fromModel(OrderModel model) :

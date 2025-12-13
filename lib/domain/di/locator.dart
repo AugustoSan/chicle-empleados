@@ -68,7 +68,7 @@ Future<void> setupLocator() async {
     () => OrderRepositoryImpl(),
   );
   getIt.registerFactory<OrderProvider>(
-    () => OrderProvider(getIt<OrderRepository>()),
+    () => OrderProvider(getIt<OrderRepository>(), getIt<AuthRepository>()),
   ); 
 
   // --- CashCut ---

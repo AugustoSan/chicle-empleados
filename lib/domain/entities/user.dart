@@ -68,6 +68,12 @@ class User {
     role: role.index,
   );
 
+  User.empty() :
+    id = const Uuid().v4(),
+    _username = '',
+    _password = '',
+    _role = EnumRole.usuario;
+
   // Puedes añadir otros getters calculados si los necesitas, por ejemplo:
   bool get isAdmin => role == EnumRole.administrador;
   

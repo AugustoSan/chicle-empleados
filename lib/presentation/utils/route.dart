@@ -177,14 +177,15 @@ class RouteUtils {
 
   Route getRouteAddCashCut() {
     return MaterialPageRoute(
-      builder: (context) => ChangeNotifierProvider(
-        create: (ctx) => AddCashCutController(
-          ctx.read<CashCutProvider>(),
-          ctx.read<OrderProvider>(),
-          ctx.read<AuthProvider>(),
-        )..initialize(), 
-        child: const AddCashCutScreen()
-      )
+      builder: (context) => const AddCashCutScreen(),
+      // builder: (context) => ChangeNotifierProvider(
+      //   // create: (ctx) => AddCashCutController(
+      //   //   ctx.read<CashCutProvider>(),
+      //   //   ctx.read<OrderProvider>(),
+      //   //   ctx.read<AuthProvider>(),
+      //   // )..initialize(), 
+      //   child: const AddCashCutScreen()
+      // )
     );
   }
 

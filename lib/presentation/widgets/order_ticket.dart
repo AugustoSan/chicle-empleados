@@ -47,7 +47,7 @@ class ReceiptWidget extends StatelessWidget {
     final total = subtotal;
 
     print('Business: ${business?.name}, address: ${business?.address}, phone: ${business?.phone}');
-
+    print('Tipo de pago: ${data.typePayment}');
 
     return Column(
       children: [

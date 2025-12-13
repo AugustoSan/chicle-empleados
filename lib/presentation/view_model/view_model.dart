@@ -1,0 +1,1 @@
+export './cash_cut/cash_cut_view_model.dart';

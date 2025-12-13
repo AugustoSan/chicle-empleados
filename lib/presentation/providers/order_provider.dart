@@ -4,13 +4,16 @@ import '../../domain/domain.dart';
 
 class OrderProvider with ChangeNotifier {
   final OrderRepository _repo;
+  final AuthRepository _authRepository;
   List<Order> _items = [];
 
-  OrderProvider(this._repo);
+  OrderProvider(this._repo, this._authRepository);
 
   // Llama esto en initState de tu pantalla o nada más instanciar el provider
   Future<void> loadAll() async {
-    _items = await _repo.getAllOrders();
+    final user = await _authRepository.getUserLogin();
+    if(user == null) return;
+    _items = await _repo.getOrdersByUser( user.id );
     _items.sort((a, b) => b.date.compareTo(a.date));
     notifyListeners();
   }

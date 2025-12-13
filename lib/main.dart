@@ -84,7 +84,7 @@ Future<void> main() async {
         ChangeNotifierProvider<LoginController>(create: (ctx) => LoginController(ctx.read<AuthProvider>())),
         ChangeNotifierProvider<BusinessController>(create: (ctx) => BusinessController(ctx.read<BusinessProvider>())),
         // ChangeNotifierProvider<CustomerProvider>(create: (ctx) => getIt<CustomerProvider>()),
-        ChangeNotifierProvider<OrderProvider>(create: (ctx) => getIt<OrderProvider>()..loadAll()),
+        ChangeNotifierProvider<OrderProvider>(create: (ctx) => getIt<OrderProvider>()),
         ChangeNotifierProvider<AddOrderController>(
           create: (ctx) => AddOrderController(
             getIt<OrderRepository>(),
@@ -104,6 +104,14 @@ Future<void> main() async {
         // ChangeNotifierProvider<ShellNavigatorController>(
         //   create: (ctx) => ShellNavigatorController(),
         // ),
+        // ViewModels
+        ChangeNotifierProvider(
+          create: (ctx) => AddCashCutViewModel(
+            orderRepository: getIt<OrderRepository>(),
+            userRepository: getIt<UserRepository>(),
+            cashCutProvider: getIt<CashCutProvider>(),
+          ),
+        ),
       ],
       child: MyApp(),
     ),
