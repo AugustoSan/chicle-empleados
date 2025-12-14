@@ -107,7 +107,7 @@ Future<void> main() async {
         // ViewModels
         ChangeNotifierProvider(
           create: (ctx) => AddCashCutViewModel(
-            orderRepository: getIt<OrderRepository>(),
+            orderProvider: getIt<OrderProvider>(),
             userRepository: getIt<UserRepository>(),
             cashCutProvider: getIt<CashCutProvider>(),
           ),
@@ -118,6 +118,11 @@ Future<void> main() async {
             authRepository: getIt<AuthRepository>(),
           ),
         ),
+        ChangeNotifierProvider(
+          create: (ctx) => CashCutViewModel(
+            repository: getIt<CashCutRepository>(),
+          ),
+        )
       ],
       child: MyApp(),
     ),

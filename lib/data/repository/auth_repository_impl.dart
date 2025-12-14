@@ -29,7 +29,6 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<bool> login(String username, String password) async {
     final user = await findUserByUsername(username);
     // final test = await _fetchLogin(username, password);
-    // print('test: $test');
     if (user == null) return false;
     final passwordHash = AuthService.checkPassword(password, user.password);
     final ok = passwordHash;

@@ -1,13 +1,13 @@
 // presentation/providers/add_cash_cut_viewmodel.dart
 import 'dart:async';
 
+import 'package:chicle_app_empleados/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 import 'package:chicle_app_empleados/domain/domain.dart';
-import 'package:chicle_app_empleados/presentation/providers/cash_cut_provider.dart';
 
 class AddCashCutViewModel extends ChangeNotifier {
   // Repositorios/Providers
-  final OrderRepository _orderRepository;
+  final OrderProvider _orderProvider;
   final UserRepository _userRepository;
   final CashCutProvider _cashCutProvider;
   
@@ -47,10 +47,10 @@ class AddCashCutViewModel extends ChangeNotifier {
   
   // Constructor
   AddCashCutViewModel({
-    required OrderRepository orderRepository,
+    required OrderProvider orderProvider,
     required UserRepository userRepository,
     required CashCutProvider cashCutProvider,
-  }) : _orderRepository = orderRepository,
+  }) : _orderProvider = orderProvider,
        _userRepository = userRepository,
       _cashCutProvider = cashCutProvider {
 
@@ -124,7 +124,7 @@ class AddCashCutViewModel extends ChangeNotifier {
     _setLoading(true);
     
     try {
-      _orders = await _orderRepository.getOrdersByUser(userId);
+      _orders = await _orderProvider.getAllOrdersByUser(userId);
       _orders = _orders.where((order) => 
         order.status == EnumOrderStatus.completed && !order.statusCashCut).toList();
       _error = null;
@@ -170,7 +170,7 @@ class AddCashCutViewModel extends ChangeNotifier {
       // Marcar las órdenes como incluidas en el corte
       for (var order in _orders) {
         order.statusCashCut = true;
-        await _orderRepository.updateOrder(order.id, order);
+        await _orderProvider.updateOrder(order.id, order);
       }
       
       // Éxito

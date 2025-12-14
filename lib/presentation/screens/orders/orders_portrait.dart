@@ -182,6 +182,10 @@ class _OrdersPortraitState extends State<OrdersPortrait> {
           itemCount: orders.length,
           itemBuilder: (context, index) {
             final order = orders[index];
+            print('Building order item: ${order.id}');
+            print('Order details: $order');
+            print('Estatus: ${order.status}');
+            print('EstatusCashCut: ${order.statusCashCut}');
             return CardOrderCustomPortrait(
               item: order,
             );

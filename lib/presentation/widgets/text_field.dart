@@ -22,8 +22,6 @@ class TextFieldCustom extends StatelessWidget {
   final FocusNode? focusNode;
   final EdgeInsetsGeometry? padding;
   final InputBorder? border;
-  final Color? fillColor;
-  final bool filled;
 
   const TextFieldCustom({
     super.key,
@@ -48,8 +46,6 @@ class TextFieldCustom extends StatelessWidget {
     this.focusNode,
     this.padding,
     this.border,
-    this.fillColor,
-    this.filled = false,
   });
 
   @override
@@ -80,8 +76,6 @@ class TextFieldCustom extends StatelessWidget {
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
           border: border ?? const OutlineInputBorder(),
-          fillColor: fillColor,
-          filled: filled,
           contentPadding: const EdgeInsets.all(12.0),
           counterText: maxLength != null ? null : '',
         ),
