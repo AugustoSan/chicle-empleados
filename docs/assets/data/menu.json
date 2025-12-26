@@ -91,7 +91,7 @@
         {
           "id": "f4b4ef0f-57d5-41f1-b1b0-dbc96516f7f0",
           "name": "Baguette",
-          "price": 40,
+          "price": 35,
           "available": true,
           "description": "Baguette con jamon, queso amarillo, lechiga y mayonesa, acompañado de papas fritas",
           "image": "./assets/images/baguette.jpg"
@@ -99,7 +99,7 @@
         {
           "id": "bb8e5eca-947c-4c7a-b643-6f62dacb0795",
           "name": "Cuernito",
-          "price": 40,
+          "price": 30,
           "available": true,
           "description": "Cuernito con jamon, queso amarillo, lechiga y mayonesa, acompañado de papas fritas",
           "image": "./assets/images/cuernito.jpg"
@@ -139,7 +139,7 @@
         {
           "id": "193db789-edf4-4b5c-8d2a-bba6732b2929",
           "name": "Pastel",
-          "price": 40,
+          "price": 20,
           "available": true,
           "description": "Pastel",
           "image": "./assets/images/pastel.jpg"
