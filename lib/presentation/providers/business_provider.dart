@@ -38,6 +38,14 @@ class BusinessProvider with ChangeNotifier {
     }
   }
 
+  Future<void> changeCashInit(double initialCash) async {
+    if (_business != null) {
+      _business = _business!.copyWith(initialCash: initialCash);
+      await _repo.saveBusiness(_business!);
+      notifyListeners();
+    }
+  }
+
   Future<bool> saveBusiness(Business config) async {
     _business = config;
     await _repo.saveBusiness(config);

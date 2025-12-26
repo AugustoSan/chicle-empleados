@@ -10,16 +10,17 @@ class AddCashCutViewModel extends ChangeNotifier {
   final OrderProvider _orderProvider;
   final UserRepository _userRepository;
   final CashCutProvider _cashCutProvider;
+  final BusinessProvider _businessProvider;
   
   // Estado
   List<User> _users = [];
   List<Order> _orders = [];
+  double _initialCash = 0.0;
   User? _selectedUser;
   bool _loading = false;
   String? _error;
   
   // Controladores (podrían estar aquí o en el widget)
-  final TextEditingController countedCashInitC = TextEditingController();
   final TextEditingController countedCashC = TextEditingController();
   final TextEditingController cardPaymentsC = TextEditingController();
   final TextEditingController expensesC = TextEditingController();
@@ -29,10 +30,9 @@ class AddCashCutViewModel extends ChangeNotifier {
   List<User> get users => _users;
   List<Order> get orders => _orders;
   User? get selectedUser => _selectedUser;
+  double get initialCash => _initialCash;
   bool get loading => _loading;
   String? get error => _error;
-  
-  double get initialCash => double.tryParse(countedCashInitC.text) ?? 0.0;
   
   // Cálculos computados
   double get cashSales => _calculateCashSales();
@@ -50,18 +50,41 @@ class AddCashCutViewModel extends ChangeNotifier {
     required OrderProvider orderProvider,
     required UserRepository userRepository,
     required CashCutProvider cashCutProvider,
+    required BusinessProvider businessProvider,
   }) : _orderProvider = orderProvider,
        _userRepository = userRepository,
-      _cashCutProvider = cashCutProvider {
-
+      _cashCutProvider = cashCutProvider,
+      _businessProvider = businessProvider {
+        
         cardPaymentsC.text = '0';
         expensesC.text = '0';
+
+        _initialize();
         
-        countedCashInitC.addListener(_notifyListeners);
         countedCashC.addListener(_notifyListeners);
         cardPaymentsC.addListener(_notifyListeners);
         expensesC.addListener(_notifyListeners);
   }
+
+  Future<void> _initialize() async {
+    _setLoading(true);
+    try {
+      // Asegurar que el BusinessProvider esté inicializado
+      await _businessProvider.initialize();
+      await _businessProvider.loadBusinessData();
+      
+      // Ahora obtener el initialCash
+      _initialCash = _businessProvider.business?.initialCash ?? 0.0;
+      
+      _error = null;
+    } catch (e) {
+      _error = 'Error al cargar datos del negocio: $e';
+      _initialCash = 0.0;
+    } finally {
+      _setLoading(false);
+    }
+  }
+
 
   // Método para notificar cambios
   void _notifyListeners() {
@@ -134,8 +157,8 @@ class AddCashCutViewModel extends ChangeNotifier {
       _setLoading(false);
     }
   }
-  
-  Future<void> saveCashCut() async {
+
+  Future<void> saveCashCut(bool confirm) async {
     // Validaciones
     if (selectedUser == null) {
       _error = 'Selecciona un usuario';
@@ -169,9 +192,13 @@ class AddCashCutViewModel extends ChangeNotifier {
   
       // Marcar las órdenes como incluidas en el corte
       for (var order in _orders) {
-        order.statusCashCut = true;
-        await _orderProvider.updateOrder(order.id, order);
+        await _orderProvider.addCashCut(order);
       }
+
+      double newInitialCash = confirm 
+        ? expectedCashInDrawer + difference 
+        : expectedCashInDrawer;
+      await _businessProvider.changeCashInit(newInitialCash);
       
       // Éxito
       _error = null;
@@ -202,12 +229,10 @@ class AddCashCutViewModel extends ChangeNotifier {
   @override
   void dispose() {
     // Remover listeners
-    countedCashInitC.removeListener(_notifyListeners);
     countedCashC.removeListener(_notifyListeners);
     cardPaymentsC.removeListener(_notifyListeners);
     expensesC.removeListener(_notifyListeners);
     
-    countedCashInitC.dispose();
     countedCashC.dispose();
     cardPaymentsC.dispose();
     expensesC.dispose();

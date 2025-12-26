@@ -68,6 +68,11 @@ class CompanyScreen extends StatelessWidget {
                                     : 'Teléfono inválido',
                               ),
                               const SizedBox(height: 12),
+                              TextFieldCustom(
+                                controller: vm.initialCashC,
+                                title: 'Efectivo inicial del día',
+                                keyboardType: TextInputType.number,
+                              ),
                               const SizedBox(height: 12),
                               const SizedBox(height: 24),
                             ],
@@ -80,6 +85,7 @@ class CompanyScreen extends StatelessWidget {
                                 final business = Business(
                                   name: vm.nameC.text.trim(),
                                   currency: vm.currencyC.text.trim(),
+                                  initialCash: double.parse(vm.initialCashC.text.trim()),
                                   taxPercent: double.parse(vm.taxC.text.trim()),
                                   address: vm.addressC.text.trim(),
                                   phone: vm.phoneC.text.trim(),

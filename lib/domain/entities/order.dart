@@ -73,7 +73,8 @@ class Order {
     userId = model.userId,
     customer = model.customer,
     status = EnumOrderStatus.values[model.status],
-    statusCashCut = false,
+    // Usar el valor persistido en el modelo (antes se forzaba a false)
+    statusCashCut = model.statusCashCut,
     date = model.date,
     typePayment = model.typePayment != null 
       ? EnumTypePayment.values[model.typePayment!] 

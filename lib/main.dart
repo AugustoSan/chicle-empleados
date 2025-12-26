@@ -110,6 +110,7 @@ Future<void> main() async {
             orderProvider: getIt<OrderProvider>(),
             userRepository: getIt<UserRepository>(),
             cashCutProvider: getIt<CashCutProvider>(),
+            businessProvider: getIt<BusinessProvider>(),
           ),
         ),
         ChangeNotifierProvider(

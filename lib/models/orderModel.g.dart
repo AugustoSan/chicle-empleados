@@ -21,11 +21,11 @@ class OrderModelAdapter extends TypeAdapter<OrderModel> {
       date: fields[2] as DateTime?,
       total: fields[4] as double?,
       statusCashCut: fields[6] as bool?,
+      typePayment: fields[7] as int?,
       userId: fields[1] as String,
       customer: fields[3] as String,
       status: fields[5] as int,
       items: (fields[8] as List).cast<OrderItemModel>(),
-      typePayment: fields[7] as int?,
     );
   }
 

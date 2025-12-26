@@ -53,6 +53,13 @@ class OrderProvider with ChangeNotifier {
     return res;
   }
 
+  Future<bool> addCashCut(Order order) async {
+    order.statusCashCut = true;
+    final res = await _repo.updateOrder(order.id, order);
+    loadAll();
+    return res;
+  }
+
   Future<bool> cancelOrder(Order order) async {
     order.status = EnumOrderStatus.cancelled;
     final res = await _repo.updateOrder(order.id, order);

@@ -130,19 +130,6 @@ class _AddCashCutScreenState extends State<AddCashCutScreen> {
     return Column(
       children: [
         TextFieldCustom(
-          controller: viewModel.countedCashInitC,
-          title: 'Fondo de Caja Inicial',
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          validator: (value) {
-            if (value == null || value.isEmpty) return 'Este campo es requerido';
-            if (double.tryParse(value) == null) return 'Ingresa un número válido';
-            return null;
-          },
-          onEditingComplete: () {
-            FocusScope.of(context).unfocus();
-          },
-        ),
-        TextFieldCustom(
           controller: viewModel.countedCashC,
           title: 'Efectivo Contado en Caja',
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -247,7 +234,44 @@ class _AddCashCutScreenState extends State<AddCashCutScreen> {
       child: ElevatedButton(
         onPressed: viewModel.loading ? null : () async {
           if (formKey.currentState!.validate()) {
-            await viewModel.saveCashCut();
+            
+            bool confirm = true;
+          
+            // Solo mostrar diálogo si hay diferencia
+            if (viewModel.difference.abs() > 0.01) {
+              final result = await showDialog<bool>(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Diferencia en Corte de Caja'),
+                  content: const Text(
+                    'Hay una diferencia entre el efectivo contado y el esperado. '
+                    '¿Deseas continuar y que la cantidad se sume o reste al final del corte de caja?'
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: const Text('No'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: const Text('Si'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, null),
+                      child: const Text('Cancelar'),
+                    ),
+                  ],
+                ),
+              );
+              // Si result es null (usuario cerró el diálogo), salir sin hacer nada
+              if (result == null) {
+                return; // Sale del onPressed sin guardar
+              }
+              
+              confirm = result;
+            }
+
+            await viewModel.saveCashCut(confirm);
             
             if (viewModel.error == null && context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(

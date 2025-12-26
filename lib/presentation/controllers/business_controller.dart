@@ -10,6 +10,7 @@ class BusinessController extends ChangeNotifier {
   final phoneC = TextEditingController(); 
   final currencyC = TextEditingController();
   final taxC = TextEditingController();
+  final initialCashC = TextEditingController();
   final ValueNotifier<String?> logoC = ValueNotifier<String?>(null);
   final ValueNotifier<BusinessType> selectedType = ValueNotifier<BusinessType>(BusinessType.cafeteria);
 
@@ -22,15 +23,53 @@ class BusinessController extends ChangeNotifier {
 
   BusinessController(this._businessProvider)
   {
+
+    _businessProvider.addListener(_onBusinessChanged);
+
+    // Si ya tiene datos, cargarlos
+    if (_businessProvider.business != null) {
+      _populateFields();
+    } else {
+      // Si no, cargarlos async
+      _loadBusinessData();
+    }
+  }
+
+  void _onBusinessChanged() {
+    // Cada vez que el BusinessProvider notifique cambios, actualizar
+    if (_businessProvider.business != null) {
+      _populateFields();
+      notifyListeners();
+    }
+  }
+
+  Future<void> _loadBusinessData() async {
+    _loading = true;
+    notifyListeners();
+
+    try {
+      await _businessProvider.initialize();
+      await _businessProvider.loadBusinessData();
+      _error = null;
+    } catch (e) {
+      _error = 'Error al cargar datos: $e';
+    } finally {
+      _loading = false;
+      notifyListeners();
+    }
+  }
+
+  void _populateFields() {
     final biz = _businessProvider.business;
     if (biz != null) {
-      nameC.text     = biz.name;
-      addressC.text  = biz.address ?? '';
-      phoneC.text    = biz.phone ?? '';
+      nameC.text = biz.name;
+      addressC.text = biz.address ?? '';
+      phoneC.text = biz.phone ?? '';
+      initialCashC.text = biz.initialCash.toString();
       currencyC.text = biz.currency;
-      taxC.text      = biz.taxPercent.toString();
-      selectedType.value   = BusinessType.cafeteria;
-      logoC.value          = biz.logo;
+      taxC.text = biz.taxPercent.toString();
+      selectedType.value = biz.type;
+      logoC.value = biz.logo;
     }
   }
 
@@ -45,6 +84,7 @@ class BusinessController extends ChangeNotifier {
       Business(
         name: nameC.text,
         currency: currencyC.text,
+        initialCash: double.parse(initialCashC.text),
         taxPercent: double.parse(taxC.text),
         type: BusinessType.cafeteria,
         logo: logoC.value, enabledModules: [],
@@ -69,7 +109,13 @@ class BusinessController extends ChangeNotifier {
 
   @override
   void dispose() {
+    // Remover listener
+    _businessProvider.removeListener(_onBusinessChanged);
+
     nameC.dispose();
+    addressC.dispose();
+    phoneC.dispose();
+    initialCashC.dispose();
     currencyC.dispose();
     taxC.dispose();
     logoC.dispose();

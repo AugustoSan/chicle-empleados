@@ -14,6 +14,7 @@ class BusinessRepositoryImpl implements BusinessRepository {
       await saveBusiness(Business(
         name:           'Chicle Café & Snacks',
         currency:       'MXN',
+        initialCash:    500.0,
         taxPercent:     16.0,
         type:           BusinessType.cafeteria,
         enabledModules: ['bebidas', 'alimentos', 'menus', 'reportes', 'configuración'],
@@ -31,6 +32,7 @@ class BusinessRepositoryImpl implements BusinessRepository {
     return Business(
       name:           model.name,
       currency:       model.currency,
+      initialCash:    model.initialCash,
       taxPercent:     model.taxPercent,
       type:           BusinessType.values[model.type],
       enabledModules: model.enabledModules,
@@ -46,6 +48,7 @@ class BusinessRepositoryImpl implements BusinessRepository {
     final model = BusinessModel(
       name:           biz.name,
       currency:       biz.currency,
+      initialCash:    biz.initialCash,
       taxPercent:     biz.taxPercent,
       type:           biz.type.index,
       enabledModules: biz.enabledModules,
