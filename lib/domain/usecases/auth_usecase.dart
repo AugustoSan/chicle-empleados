@@ -1,19 +1,20 @@
+import 'package:chicle_app_empleados/data/data.dart';
 import 'package:chicle_app_empleados/domain/domain.dart';
 
 class LoginUseCase {
-  final AuthRepository repo;
+  final AuthRepositoryImpl repo;
   LoginUseCase(this.repo);
   Future<void> call(String username, String password) => repo.login(username, password);
 }
 
 class LogoutUseCase {
-  final AuthRepository repo;
+  final AuthRepositoryImpl repo;
   LogoutUseCase(this.repo);
   Future<void> call() => repo.logout();
 }
 
 class GetUserLoginUseCase {
-  final AuthRepository repo;
+  final AuthRepositoryImpl repo;
   GetUserLoginUseCase(this.repo);
   Future<User?> call() => repo.getUserLogin();
 }
