@@ -4,9 +4,40 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 /// Widget que dibuja el recibo
-class ReceiptWidget extends StatelessWidget {
+class ReceiptWidget extends StatefulWidget {
   final Order data;
   const ReceiptWidget({Key? key, required this.data}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _ReceiptWidgetState();
+
+}
+
+class _ReceiptWidgetState extends State<ReceiptWidget> {
+
+  String userName = 'Sin nombre';
+  Order? data = null;
+
+  @override
+  void initState() {
+    super.initState();
+    data = widget.data;
+    _loadUserName();
+  }
+
+  Future<void> _loadUserName() async {
+    try {
+      final userProvider = context.read<UserProvider>();
+      final user = await userProvider.findUserById( widget.data.userId);
+      if (user != null) {
+        setState(() {
+          userName = user.username;
+        });
+      }
+    } catch (e) {
+      print('Error loading user name: $e');
+    }
+  }
 
   Widget _buildSaleItemRow(OrderItem item) {
     return Padding(
@@ -33,22 +64,6 @@ class ReceiptWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    print('ReceiptWidget: ${data.id}');
-    final business = context.read<BusinessProvider>().business;
-    // Cálculos
-    final subtotal = data.items.fold<double>(
-      0,
-      (sum, it) => sum + it.total,
-    );
-    // final taxPercent = business?.taxPercent ?? 0.16;
-    // final tax = subtotal * taxPercent;
-    // final total = subtotal + tax;
-    final total = subtotal;
-
-    print('Business: ${business?.name}, address: ${business?.address}, phone: ${business?.phone}');
-    print('Tipo de pago: ${data.typePayment}');
-
     return Column(
       children: [
         Container(
@@ -59,7 +74,26 @@ class ReceiptWidget extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade300),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Column(
+      child: data == null 
+        ? Text("Sin datos")
+        : _buildContent(data!)
+    )
+      ],
+    );
+  }
+
+  Widget _buildContent(Order data) {
+    final business = context.read<BusinessProvider>().business;
+    // Cálculos
+    final subtotal = data.items.fold<double>(
+      0,
+      (sum, it) => sum + it.total,
+    );
+    // final taxPercent = business?.taxPercent ?? 0.16;
+    // final tax = subtotal * taxPercent;
+    // final total = subtotal + tax;
+    final total = subtotal;
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Encabezado
@@ -75,6 +109,7 @@ class ReceiptWidget extends StatelessWidget {
 
           // Info de ticket
           _buildInfoRow('Cliente:', 'Publico en general'),
+          _buildInfoRow('Usuario:', userName),
           _buildInfoRow('Ticket #:', data.id.toString()),
           _buildInfoRow('Fecha:', DateUtil.formatDateTime(data.date)),
           _buildInfoRow('Tipo de pago:', data.typePayment != null ? data.typePayment!.name.toUpperCase() : 'No especificado'),
@@ -112,10 +147,7 @@ class ReceiptWidget extends StatelessWidget {
             style: const TextStyle(fontSize: 14),
           ),
         ],
-      ),
-    )
-      ],
-    );
+      );
   }
 
   Widget _buildInfoRow(String label, String value, {bool alignRight = false, TextStyle? valueStyle}) {

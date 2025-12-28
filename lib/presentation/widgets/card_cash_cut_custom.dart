@@ -41,7 +41,11 @@ class _CardCashCutCustomState extends State<CardCashCutCustom> {
   Widget build(BuildContext context) {
     final item = widget.item;
     print('CardCashCutCustom: ${item.id}');
-    return Container(
+    return InkWell(
+      onTap: () => {
+        mostrarCashCutDialog(context, item, userName),
+      },
+      child: Container(
         // margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -70,6 +74,7 @@ class _CardCashCutCustomState extends State<CardCashCutCustom> {
             ),
           ],
         ),
-      );
+      ),
+    );
   }
 }

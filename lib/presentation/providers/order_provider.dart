@@ -13,7 +13,7 @@ class OrderProvider with ChangeNotifier {
   Future<void> loadAll() async {
     final user = await _authRepository.getUserLogin();
     if(user == null) return;
-    _items = await _repo.getOrdersByUser( user.id );
+    _items = user.isAdmin ? await _repo.getAllOrders() : await _repo.getOrdersByUser( user.id );
     _items.sort((a, b) => b.date.compareTo(a.date));
     notifyListeners();
   }

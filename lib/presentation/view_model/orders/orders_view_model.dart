@@ -35,7 +35,7 @@ class OrdersViewModel extends ChangeNotifier {
         return;
       }
       final userId = user.id;
-      _orders = await _orderRepository.getOrdersByUser(userId);
+      _orders = user.isAdmin ? await _orderRepository.getAllOrders() : await _orderRepository.getOrdersByUser(userId);
       _error = null;
     } catch (e) {
       _hasError = true;

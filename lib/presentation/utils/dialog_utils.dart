@@ -1,3 +1,4 @@
+import 'package:chicle_app_empleados/presentation/screens/cashcut/cash_cut_resume.dart';
 import 'package:flutter/material.dart';
 import 'package:chicle_app_empleados/domain/domain.dart';
 import 'package:chicle_app_empleados/presentation/presentation.dart';
@@ -69,5 +70,14 @@ Future<void> mostrarQrImageDialog(BuildContext context, String message) {
     context: context,
     barrierDismissible: true,
     builder: (_) => AlertQrDialog(message: message),
+  );
+}
+
+
+Future<void> mostrarCashCutDialog(BuildContext context, CashCut item, String username) {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: true,
+    builder: (_) => CashCutResume(data: item, user: username,),
   );
 }
