@@ -24,20 +24,23 @@ class CategoryRepositoryImpl extends CategoryRepository {
 
   /// Fetches the menu from the network, parses it, and caches any new products into Hive.
   Future<RestaurantMenu?> _fetchAndCacheMenu() async {
-    final response = await http.get(Uri.parse(apiUrl + 'assets/data/menu.json'));
+    final client = http.Client();
+    try {
+      final response = await client.get(Uri.parse(apiUrl + 'assets/data/menu.json')).timeout(const Duration(seconds: 30));
 
-    if (response.statusCode == 200) {
-      Map<String, dynamic> jsonResponse = json.decode(response.body);
-      final restaurant = RestaurantMenu.fromJson(jsonResponse);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> jsonResponse = json.decode(response.body);
+        final restaurant = RestaurantMenu.fromJson(jsonResponse);
 
-      // Check each product and save it to Hive if it doesn't exist.
-      // for (var category in restaurant.categories) {
-      //   await _save(category);
-      // }
-      return restaurant;
-    } else {
-      print('Failed to load menu. Status Code: ${response.statusCode}');
-      return null;
+        return restaurant;
+      } else {
+        print('Failed to load menu. Status Code: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      rethrow;
+    } finally {
+      client.close();
     }
   }
 
