@@ -15,7 +15,7 @@
         {
           "id": "b21838bc-5b06-4606-ac6e-6b1f47d3274d",
           "name": "Café americano",
-          "price": 40,
+          "price": 35,
           "available": true,
           "description": "Café americano",
           "image": "./assets/images/cafe-americano.png"
