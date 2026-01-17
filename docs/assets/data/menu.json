@@ -7,7 +7,7 @@
         {
           "id": "6d40c1b1-da76-4a74-b18d-d255eaa696cd",
           "name": "Café capuchino",
-          "price": 40,
+          "price": 45,
           "available": true,
           "description": "Café capuchino",
           "image": "./assets/images/cafe-capuchino.png"
